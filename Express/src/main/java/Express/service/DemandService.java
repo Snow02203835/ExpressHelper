@@ -121,6 +121,27 @@ public class DemandService {
     }
 
     /**
+     * 根据需求id查找需求详细
+     * @author snow create 2021/04/16 00:24
+     * @param userId
+     * @param departId
+     * @param demandId
+     * @return
+     */
+    public ReturnObject getDemandById(Long userId, Long departId, Long demandId){
+        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId);
+        if(retObj.getData() == null){
+            return retObj;
+        }
+        Demand demand = retObj.getData();
+        if(userDepartId.equals(departId) && !userId.equals(demand.getSponsorId())){
+            return retObj;
+        }
+        demand.setOrders(orderDao.findOrderByDemandId(demandId));
+        return new ReturnObject(demand);
+    }
+
+    /**
      * 用户接单
      * @author snow create 2021/04/15 16:08
      * @param userId
