@@ -6,6 +6,7 @@ import Express.util.OrderStatus;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @author snow create 2021/04/15 16:05
@@ -20,6 +21,8 @@ public class Order implements VoObject, Serializable {
     private Byte deleted;
     private String urlCheck;
     private String urlSent;
+    private LocalDateTime gmtCreate;
+    private LocalDateTime gmtModified;
 
     public Order(OrderPo orderPo){
         this.id = orderPo.getId();
@@ -29,6 +32,8 @@ public class Order implements VoObject, Serializable {
         this.deleted = orderPo.getDeleted();
         this.urlCheck = orderPo.getUrlCheck();
         this.urlSent = orderPo.getUrlSent();
+        this.gmtCreate = orderPo.getGmtCreate();
+        this.gmtModified = orderPo.getGmtModified();
     }
 
     public Order(Long receiverId, Long demandId){
@@ -47,6 +52,8 @@ public class Order implements VoObject, Serializable {
         orderPo.setDeleted(this.deleted);
         orderPo.setUrlCheck(this.urlCheck);
         orderPo.setUrlSent(this.urlSent);
+        orderPo.setGmtCreate(this.gmtCreate);
+        orderPo.setGmtModified(this.gmtModified);
         return orderPo;
     }
 

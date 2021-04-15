@@ -4,12 +4,10 @@ import Express.model.po.DemandPo;
 import Express.model.vo.DemandVo;
 import Express.util.DemandStatus;
 import Core.model.VoObject;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @author snow create 2021/04/15 14:39
@@ -28,6 +26,8 @@ public class Demand implements VoObject, Serializable {
     private String address;
     private String destination;
     private String comment;
+    private LocalDateTime gmtCreate;
+    private LocalDateTime gmtModified;
 
     public Demand(DemandPo demandPo){
         this.id = demandPo.getId();
@@ -41,6 +41,8 @@ public class Demand implements VoObject, Serializable {
         this.address = demandPo.getAddress();
         this.destination = demandPo.getDestination();
         this.comment = demandPo.getComment();
+        this.gmtCreate = demandPo.getGmtCreate();
+        this.gmtModified = demandPo.getGmtModified();
     }
 
     public Demand(DemandVo demandVo){
@@ -67,6 +69,8 @@ public class Demand implements VoObject, Serializable {
         demandPo.setMobile(this.mobile);
         demandPo.setAddress(this.address);
         demandPo.setDestination(this.destination);
+        demandPo.setGmtCreate(this.gmtCreate);
+        demandPo.setGmtModified(this.gmtModified);
         return demandPo;
     }
 
