@@ -58,7 +58,7 @@ public class Swagger2Configuration {
                 //版本号
                 .version("1.0.0")
                 //license
-                .termsOfServiceUrl("https://github.com/XMU-YG/CompuOrg-Service")
+                .termsOfServiceUrl("https://github.com/Snow02203835/ExpressHelper")
                 .build();
     }
 }
