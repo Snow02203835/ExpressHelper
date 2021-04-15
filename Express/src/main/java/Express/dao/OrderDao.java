@@ -5,10 +5,13 @@ import Core.util.ReturnObject;
 import Express.mapper.OrderPoMapper;
 import Express.model.bo.Order;
 import Express.model.po.OrderPo;
+import Express.model.po.OrderPoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class OrderDao {
@@ -80,4 +83,31 @@ public class OrderDao {
         }
         return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
     }
+
+    /**
+     * 根据需求id查找相关订单
+     * @author snow create 2021/04/16 00:23
+     * @param demandId
+     * @return
+     */
+    public List<Order> findOrderByDemandId(Long demandId){
+        try {
+            OrderPoExample example = new OrderPoExample();
+            OrderPoExample.Criteria criteria = example.createCriteria();
+            criteria.andDemandIdEqualTo(demandId);
+            List<OrderPo> orderPos = orderPoMapper.selectByExample(example);
+            if(orderPos != null && orderPos.size() != 0){
+                List<Order> orders = new ArrayList<>(orderPos.size());
+                for(OrderPo orderPo : orderPos){
+                    orders.add(new Order(orderPo));
+                }
+                return orders;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
