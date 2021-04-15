@@ -37,4 +37,47 @@ public class OrderDao {
         }
         return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
     }
+
+    /**
+     * 更新订单
+     * @author snow create 2021/04/15 19:48
+     * @param order
+     * @return
+     */
+    public ReturnObject alterOrder(Order order){
+        try {
+            OrderPo orderPo = order.createPo();
+            orderPo.setGmtModified(LocalDateTime.now());
+            int effectRows = orderPoMapper.updateByPrimaryKey(orderPo);
+            if(effectRows == 1){
+                return new ReturnObject(ResponseCode.OK);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+    }
+
+    /**
+     * 根据id查找订单
+     * @author snow create 2021/04/15 19:50
+     * @param orderId
+     * @return
+     */
+    public ReturnObject<Order> findOrderById(Long orderId){
+        try {
+            OrderPo orderPo = orderPoMapper.selectByPrimaryKey(orderId);
+            if(orderPo != null && orderPo.getDeleted() != (byte)1){
+                return new ReturnObject<>(new Order(orderPo));
+            }
+            else {
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOT_EXIST);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+    }
 }
