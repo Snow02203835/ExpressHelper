@@ -63,6 +63,7 @@ public class DemandService {
     /**
      * 更新需求状态为待接单（已支付）
      * @author snow create 2021/04/15 16:25
+     *            modified 2021/04/15 19:20
      * @param userId
      * @param departId
      * @param demandId
@@ -81,6 +82,9 @@ public class DemandService {
         Demand demand = retObj.getData();
         if(userDepartId.equals(departId) && !userId.equals(demand.getSponsorId())){
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(DemandStatus.UNPAID.getCode() != demand.getStatus()){
+            return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
         }
         demand.setStatus(DemandStatus.EXPECTING.getCode());
         return demandDao.alterDemand(demand);
