@@ -152,6 +152,37 @@ public class ExpressController {
     }
 
     /**
+     * 获取需求记录
+     * @author snow create 2021/04/15 00:33
+     * @param userId
+     * @param departId
+     * @param demandId
+     * @return
+     */
+    @ApiOperation(value = "获取需求记录", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "demandId", value = "需求记录id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @GetMapping("demand/{demandId}")
+    public Object getDemandById(@ApiIgnore @LoginUser Long userId,
+                                @ApiIgnore @Depart Long departId,
+                                @PathVariable Long demandId){
+        ReturnObject retObj = demandService.getDemandById(userId, departId, demandId);
+        if(retObj.getData() == null){
+            return Common.decorateReturnObject(retObj);
+        }
+        else {
+            return Common.getRetObject(retObj);
+        }
+    }
+
+    /**
      * 用户接单
      * @author snow create 2021/04/15 13:22
      * @param userId
