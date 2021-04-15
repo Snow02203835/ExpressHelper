@@ -7,6 +7,7 @@ import Core.annotation.Audit;
 import Core.annotation.LoginUser;
 import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
+import Express.model.vo.URLVo;
 import Express.service.DemandService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -179,6 +180,36 @@ public class ExpressController {
             return Common.getNullRetObj(retObj, httpServletResponse);
         }
 
+    }
+
+    /**
+     * 用户取件/送达
+     * @author snow create 2021/04/15 20:03
+     * @param userId
+     * @param orderId
+     * @return
+     */
+    @ApiOperation(value = "用户取件/送达", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "orderId", value = "订单id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "URLVo", name = "urlVo", value = "取件图片地址", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("order/{orderId}")
+    public Object pickUpPackage(@ApiIgnore @LoginUser Long userId,
+                                @PathVariable Long orderId,
+                                @Validated @RequestBody URLVo urlVo,
+                                BindingResult bindingResult){
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if(returnObject != null){
+            return returnObject;
+        }
+        return Common.decorateReturnObject(demandService.updateOrderStatusWithURL(userId, orderId, urlVo.getUrl()));
     }
 
 }
