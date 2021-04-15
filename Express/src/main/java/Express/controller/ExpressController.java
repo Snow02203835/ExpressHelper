@@ -103,6 +103,31 @@ public class ExpressController {
     }
 
     /**
+     * 取消需求
+     * @author snow create 2021/04/15 19:40
+     * @param userId
+     * @param departId
+     * @param demandId
+     * @return
+     */
+    @ApiOperation(value = "取消需求", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "demandId", value = "需求id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("demand/{demandId}/cancel")
+    public Object cancelDemand(@ApiIgnore @LoginUser Long userId,
+                               @ApiIgnore @Depart Long departId,
+                               @PathVariable Long demandId){
+        return Common.decorateReturnObject(demandService.cancelDemand(userId, departId, demandId));
+    }
+
+    /**
      * 删除需求记录
      * @author snow create 2021/04/15 15:48
      * @param userId
