@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author snow create 2021/04/15 14:39
@@ -28,6 +29,7 @@ public class Demand implements VoObject, Serializable {
     private String comment;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
+    private List<Order> orders;
 
     public Demand(DemandPo demandPo){
         this.id = demandPo.getId();
