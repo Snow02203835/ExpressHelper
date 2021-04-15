@@ -243,4 +243,35 @@ public class ExpressController {
         return Common.decorateReturnObject(demandService.updateOrderStatusWithURL(userId, orderId, urlVo.getUrl()));
     }
 
+    /**
+     * 根据id获取订单
+     * @author snow create 2021/04/15 01:02
+     * @param userId
+     * @param departId
+     * @param orderId
+     * @return
+     */
+    @ApiOperation(value = "根据id获取订单", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "orderId", value = "订单id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @GetMapping("order/{orderId}")
+    public Object getOrderById(@ApiIgnore @LoginUser Long userId,
+                               @ApiIgnore @Depart Long departId,
+                               @PathVariable Long orderId){
+        ReturnObject retObj = demandService.getOrderById(userId, departId, orderId);
+        if(retObj.getData() == null){
+            return Common.decorateReturnObject(retObj);
+        }
+        else {
+            return Common.getRetObject(retObj);
+        }
+    }
+
 }
