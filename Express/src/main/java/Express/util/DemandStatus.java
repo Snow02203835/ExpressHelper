@@ -5,7 +5,8 @@ public enum DemandStatus {
     UNPAID((byte)0, "待支付"),
     EXPECTING((byte)1, "待接单"),
     PICKED((byte)2, "已接单"),
-    SATISFY((byte)3, "已完成");
+    SATISFY((byte)3, "已完成"),
+    CANCEL((byte)4, "已取消");
 
     private Byte code;
     private String message;
