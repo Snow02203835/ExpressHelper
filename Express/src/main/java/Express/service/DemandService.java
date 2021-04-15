@@ -10,6 +10,7 @@ import Express.model.bo.Order;
 import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
 import Express.util.DemandStatus;
+import Express.util.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -151,6 +152,31 @@ public class DemandService {
         else{
             return insertOrderResult;
         }
+    }
+
+    /**
+     * 更新订单状态：已接单->已取件 | 已取件->已送达
+     * @author snow create 2021/04/15 20:13
+     * @param userId
+     * @param orderId
+     * @param urlCheck
+     * @return
+     */
+    public ReturnObject updateOrderStatusWithURL(Long userId, Long orderId, String urlCheck){
+        ReturnObject<Order> retObj = orderDao.findOrderById(orderId);
+        if(retObj.getData() == null){
+            return retObj;
+        }
+        Order order = retObj.getData();
+        if(!order.getReceiverId().equals(userId)){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(!OrderStatus.PICKED.getCode().equals(order.getStatus()) && !OrderStatus.COLLECTED.getCode().equals(order.getStatus())){
+            return new ReturnObject(ResponseCode.ORDER_STATUS_FORBID);
+        }
+        order.setStatus(OrderStatus.PICKED.getCode().equals(order.getStatus()) ? OrderStatus.COLLECTED.getCode() : OrderStatus.SENT.getCode());
+        order.setUrlCheck(urlCheck);
+        return orderDao.alterOrder(order);
     }
 
 }
