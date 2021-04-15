@@ -69,6 +69,7 @@ public class ExpressController {
     /**
      * 需求支付成功
      * @author snow create 2021/04/15 17:20
+     *            modified 2021/04/15 19:23
      * @param userId
      * @param demandId
      * @param departId
@@ -85,7 +86,7 @@ public class ExpressController {
             @ApiResponse(code = 0, message = "成功"),
     })
     @Audit
-    @PutMapping("demand/paid{demandId}")
+    @PutMapping("demand/payment/{demandId}")
     public Object paidForDemand(@ApiIgnore @LoginUser Long userId,
                                 @ApiIgnore @Depart Long departId,
                                 @PathVariable Long demandId,
