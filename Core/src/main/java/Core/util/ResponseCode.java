@@ -60,7 +60,8 @@ public enum ResponseCode {
     /***************************************************
      *    订单模块错误码
      **************************************************/
-    DEMAND_STATUS_FORBID(800,"需求状态禁止");
+    DEMAND_STATUS_FORBID(800,"需求状态禁止"),
+    ORDER_STATUS_FORBID(810, "订单状态禁止");
 
     private int code;
     private String message;
