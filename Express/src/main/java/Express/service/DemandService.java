@@ -61,6 +61,35 @@ public class DemandService {
     }
 
     /**
+     * 取消需求
+     * @author snow create 2021/04/15 19:37
+     * @param userId
+     * @param departId
+     * @param demandId
+     * @return
+     */
+    public ReturnObject cancelDemand(Long userId, Long departId, Long demandId){
+        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId);
+        if(retObj.getData() == null){
+            return retObj;
+        }
+        Demand demand = retObj.getData();
+        if(userDepartId.equals(departId) && !userId.equals(demand.getSponsorId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(DemandStatus.SATISFY.getCode() > demand.getStatus()){
+            if(!DemandStatus.UNPAID.getCode().equals(demand.getStatus())){
+                //Refund
+            }
+            demand.setStatus(DemandStatus.CANCEL.getCode());
+            return demandDao.alterDemand(demand);
+        }
+        else{
+            return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
+        }
+    }
+
+    /**
      * 更新需求状态为待接单（已支付）
      * @author snow create 2021/04/15 16:25
      *            modified 2021/04/15 19:20
