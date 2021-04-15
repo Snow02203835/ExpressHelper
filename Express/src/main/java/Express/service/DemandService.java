@@ -9,6 +9,7 @@ import Express.model.bo.Demand;
 import Express.model.bo.Order;
 import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
+import Express.model.vo.OrderRetVo;
 import Express.util.DemandStatus;
 import Express.util.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -203,6 +204,29 @@ public class DemandService {
         order.setStatus(OrderStatus.PICKED.getCode().equals(order.getStatus()) ? OrderStatus.COLLECTED.getCode() : OrderStatus.SENT.getCode());
         order.setUrlCheck(urlCheck);
         return orderDao.alterOrder(order);
+    }
+
+    /**
+     * 根据订单id查找订单以及对应需求
+     * @author snow create 2021/04/16 01:00
+     * @param userId
+     * @param departId
+     * @param orderId
+     * @return
+     */
+    public ReturnObject getOrderById(Long userId, Long departId, Long orderId){
+        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId);
+        if(orderReturnObject.getData() == null){
+            return orderReturnObject;
+        }
+        Order order = orderReturnObject.getData();
+        if(userDepartId.equals(departId) && !userId.equals(order.getReceiverId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        OrderRetVo orderRetVo = new OrderRetVo(order);
+        ReturnObject<Demand> demandReturnObject = demandDao.findDemandById(orderRetVo.getDemandId(), true);
+        orderRetVo.addDemandDetail(demandReturnObject.getData());
+        return new ReturnObject(orderRetVo);
     }
 
 }
