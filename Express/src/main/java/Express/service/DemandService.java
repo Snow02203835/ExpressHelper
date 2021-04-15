@@ -41,12 +41,13 @@ public class DemandService {
     /**
      * 用户逻辑删除需求记录
      * @author snow create 2021/04/15 15:45
+     *            modified 2021/04/16 00:53
      * @param userId
      * @param demandId
      * @return
      */
     public ReturnObject deleteDemandLogically(Long userId, Long demandId){
-        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId);
+        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
         if(retObj.getData() == null){
             return retObj;
         }
@@ -64,13 +65,14 @@ public class DemandService {
     /**
      * 取消需求
      * @author snow create 2021/04/15 19:37
+     *            modified 2021/04/16 00:53
      * @param userId
      * @param departId
      * @param demandId
      * @return
      */
     public ReturnObject cancelDemand(Long userId, Long departId, Long demandId){
-        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId);
+        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
         if(retObj.getData() == null){
             return retObj;
         }
@@ -94,6 +96,7 @@ public class DemandService {
      * 更新需求状态为待接单（已支付）
      * @author snow create 2021/04/15 16:25
      *            modified 2021/04/15 19:20
+     *            modified 2021/04/16 00:53
      * @param userId
      * @param departId
      * @param demandId
@@ -105,7 +108,7 @@ public class DemandService {
         if(billStatus != ResponseCode.BILL_PAID){
             return new ReturnObject(billStatus);
         }
-        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId);
+        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
         if(retObj.getData() == null){
             return retObj;
         }
@@ -123,13 +126,14 @@ public class DemandService {
     /**
      * 根据需求id查找需求详细
      * @author snow create 2021/04/16 00:24
+     *            modified 2021/04/16 00:54
      * @param userId
      * @param departId
      * @param demandId
      * @return
      */
     public ReturnObject getDemandById(Long userId, Long departId, Long demandId){
-        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId);
+        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
         if(retObj.getData() == null){
             return retObj;
         }
@@ -144,12 +148,13 @@ public class DemandService {
     /**
      * 用户接单
      * @author snow create 2021/04/15 16:08
+     *            modified 2021/04/16 00:54
      * @param userId
      * @param demandId
      * @return
      */
     public ReturnObject pickUpDemand(Long userId, Long demandId){
-        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId);
+        ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
         if(retObj.getData() == null){
             return retObj;
         }

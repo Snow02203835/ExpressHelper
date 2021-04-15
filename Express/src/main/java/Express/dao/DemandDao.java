@@ -62,13 +62,15 @@ public class DemandDao {
     /**
      * 根据id查找需求
      * @author snow create 2021/04/15 15:53
+     *            modified 2021/04/16 00:52
      * @param demandId
+     * @param selectDeleted
      * @return
      */
-    public ReturnObject<Demand> findDemandById(Long demandId){
+    public ReturnObject<Demand> findDemandById(Long demandId, boolean selectDeleted){
         try {
             DemandPo demandPo = demandPoMapper.selectByPrimaryKey(demandId);
-            if(demandPo != null && demandPo.getDeleted() != (byte)1){
+            if(demandPo != null && (selectDeleted || demandPo.getDeleted() != (byte)1)){
                 return new ReturnObject<>(new Demand(demandPo));
             }
             else {
