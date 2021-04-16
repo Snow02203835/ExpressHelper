@@ -44,6 +44,7 @@ public class DemandService {
      * 用户逻辑删除需求记录
      * @author snow create 2021/04/15 15:45
      *            modified 2021/04/16 00:53
+     *            modified 2021/04/16 08:45
      * @param userId
      * @param demandId
      * @return
@@ -57,11 +58,15 @@ public class DemandService {
         if(!userId.equals(demand.getSponsorId())){
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
         }
-        if (DemandStatus.SATISFY.getCode() != demand.getStatus() && DemandStatus.UNPAID.getCode() != demand.getStatus()){
+        if (DemandStatus.SATISFY.getCode().equals(demand.getStatus()) ||
+                DemandStatus.UNPAID.getCode().equals(demand.getStatus()) ||
+                DemandStatus.CANCEL.getCode().equals(demand.getStatus())){
+            demand.setDeleted((byte)1);
+            return demandDao.alterDemand(demand);
+        }
+        else{
             return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
         }
-        demand.setDeleted((byte)1);
-        return demandDao.alterDemand(demand);
     }
 
     /**
