@@ -2,6 +2,7 @@ package Express.controller;
 
 import Core.annotation.Depart;
 import Core.util.Common;
+import Core.util.ResponseCode;
 import Core.util.ReturnObject;
 import Core.annotation.Audit;
 import Core.annotation.LoginUser;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Api(value = "快递代取后端", tags = "express")
 @RestController /*Restful的Controller对象*/
@@ -208,6 +211,81 @@ public class ExpressController {
         else {
             return Common.getRetObject(retObj);
         }
+    }
+
+    /**
+     * 根据条件获取需求列表
+     * @author snow create 2021/04/16 13:25
+     * @param departId
+     * @param sponsorId
+     * @param type
+     * @param status
+     * @param deleted
+     * @param minPrice
+     * @param maxPrice
+     * @param address
+     * @param destination
+     * @param startTime
+     * @param endTime
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation(value = "根据条件获取需求列表", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "sponsorId", value = "发布者id", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "type", value = "需求类型", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "status", value = "需求状态", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "deleted", value = "逻辑删除订单是否可见", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "minPrice", value = "最低价格", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "maxPrice", value = "最高价格", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "address", value = "取件地址", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "destination", value = "送达地址", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "startTime", value = "开始时间", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "endTime", value = "结束时间", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "page", value = "页码", defaultValue = "1", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "pageSize", value = "页大小", defaultValue = "5", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @GetMapping("demand")
+    public Object getDemands(@ApiIgnore @Depart Long departId,
+                             @RequestParam(required = false) Long sponsorId,
+                             @RequestParam(required = false) Byte type,
+                             @RequestParam(required = false) Byte status,
+                             @RequestParam(required = false) Byte deleted,
+                             @RequestParam(required = false) Integer minPrice,
+                             @RequestParam(required = false) Integer maxPrice,
+                             @RequestParam(required = false) String address,
+                             @RequestParam(required = false) String destination,
+                             @RequestParam(required = false) String startTime,
+                             @RequestParam(required = false) String endTime,
+                             @RequestParam(defaultValue = "1") Integer page,
+                             @RequestParam(defaultValue = "5") Integer pageSize){
+        if(page < 1 || pageSize < 0){
+            return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
+        }
+        System.out.println("departId: " + departId + ", SponsorId: " + sponsorId + ", type: " + type + ", status: " +status);
+        System.out.println("deleted: " + deleted + ", minPrice: " + minPrice + ", maxPrice: " + maxPrice + ", address: " + address);
+        System.out.println("destination: " + destination + ", startTime: " + startTime + ", endTime: " + endTime + ", page: " + page + ", pageSize: " + pageSize);
+        LocalDateTime start = null, end = null;
+        try {
+            if(startTime != null) {
+                start = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+            if(endTime != null){
+                end = LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
+        }
+        return Common.getPageRetObject(demandService.getDemandsWithCondition(departId, sponsorId, type, status,
+                deleted, minPrice, maxPrice, address, destination, start, end, page, pageSize));
     }
 
     /**
