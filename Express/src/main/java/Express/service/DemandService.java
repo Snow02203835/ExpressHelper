@@ -191,6 +191,7 @@ public class DemandService {
     /**
      * 根据条件查找需求
      * @author snow create 2021/04/16 11:08
+     *            modified 2021/04/17 00:49
      * @param departId
      * @param sponsorId
      * @param type
@@ -211,15 +212,12 @@ public class DemandService {
                                                                     String address, String destination,
                                                                     LocalDateTime startTime, LocalDateTime endTime,
                                                                     Integer page, Integer pageSize){
-        System.out.println("Service1");
         if(userDepartId.equals(departId)){
             deleted = (byte)0;
         }
-        System.out.println("Service2");
         PageHelper.startPage(page, pageSize);
-        System.out.println("Service3");
-        PageInfo<DemandPo> demandPoPageInfo = demandDao.findDemandsWithCondition(sponsorId, type, status, deleted, minPrice, maxPrice, address, destination, startTime, endTime);
-        System.out.println("Service4");
+        PageInfo<DemandPo> demandPoPageInfo = demandDao.findDemandsWithCondition(sponsorId, type, status, deleted,
+                minPrice, maxPrice, address, destination, startTime, endTime);
         if(demandPoPageInfo == null){
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }

@@ -216,6 +216,7 @@ public class ExpressController {
     /**
      * 根据条件获取需求列表
      * @author snow create 2021/04/16 13:25
+     *            modified 2021/04/17 00:48
      * @param departId
      * @param sponsorId
      * @param type
@@ -237,7 +238,7 @@ public class ExpressController {
             @ApiImplicitParam(paramType = "query", dataType = "int", name = "sponsorId", value = "发布者id", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "int", name = "type", value = "需求类型", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "int", name = "status", value = "需求状态", required = false),
-            @ApiImplicitParam(paramType = "query", dataType = "int", name = "deleted", value = "逻辑删除订单是否可见", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "deleted", value = "逻辑删除需求是否可见", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "int", name = "minPrice", value = "最低价格", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "int", name = "maxPrice", value = "最高价格", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "address", value = "取件地址", required = false),

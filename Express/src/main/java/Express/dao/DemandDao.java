@@ -89,6 +89,7 @@ public class DemandDao {
     /**
      * 根据条件查找需求
      * @author snow create 2021/04/16 11:03
+     *            modified 2021/04/17 00:49
      * @param sponsorId
      * @param type
      * @param status
@@ -106,10 +107,8 @@ public class DemandDao {
                                                        String address, String destination,
                                                        LocalDateTime startTime, LocalDateTime endTime){
         try {
-            System.out.println("Dao1");
             DemandPoExample example = new DemandPoExample();
             DemandPoExample.Criteria criteria = example.createCriteria();
-            System.out.println("Dao2");
             if(sponsorId != null){
                 criteria.andSponsorIdEqualTo(sponsorId);
             }
@@ -140,7 +139,6 @@ public class DemandDao {
             if(endTime != null){
                 criteria.andGmtModifiedLessThanOrEqualTo(endTime);
             }
-            System.out.println("Dao3");
             List<DemandPo> demandPos = demandPoMapper.selectByExample(example);
             return new PageInfo<>(demandPos);
         }
