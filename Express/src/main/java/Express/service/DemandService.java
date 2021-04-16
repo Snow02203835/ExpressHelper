@@ -41,6 +41,33 @@ public class DemandService {
     }
 
     /**
+     * 更新需求
+     * @author snow create 2021/04/16 09:06
+     * @param userId
+     * @param departId
+     * @param demandId
+     * @param demandVo
+     * @return
+     */
+    public ReturnObject updateDemand(Long userId, Long departId, Long demandId, DemandVo demandVo){
+        ReturnObject<Demand> demandReturnObject = demandDao.findDemandById(demandId, false);
+        if(demandReturnObject.getData() == null){
+            return demandReturnObject;
+        }
+        Demand demand = demandReturnObject.getData();
+        if(userDepartId.equals(departId) && !userId.equals(demand.getSponsorId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(DemandStatus.UNPAID.getCode().equals(demand.getStatus()) || DemandStatus.EXPECTING.getCode().equals(demand.getStatus())) {
+            demand.updateFieldWithVo(demandVo);
+            return demandDao.alterDemand(demand);
+        }
+        else {
+            return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
+        }
+    }
+
+    /**
      * 用户逻辑删除需求记录
      * @author snow create 2021/04/15 15:45
      *            modified 2021/04/16 00:53
