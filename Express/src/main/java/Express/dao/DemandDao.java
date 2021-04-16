@@ -5,10 +5,13 @@ import Express.mapper.DemandPoMapper;
 import Core.util.ReturnObject;
 import Express.model.bo.Demand;
 import Express.model.po.DemandPo;
+import Express.model.po.DemandPoExample;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public class DemandDao {
@@ -82,4 +85,69 @@ public class DemandDao {
         }
         return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
     }
+
+    /**
+     * 根据条件查找需求
+     * @author snow create 2021/04/16 11:03
+     * @param sponsorId
+     * @param type
+     * @param status
+     * @param deleted
+     * @param minPrice
+     * @param maxPrice
+     * @param address
+     * @param destination
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public PageInfo<DemandPo> findDemandsWithCondition(Long sponsorId, Byte type, Byte status, Byte deleted,
+                                                       Integer minPrice, Integer maxPrice,
+                                                       String address, String destination,
+                                                       LocalDateTime startTime, LocalDateTime endTime){
+        try {
+            System.out.println("Dao1");
+            DemandPoExample example = new DemandPoExample();
+            DemandPoExample.Criteria criteria = example.createCriteria();
+            System.out.println("Dao2");
+            if(sponsorId != null){
+                criteria.andSponsorIdEqualTo(sponsorId);
+            }
+            if(type != null){
+                criteria.andTypeEqualTo(type);
+            }
+            if(status != null){
+                criteria.andStatusEqualTo(status);
+            }
+            if(deleted != null){
+                criteria.andDeletedEqualTo(deleted);
+            }
+            if(minPrice != null){
+                criteria.andPriceGreaterThanOrEqualTo(minPrice);
+            }
+            if(maxPrice != null){
+                criteria.andPriceLessThanOrEqualTo(maxPrice);
+            }
+            if(address != null){
+                criteria.andAddressLike(address);
+            }
+            if(destination != null){
+                criteria.andDestinationLike(destination);
+            }
+            if(startTime != null){
+                criteria.andGmtModifiedGreaterThanOrEqualTo(startTime);
+            }
+            if(endTime != null){
+                criteria.andGmtModifiedLessThanOrEqualTo(endTime);
+            }
+            System.out.println("Dao3");
+            List<DemandPo> demandPos = demandPoMapper.selectByExample(example);
+            return new PageInfo<>(demandPos);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
