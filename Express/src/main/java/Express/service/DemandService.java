@@ -223,6 +223,32 @@ public class DemandService {
     }
 
     /**
+     * 逻辑删除订单
+     * @author snow create 2021/04/16 08:51
+     * @param userId
+     * @param orderId
+     * @return
+     */
+    public ReturnObject deleteOrderLogically(Long userId, Long orderId){
+        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId);
+        if(orderReturnObject.getData() == null){
+            return orderReturnObject;
+        }
+        Order order = orderReturnObject.getData();
+        if(!userId.equals(order.getReceiverId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(OrderStatus.CANCEL.getCode().equals(order.getStatus()) ||
+                OrderStatus.SATISFY.getCode().equals(order.getStatus())){
+            order.setDeleted((byte)1);
+            return orderDao.alterOrder(order);
+        }
+        else{
+            return new ReturnObject(ResponseCode.ORDER_STATUS_FORBID);
+        }
+    }
+
+    /**
      * 更新订单状态：已接单->已取件 | 已取件->已送达
      * @author snow create 2021/04/15 20:13
      * @param userId

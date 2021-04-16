@@ -239,6 +239,29 @@ public class ExpressController {
     }
 
     /**
+     * 用户删除订单
+     * @author snow create 2021/04/16 08:54
+     * @param userId
+     * @param orderId
+     * @return
+     */
+    @ApiOperation(value = "用户删除订单", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "orderId", value = "订单id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @DeleteMapping("order/{orderId}")
+    public Object deleteOrder(@ApiIgnore @LoginUser Long userId,
+                              @PathVariable Long orderId){
+        return Common.decorateReturnObject(demandService.deleteOrderLogically(userId, orderId));
+    }
+
+    /**
      * 用户取件/送达
      * @author snow create 2021/04/15 20:03
      * @param userId
