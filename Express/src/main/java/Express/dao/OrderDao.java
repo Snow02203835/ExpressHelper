@@ -6,6 +6,7 @@ import Express.mapper.OrderPoMapper;
 import Express.model.bo.Order;
 import Express.model.po.OrderPo;
 import Express.model.po.OrderPoExample;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -103,6 +104,44 @@ public class OrderDao {
                 }
                 return orders;
             }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 根据条件查找订单
+     * @author snow create 2021/04/17 00:34
+     * @param receiverId
+     * @param status
+     * @param deleted
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public PageInfo<OrderPo> findOrdersWithCondition(Long receiverId , Byte status, Byte deleted,
+                                                     LocalDateTime startTime, LocalDateTime endTime){
+        try {
+            OrderPoExample example = new OrderPoExample();
+            OrderPoExample.Criteria criteria = example.createCriteria();
+            if(receiverId != null){
+                criteria.andReceiverIdEqualTo(receiverId);
+            }
+            if(status != null){
+                criteria.andStatusEqualTo(status);
+            }
+            if(deleted != null){
+                criteria.andDeletedEqualTo(deleted);
+            }
+            if(startTime != null){
+                criteria.andGmtModifiedGreaterThanOrEqualTo(startTime);
+            }
+            if(endTime != null){
+                criteria.andGmtModifiedLessThanOrEqualTo(endTime);
+            }
+            return new PageInfo<>(orderPoMapper.selectByExample(example));
         }
         catch (Exception e){
             e.printStackTrace();
