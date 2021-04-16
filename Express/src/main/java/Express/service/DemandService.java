@@ -1,5 +1,6 @@
 package Express.service;
 
+import Core.model.VoObject;
 import Core.util.ResponseCode;
 import Core.util.ReturnObject;
 import Express.dao.DemandDao;
@@ -7,14 +8,21 @@ import Express.dao.OrderDao;
 import Express.model.bo.Bill;
 import Express.model.bo.Demand;
 import Express.model.bo.Order;
+import Express.model.po.DemandPo;
 import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
 import Express.model.vo.OrderRetVo;
 import Express.util.DemandStatus;
 import Express.util.OrderStatus;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DemandService {
@@ -177,6 +185,53 @@ public class DemandService {
         }
         demand.setOrders(orderDao.findOrderByDemandId(demandId));
         return new ReturnObject(demand);
+    }
+
+    /**
+     * 根据条件查找需求
+     * @author snow create 2021/04/16 11:08
+     * @param departId
+     * @param sponsorId
+     * @param type
+     * @param status
+     * @param deleted
+     * @param minPrice
+     * @param maxPrice
+     * @param address
+     * @param destination
+     * @param startTime
+     * @param endTime
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public ReturnObject<PageInfo<VoObject>> getDemandsWithCondition(Long departId, Long sponsorId, Byte type, Byte status,
+                                                                    Byte deleted, Integer minPrice, Integer maxPrice,
+                                                                    String address, String destination,
+                                                                    LocalDateTime startTime, LocalDateTime endTime,
+                                                                    Integer page, Integer pageSize){
+        System.out.println("Service1");
+        if(userDepartId.equals(departId)){
+            deleted = (byte)0;
+        }
+        System.out.println("Service2");
+        PageHelper.startPage(page, pageSize);
+        System.out.println("Service3");
+        PageInfo<DemandPo> demandPoPageInfo = demandDao.findDemandsWithCondition(sponsorId, type, status, deleted, minPrice, maxPrice, address, destination, startTime, endTime);
+        System.out.println("Service4");
+        if(demandPoPageInfo == null){
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+        List<VoObject> userInfos = demandPoPageInfo.getList().stream().map(Demand::new).collect(Collectors.toList());
+        System.out.println(userInfos.toString());
+
+        PageInfo<VoObject> retObj = new PageInfo<>(userInfos);
+        retObj.setPages(demandPoPageInfo.getPages());
+        retObj.setPageNum(demandPoPageInfo.getPageNum());
+        retObj.setPageSize(demandPoPageInfo.getPageSize());
+        retObj.setTotal(demandPoPageInfo.getTotal());
+
+        return new ReturnObject<>(retObj);
     }
 
     /**
