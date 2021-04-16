@@ -76,6 +76,30 @@ public class Demand implements VoObject, Serializable {
         return demandPo;
     }
 
+    public void updateFieldWithVo(DemandVo demandVo){
+        if(demandVo.getType() != null) {
+            this.type = demandVo.getType();
+        }
+        if(demandVo.getPrice() != null) {
+            this.price = demandVo.getPrice();
+        }
+        if(demandVo.getCode() != null) {
+            this.code = demandVo.getCode();
+        }
+        if(demandVo.getMobile() != null) {
+            this.mobile = demandVo.getMobile();
+        }
+        if(demandVo.getAddress() != null) {
+            this.address = demandVo.getAddress();
+        }
+        if(demandVo.getDestination() != null) {
+            this.destination = demandVo.getDestination();
+        }
+        if(demandVo.getComment() != null) {
+            this.comment = demandVo.getComment();
+        }
+    }
+
     @Override
     public Object createVo() {
         return this;
