@@ -428,4 +428,64 @@ public class ExpressController {
         }
     }
 
+    /**
+     * 根据条件获取订单列表
+     * @author snow create 2021/04/17 00:42
+     * @param userId
+     * @param departId
+     * @param receiverId
+     * @param status
+     * @param deleted
+     * @param startTime
+     * @param endTime
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation(value = "根据条件获取订单列表", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "receiverId", value = "接单者id", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "status", value = "订单状态", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "deleted", value = "逻辑删除订单是否可见", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "startTime", value = "开始时间", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "endTime", value = "结束时间", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "page", value = "页码", defaultValue = "1", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "pageSize", value = "页大小", defaultValue = "5", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @GetMapping("order")
+    public Object getOrders(@ApiIgnore @LoginUser Long userId,
+                            @ApiIgnore @Depart Long departId,
+                            @RequestParam(required = false) Long receiverId,
+                            @RequestParam(required = false) Byte status,
+                            @RequestParam(required = false) Byte deleted,
+                            @RequestParam(required = false) String startTime,
+                            @RequestParam(required = false) String endTime,
+                            @RequestParam(defaultValue = "1") Integer page,
+                            @RequestParam(defaultValue = "5") Integer pageSize){
+        if(page < 1 || pageSize < 0){
+            return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
+        }
+        System.out.println("userId: " + userId + ", departId: " + departId + ", status: " +status + ", deleted: " + deleted);
+        System.out.println("startTime: " + startTime + ", endTime: " + endTime + ", page: " + page + ", pageSize: " + pageSize);
+        LocalDateTime start = null, end = null;
+        try {
+            if(startTime != null) {
+                start = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+            if(endTime != null){
+                end = LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
+        }
+        return Common.getPageRetObject(demandService.getOrdersWithCondition(userId, departId, receiverId, status, deleted, start, end, page, pageSize));
+    }
+
 }
