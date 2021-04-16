@@ -68,6 +68,34 @@ public class ExpressController {
     }
 
     /**
+     * 修改需求
+     * @author snow create 2021/04/16 09:10
+     * @param userId
+     * @param departId
+     * @param demandId
+     * @param demandVo
+     * @return
+     */
+    @ApiOperation(value = "修改需求", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "demandId", value = "需求id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "DemandVo", name = "demandVo", value = "需求详细", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("demand/{demandId}")
+    public Object updateDemand(@ApiIgnore @LoginUser Long userId,
+                               @ApiIgnore @Depart Long departId,
+                               @PathVariable Long demandId,
+                               @RequestBody DemandVo demandVo){
+        return Common.decorateReturnObject(demandService.updateDemand(userId, departId, demandId, demandVo));
+    }
+
+    /**
      * 需求支付成功
      * @author snow create 2021/04/15 17:20
      *            modified 2021/04/15 19:23
