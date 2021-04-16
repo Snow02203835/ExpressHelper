@@ -9,6 +9,7 @@ import Express.model.bo.Bill;
 import Express.model.bo.Demand;
 import Express.model.bo.Order;
 import Express.model.po.DemandPo;
+import Express.model.po.OrderPo;
 import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
 import Express.model.vo.OrderRetVo;
@@ -376,6 +377,45 @@ public class DemandService {
         ReturnObject<Demand> demandReturnObject = demandDao.findDemandById(orderRetVo.getDemandId(), true);
         orderRetVo.addDemandDetail(demandReturnObject.getData());
         return new ReturnObject(orderRetVo);
+    }
+
+    /**
+     * 根据条件查找订单
+     * @author snow create 2021/04/17 00:39
+     * @param userId
+     * @param departId
+     * @param receiverId
+     * @param status
+     * @param deleted
+     * @param startTime
+     * @param endTime
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public ReturnObject<PageInfo<VoObject>> getOrdersWithCondition(Long userId, Long departId, Long receiverId, Byte status,
+                                                      Byte deleted, LocalDateTime startTime, LocalDateTime endTime,
+                                                      Integer page, Integer pageSize){
+        if(userDepartId.equals(departId)){
+            deleted = (byte)0;
+            receiverId = userId;
+        }
+        PageHelper.startPage(page, pageSize);
+        PageInfo<OrderPo> orderPoPageInfo = orderDao.findOrdersWithCondition(receiverId, status, deleted, startTime, endTime);
+        if(orderPoPageInfo == null){
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+        List<VoObject> orderInfos = orderPoPageInfo.getList().stream().map(Order::new).collect(Collectors.toList());
+        System.out.println(orderInfos.toString());
+
+        PageInfo<VoObject> retObj = new PageInfo<>(orderInfos);
+        retObj.setPages(orderPoPageInfo.getPages());
+        retObj.setPageNum(orderPoPageInfo.getPageNum());
+        retObj.setPageSize(orderPoPageInfo.getPageSize());
+        retObj.setTotal(orderPoPageInfo.getTotal());
+
+        return new ReturnObject<>(retObj);
+
     }
 
 }
