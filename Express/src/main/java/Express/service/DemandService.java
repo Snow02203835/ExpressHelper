@@ -14,6 +14,7 @@ import Express.util.DemandStatus;
 import Express.util.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DemandService {
@@ -179,6 +180,41 @@ public class DemandService {
         else{
             return insertOrderResult;
         }
+    }
+
+    /**
+     * 取消订单
+     * @author snow create 2021/04/16 08:28
+     * @param userId
+     * @param departId
+     * @param orderId
+     * @return
+     */
+    @Transactional
+    public ReturnObject cancelOrder(Long userId, Long departId, Long orderId){
+        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId);
+        if(orderReturnObject.getData() == null){
+            return orderReturnObject;
+        }
+        Order order = orderReturnObject.getData();
+        if(userDepartId.equals(departId) && !userId.equals(order.getReceiverId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(OrderStatus.PICKED.getCode() != order.getStatus()){
+            return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
+        }
+        order.setStatus(OrderStatus.CANCEL.getCode());
+        /*
+        decrease user credit
+         */
+        ReturnObject<Demand> demandReturnObject = demandDao.findDemandById(order.getDemandId(), false);
+        if (demandReturnObject.getData() == null){
+            return demandReturnObject;
+        }
+        Demand demand = demandReturnObject.getData();
+        demand.setStatus(DemandStatus.EXPECTING.getCode());
+        demandDao.alterDemand(demand);
+        return orderDao.alterOrder(order);
     }
 
     /**
