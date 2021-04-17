@@ -1,7 +1,9 @@
 package Express.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
@@ -11,6 +13,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
+
+    @Value("${Express.img.path}")
+    private String imgSavedPath;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
@@ -24,5 +30,11 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS", "HEAD")
                 .maxAge(3600);
+    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String path = "file:///" + imgSavedPath.replace("\\", "/") + "/";
+        System.out.println("ResourceHandlerConfigs: " + path);
+        registry.addResourceHandler("/resource/img/**").addResourceLocations(path);
     }
 }
