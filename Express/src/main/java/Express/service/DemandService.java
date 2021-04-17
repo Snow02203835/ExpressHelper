@@ -1,12 +1,15 @@
 package Express.service;
 
 import Core.model.VoObject;
+import Core.util.MD5;
 import Core.util.ResponseCode;
 import Core.util.ReturnObject;
 import Express.dao.DemandDao;
+import Express.dao.ImageDao;
 import Express.dao.OrderDao;
 import Express.model.bo.Bill;
 import Express.model.bo.Demand;
+import Express.model.bo.Image;
 import Express.model.bo.Order;
 import Express.model.po.DemandPo;
 import Express.model.po.OrderPo;
@@ -18,11 +21,15 @@ import Express.util.OrderStatus;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,9 +39,13 @@ public class DemandService {
 
     @Autowired
     private DemandDao demandDao;
-
+    @Autowired
+    private ImageDao imageDao;
     @Autowired
     private OrderDao orderDao;
+
+    @Value("${Express.img.path}")
+    private String imgPath;
 
     /**
      * 新建需求
@@ -414,6 +425,51 @@ public class DemandService {
 
         return new ReturnObject<>(retObj);
 
+    }
+
+    /**
+     * 用户上传图片
+     * @author snow create 2021/04/17 16:12
+     * @param userId 用户id
+     * @param img 图片
+     * @return 上传文件的文件名
+     */
+    public ReturnObject<String> uploadFile(Long userId, MultipartFile img){
+        String imgMD5 = MD5.getFileMd5(img);
+        System.out.println("MD5: " + imgMD5);
+        ReturnObject<String> imgExist = imageDao.isImageHasExist(imgMD5);
+        if(imgExist.getCode() != ResponseCode.IMG_NOT_EXIST){
+            return imgExist;
+        }
+        String fileName = savaImgToDisk(img);
+        if(fileName == null){
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+        System.out.println("FileName: " + fileName);
+        Image image = new Image(userId, imgMD5, fileName);
+        return imageDao.insertImage(image);
+    }
+
+    /**
+     * 保存图片至磁盘
+     * @author snow create 2021/04/17 14:40
+     * @param img 图片
+     * @return 图片路径
+     */
+    public String savaImgToDisk(MultipartFile img){
+        try {
+            String realPath = imgPath + "/" + UUID.randomUUID().toString().replace("-", "")+img.getOriginalFilename().substring(img.getOriginalFilename().lastIndexOf("."));
+            File dest = new File(realPath);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdir();
+            }
+            img.transferTo(dest);
+            return dest.getName();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
