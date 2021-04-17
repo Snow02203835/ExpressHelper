@@ -54,32 +54,9 @@ mybatis:
     #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 
-CompuOrgService:
-  #是否对数据库中的未初始化的数据初始化
-  initialization: true
-  #分布式锁失效时间（秒）
-  lockerExpireTime: 30
-  #dav信息配置
-  dav:
-    username: oomall
-    password: admin
-    baseUrl: http://127.0.0.1:8888/webdav/
-
-  user:
-    # user的权限字在Redis中失效秒数
-    expiretime: 600
-  role:
-    # role的权限字在Redis中失效秒数
-    expiretime: 600
-  admin:
-    departId: 0
-  teacher:
-    departId: 1
-  student:
-    departId: 2
-    login:
-      #jwt过期的时间(秒)
-      jwtExpire: 7200
+Express:
+  img:
+    path: D:\Download
 
 
 #pagehelper分页插件配置
