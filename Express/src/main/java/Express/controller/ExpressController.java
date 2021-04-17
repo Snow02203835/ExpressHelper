@@ -3,6 +3,7 @@ package Express.controller;
 import Core.annotation.Depart;
 import Core.util.Common;
 import Core.util.ResponseCode;
+import Core.util.ResponseUtil;
 import Core.util.ReturnObject;
 import Core.annotation.Audit;
 import Core.annotation.LoginUser;
@@ -12,9 +13,11 @@ import Express.model.vo.URLVo;
 import Express.service.DemandService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
@@ -487,6 +490,34 @@ public class ExpressController {
             return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
         }
         return Common.getPageRetObject(demandService.getOrdersWithCondition(userId, departId, receiverId, status, deleted, start, end, page, pageSize));
+    }
+
+    /**
+     * 用户上传图片
+     * @author snow create 2021/04/17 16:14
+     * @param userId 用户id
+     * @param img 图片文件
+     * @return 操作结果
+     */
+    @ApiOperation(value = "上传图片", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "form", dataType = "__file", name = "img", value = "图片", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PostMapping("image")
+    public Object uploadFile(@ApiIgnore @LoginUser Long userId,
+                             @RequestParam MultipartFile img){
+        System.out.println("UserId: " + userId + ", FileSize: " + img.getSize() + ", FileName: " + img.getOriginalFilename());
+        ReturnObject<String> returnObject = demandService.uploadFile(userId, img);
+        if(returnObject.getData() == null){
+            return ResponseUtil.fail(returnObject.getCode(), returnObject.getErrmsg());
+        }else{
+            return ResponseUtil.ok(returnObject.getData());
+        }
     }
 
 }
