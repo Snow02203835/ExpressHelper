@@ -9,6 +9,7 @@ import Core.annotation.Audit;
 import Core.annotation.LoginUser;
 import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
+import Express.model.vo.FeedbackVo;
 import Express.model.vo.URLVo;
 import Express.service.DemandService;
 import io.swagger.annotations.*;
@@ -490,6 +491,72 @@ public class ExpressController {
             return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
         }
         return Common.getPageRetObject(demandService.getOrdersWithCondition(userId, departId, receiverId, status, deleted, start, end, page, pageSize));
+    }
+
+    /**
+     * 用户反馈
+     * @author snow create 2021/04/19 01:39
+     * @param userId 用户id
+     * @param feedbackVo 反馈信息
+     * @param bindingResult 校验信息
+     * @return 插入结果
+     */
+    @ApiOperation(value = "用户反馈", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "FeedbackVo", name = "feedbackVo", value = "反馈内容", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PostMapping("feedback")
+    public Object userFeedback(@ApiIgnore @LoginUser Long userId,
+                               @Validated @RequestBody FeedbackVo feedbackVo,
+                               BindingResult bindingResult){
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if(returnObject != null){
+            return returnObject;
+        }
+        ReturnObject retObj = demandService.userFeedback(userId, feedbackVo.getOrderId(), feedbackVo.getContent());
+        if(retObj.getData() == null){
+            return Common.decorateReturnObject(retObj);
+        }
+        else {
+            return Common.getRetObject(retObj);
+        }
+    }
+
+    /**
+     * 获取用户反馈
+     * @author snow create 2021/04/19 01:42
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param feedbackId 反馈id
+     * @return 反馈详细
+     */
+    @ApiOperation(value = "获取用户反馈", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "feedbackId", value = "反馈id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @GetMapping("feedback/{feedbackId}")
+    public Object getUserFeedback(@ApiIgnore @LoginUser Long userId,
+                                  @ApiIgnore @Depart Long departId,
+                                  @PathVariable Long feedbackId){
+        ReturnObject retObj = demandService.getUserFeedbackById(userId, departId, feedbackId);
+        if(retObj.getData() == null){
+            return Common.decorateReturnObject(retObj);
+        }
+        else {
+            return Common.getRetObject(retObj);
+        }
     }
 
     /**

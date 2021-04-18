@@ -5,12 +5,10 @@ import Core.util.MD5;
 import Core.util.ResponseCode;
 import Core.util.ReturnObject;
 import Express.dao.DemandDao;
+import Express.dao.FeedbackDao;
 import Express.dao.ImageDao;
 import Express.dao.OrderDao;
-import Express.model.bo.Bill;
-import Express.model.bo.Demand;
-import Express.model.bo.Image;
-import Express.model.bo.Order;
+import Express.model.bo.*;
 import Express.model.po.DemandPo;
 import Express.model.po.OrderPo;
 import Express.model.vo.BillVo;
@@ -39,6 +37,8 @@ public class DemandService {
 
     @Autowired
     private DemandDao demandDao;
+    @Autowired
+    private FeedbackDao feedbackDao;
     @Autowired
     private ImageDao imageDao;
     @Autowired
@@ -425,6 +425,38 @@ public class DemandService {
 
         return new ReturnObject<>(retObj);
 
+    }
+
+    /**
+     * 用户反馈
+     * @author snow create 2021/04/19 01:32
+     * @param userId 用户id
+     * @param orderId 相关订单id
+     * @param content 反馈内容
+     * @return 插入结果
+     */
+    public ReturnObject userFeedback(Long userId, Long orderId, String content){
+        Feedback feedback = new Feedback(userId, orderId, content);
+        return feedbackDao.insertFeedback(feedback);
+    }
+
+    /**
+     * 根据反馈id返回反馈详情
+     * @author snow create 2021/04/19 01:37
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param feedbackId 反馈id
+     * @return 反馈详情
+     */
+    public ReturnObject getUserFeedbackById(Long userId, Long departId, Long feedbackId){
+        ReturnObject<Feedback> retObj = feedbackDao.findFeedBackById(feedbackId);
+        if(retObj.getData() != null){
+            Feedback feedback = retObj.getData();
+            if(userDepartId.equals(departId) && !userId.equals(feedback.getUserId())){
+                return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+            }
+        }
+        return retObj;
     }
 
     /**
