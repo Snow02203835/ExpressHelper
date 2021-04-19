@@ -12,8 +12,11 @@ import javax.validation.constraints.NotNull;
 @Data
 public class FeedbackVo {
 
+    @ApiModelProperty(value = "反馈类型")
+    @NotNull(message = "反馈类型不能为空")
+    private Byte type;
+
     @ApiModelProperty(value = "订单id")
-    @NotNull(message = "订单id不能为空")
     private Long orderId;
 
     @ApiModelProperty(value = "反馈内容")
