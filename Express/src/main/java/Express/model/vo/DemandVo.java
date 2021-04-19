@@ -36,6 +36,9 @@ public class DemandVo {
     @NotBlank(message = "送达地址不能为空")
     private String destination;
 
+    @ApiModelProperty(value = "预期送达时间")
+    private String expectTime;
+
     @ApiModelProperty(value = "备注")
     private String comment;
 }
