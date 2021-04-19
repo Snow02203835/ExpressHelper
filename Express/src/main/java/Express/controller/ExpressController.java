@@ -532,6 +532,7 @@ public class ExpressController {
     /**
      * 获取用户反馈
      * @author snow create 2021/04/19 01:42
+     *            modified 2021/04/19 10:38
      * @param userId 用户id
      * @param departId 角色id
      * @param feedbackId 反馈id
@@ -547,7 +548,7 @@ public class ExpressController {
             @ApiResponse(code = 0, message = "成功"),
     })
     @Audit
-    @GetMapping("feedback/{feedbackId}")
+    @GetMapping("order/feedback/{feedbackId}")
     public Object getUserFeedback(@ApiIgnore @LoginUser Long userId,
                                   @ApiIgnore @Depart Long departId,
                                   @PathVariable Long feedbackId){
