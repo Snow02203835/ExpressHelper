@@ -497,6 +497,7 @@ public class ExpressController {
      * 用户反馈
      * @author snow create 2021/04/19 01:39
      *            modified 2021/04/19 10:37
+     *            modified 2021/04/19 11:23
      * @param userId 用户id
      * @param feedbackVo 反馈信息
      * @param bindingResult 校验信息
@@ -520,7 +521,7 @@ public class ExpressController {
         if(returnObject != null){
             return returnObject;
         }
-        ReturnObject retObj = demandService.userFeedback(userId, feedbackVo.getOrderId(), feedbackVo.getContent());
+        ReturnObject retObj = demandService.userFeedback(userId, feedbackVo.getType(), feedbackVo.getOrderId(), feedbackVo.getContent());
         if(retObj.getData() == null){
             return Common.decorateReturnObject(retObj);
         }
@@ -553,6 +554,37 @@ public class ExpressController {
                                   @ApiIgnore @Depart Long departId,
                                   @PathVariable Long feedbackId){
         ReturnObject retObj = demandService.getUserFeedbackById(userId, departId, feedbackId);
+        if(retObj.getData() == null){
+            return Common.decorateReturnObject(retObj);
+        }
+        else {
+            return Common.getRetObject(retObj);
+        }
+    }
+
+    /**
+     * 根据订单id获取用户反馈
+     * @author snow create 2021/04/19 10:44
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param orderId 订单id
+     * @return 反馈详细
+     */
+    @ApiOperation(value = "根据订单id获取用户反馈", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "orderId", value = "订单id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @GetMapping("order/{orderId}/feedback")
+    public Object getUserFeedbackByOrderId(@ApiIgnore @LoginUser Long userId,
+                                           @ApiIgnore @Depart Long departId,
+                                           @PathVariable Long orderId){
+        ReturnObject retObj = demandService.getUserFeedbackByOrderId(userId, departId, orderId);
         if(retObj.getData() == null){
             return Common.decorateReturnObject(retObj);
         }
