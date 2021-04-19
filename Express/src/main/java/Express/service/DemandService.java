@@ -461,6 +461,25 @@ public class DemandService {
     }
 
     /**
+     * 根据订单id返回反馈详情
+     * @author snow create 2021/04/19 10:42
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param orderId 订单id
+     * @return 反馈详情
+     */
+    public ReturnObject getUserFeedbackByOrderId(Long userId, Long departId, Long orderId){
+        ReturnObject<Feedback> retObj = feedbackDao.findFeedbackByOrderId(orderId);
+        if(retObj.getData() != null){
+            Feedback feedback = retObj.getData();
+            if(userDepartId.equals(departId) && !userId.equals(feedback.getUserId())){
+                return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+            }
+        }
+        return retObj;
+    }
+
+    /**
      * 用户上传图片
      * @author snow create 2021/04/17 16:12
      * @param userId 用户id
