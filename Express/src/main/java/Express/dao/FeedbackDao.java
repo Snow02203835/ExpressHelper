@@ -115,7 +115,9 @@ public class FeedbackDao {
     /**
      * 根据条件查找用户反馈
      * @author snow create 2021/04/19 10:33
+     *            modified 2021/04/19 15:19
      * @param userId 用户id
+     * @param type 反馈类型
      * @param status 反馈状态
      * @param deleted 逻辑删除是否可见
      * @param content 反馈内容
@@ -123,14 +125,16 @@ public class FeedbackDao {
      * @param endTime 结束时间
      * @return 反馈信息列表
      */
-    public PageInfo<FeedBackPo> findFeedbackWithCondition(Long userId, Byte status,
-                                                          Byte deleted, String content,
-                                                          LocalDateTime startTime, LocalDateTime endTime){
+    public PageInfo<FeedBackPo> findFeedbackWithCondition(Long userId, Byte type, Byte status, Byte deleted,
+                                                          String content, LocalDateTime startTime, LocalDateTime endTime){
         try {
             FeedBackPoExample example = new FeedBackPoExample();
             FeedBackPoExample.Criteria criteria = example.createCriteria();
             if(userId != null){
                 criteria.andUserIdEqualTo(userId);
+            }
+            if(type != null){
+                criteria.andTypeEqualTo(type);
             }
             if(status != null){
                 criteria.andStatusEqualTo(status);
