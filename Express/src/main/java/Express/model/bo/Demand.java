@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * @author snow create 2021/04/15 14:39
+ *            modified 2021/04/19 11:44
  */
 @Data
 public class Demand implements VoObject, Serializable {
@@ -26,6 +27,7 @@ public class Demand implements VoObject, Serializable {
     private String mobile;
     private String address;
     private String destination;
+    private String expectTime;
     private String comment;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
@@ -42,6 +44,7 @@ public class Demand implements VoObject, Serializable {
         this.mobile = demandPo.getMobile();
         this.address = demandPo.getAddress();
         this.destination = demandPo.getDestination();
+        this.expectTime = demandPo.getExpectTime();
         this.comment = demandPo.getComment();
         this.gmtCreate = demandPo.getGmtCreate();
         this.gmtModified = demandPo.getGmtModified();
@@ -56,6 +59,7 @@ public class Demand implements VoObject, Serializable {
         this.mobile = demandVo.getMobile();
         this.address = demandVo.getAddress();
         this.destination = demandVo.getDestination();
+        this.expectTime = demandVo.getExpectTime();
         this.comment = demandVo.getComment();
     }
 
@@ -71,6 +75,7 @@ public class Demand implements VoObject, Serializable {
         demandPo.setMobile(this.mobile);
         demandPo.setAddress(this.address);
         demandPo.setDestination(this.destination);
+        demandPo.setExpectTime(this.expectTime);
         demandPo.setGmtCreate(this.gmtCreate);
         demandPo.setGmtModified(this.gmtModified);
         return demandPo;
@@ -94,6 +99,9 @@ public class Demand implements VoObject, Serializable {
         }
         if(demandVo.getDestination() != null) {
             this.destination = demandVo.getDestination();
+        }
+        if(demandVo.getExpectTime() != null){
+            this.expectTime = demandVo.getExpectTime();
         }
         if(demandVo.getComment() != null) {
             this.comment = demandVo.getComment();
