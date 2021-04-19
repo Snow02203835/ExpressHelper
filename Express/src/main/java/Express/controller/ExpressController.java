@@ -496,6 +496,7 @@ public class ExpressController {
     /**
      * 用户反馈
      * @author snow create 2021/04/19 01:39
+     *            modified 2021/04/19 10:37
      * @param userId 用户id
      * @param feedbackVo 反馈信息
      * @param bindingResult 校验信息
@@ -511,7 +512,7 @@ public class ExpressController {
             @ApiResponse(code = 0, message = "成功"),
     })
     @Audit
-    @PostMapping("feedback")
+    @PostMapping("order/feedback")
     public Object userFeedback(@ApiIgnore @LoginUser Long userId,
                                @Validated @RequestBody FeedbackVo feedbackVo,
                                BindingResult bindingResult){
