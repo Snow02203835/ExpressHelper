@@ -74,7 +74,7 @@ public class FeedbackDao {
     public ReturnObject<Feedback> findFeedbackById(Long feedBackId){
         try {
             FeedBackPo feedBackPo = feedBackPoMapper.selectByPrimaryKey(feedBackId);
-            if(feedBackPo != null){
+            if(feedBackPo != null && feedBackPo.getDeleted() != (byte)1){
                 return new ReturnObject<>(new Feedback(feedBackPo));
             }
             else{
@@ -99,7 +99,7 @@ public class FeedbackDao {
             FeedBackPoExample.Criteria criteria = example.createCriteria();
             criteria.andOrderIdEqualTo(orderId);
             List<FeedBackPo> feedBackPos = feedBackPoMapper.selectByExample(example);
-            if(feedBackPos != null && feedBackPos.size() != 0){
+            if(feedBackPos != null && feedBackPos.size() != 0 && feedBackPos.get(0).getDeleted() != (byte)1){
                 return new ReturnObject<>(new Feedback(feedBackPos.get(0)));
             }
             else{
