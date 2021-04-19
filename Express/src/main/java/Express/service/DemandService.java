@@ -430,13 +430,15 @@ public class DemandService {
     /**
      * 用户反馈
      * @author snow create 2021/04/19 01:32
+     *            modified 2021/04/19 11:20
      * @param userId 用户id
+     * @param type 反馈类型
      * @param orderId 相关订单id
      * @param content 反馈内容
      * @return 插入结果
      */
-    public ReturnObject userFeedback(Long userId, Long orderId, String content){
-        Feedback feedback = new Feedback(userId, orderId, content);
+    public ReturnObject userFeedback(Long userId, Byte type, Long orderId, String content){
+        Feedback feedback = new Feedback(userId, type, orderId, content);
         return feedbackDao.insertFeedback(feedback);
     }
 
