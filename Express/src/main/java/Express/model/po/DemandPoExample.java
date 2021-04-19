@@ -496,7 +496,7 @@ public class DemandPoExample {
         }
 
         public Criteria andAddressLike(String value) {
-            addCriterion("address like", value, "address");
+            addCriterion("address like", value + "%", "address");
             return (Criteria) this;
         }
 
@@ -566,7 +566,7 @@ public class DemandPoExample {
         }
 
         public Criteria andDestinationLike(String value) {
-            addCriterion("destination like", value, "destination");
+            addCriterion("destination like", value + "%", "destination");
             return (Criteria) this;
         }
 
@@ -592,6 +592,76 @@ public class DemandPoExample {
 
         public Criteria andDestinationNotBetween(String value1, String value2) {
             addCriterion("destination not between", value1, value2, "destination");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeIsNull() {
+            addCriterion("expect_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeIsNotNull() {
+            addCriterion("expect_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeEqualTo(String value) {
+            addCriterion("expect_time =", value, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeNotEqualTo(String value) {
+            addCriterion("expect_time <>", value, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeGreaterThan(String value) {
+            addCriterion("expect_time >", value, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("expect_time >=", value, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeLessThan(String value) {
+            addCriterion("expect_time <", value, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeLessThanOrEqualTo(String value) {
+            addCriterion("expect_time <=", value, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeLike(String value) {
+            addCriterion("expect_time like", value, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeNotLike(String value) {
+            addCriterion("expect_time not like", value, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeIn(List<String> values) {
+            addCriterion("expect_time in", values, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeNotIn(List<String> values) {
+            addCriterion("expect_time not in", values, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeBetween(String value1, String value2) {
+            addCriterion("expect_time between", value1, value2, "expectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectTimeNotBetween(String value1, String value2) {
+            addCriterion("expect_time not between", value1, value2, "expectTime");
             return (Criteria) this;
         }
 
