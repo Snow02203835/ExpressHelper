@@ -559,6 +559,103 @@ public class ExpressController {
     }
 
     /**
+     * 用户取消反馈
+     * @author snow create 2021/04/19 15:03
+     * @param userId 用户id
+     * @param feedbackId 反馈信息id
+     * @return 操作结果
+     */
+    @ApiOperation(value = "用户取消反馈", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "feedbackId", value = "反馈id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("order/feedback/{feedbackId}/cancel")
+    public Object userCancelFeedback(@ApiIgnore @LoginUser Long userId,
+                                     @PathVariable Long feedbackId){
+        return Common.decorateReturnObject(demandService.userCancelFeedback(userId, feedbackId));
+    }
+
+    /**
+     * 用户删除反馈
+     * @author snow create 2021/04/19 15:04
+     * @param userId 用户id
+     * @param feedbackId 反馈信息id
+     * @return 操作结果
+     */
+    @ApiOperation(value = "用户删除反馈", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "feedbackId", value = "反馈id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @DeleteMapping("order/feedback/{feedbackId}")
+    public Object userDeleteFeedback(@ApiIgnore @LoginUser Long userId,
+                                     @PathVariable Long feedbackId){
+        return Common.decorateReturnObject(demandService.userDeleteFeedback(userId, feedbackId));
+    }
+
+    /**
+     * 管理员受理用户反馈
+     * @author snow create 2021/04/19 15:06
+     * @param feedbackId 反馈信息id
+     * @return 操作结果
+     */
+    @ApiOperation(value = "管理员受理用户反馈", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "feedbackId", value = "反馈id", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("order/feedback/{feedbackId}/handling")
+    public Object adminHandlingFeedback(@PathVariable Long feedbackId){
+        return Common.decorateReturnObject(demandService.adminHandlingFeedback(feedbackId));
+    }
+
+    /**
+     * 管理员答复用户反馈
+     * @author snow create 2021/04/19 15:09
+     * @param feedbackId 反馈信息id
+     * @param responseVo 反馈答复
+     * @param bindingResult 校验
+     * @return 操作结果
+     */
+    @ApiOperation(value = "管理员答复用户反馈", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "feedbackId", value = "反馈id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "FeedbackResponseVo", name = "responseVo", value = "反馈答复", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("order/feedback/{feedbackId}/response")
+    public Object adminRespondFeedback(@PathVariable Long feedbackId,
+                                       @RequestBody FeedbackResponseVo responseVo,
+                                       BindingResult bindingResult){
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if(returnObject != null){
+            return returnObject;
+        }
+        return Common.decorateReturnObject(demandService.adminRespondFeedback(feedbackId, responseVo.getResponse()));
+    }
+
+    /**
      * 获取用户反馈
      * @author snow create 2021/04/19 01:42
      *            modified 2021/04/19 10:38

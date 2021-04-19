@@ -15,6 +15,7 @@ import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
 import Express.model.vo.OrderRetVo;
 import Express.util.DemandStatus;
+import Express.util.FeedbackStatus;
 import Express.util.OrderStatus;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -461,6 +462,103 @@ public class DemandService {
         }
         feedback.setContent(content);
         return feedbackDao.updateFeedback(feedback);
+    }
+
+    /**
+     * 用户取消反馈
+     * @author snow create 2021/04/19 14:53
+     * @param userId 用户id
+     * @param feedbackId 反馈id
+     * @return 操作结果
+     */
+    public ReturnObject userCancelFeedback(Long userId, Long feedbackId){
+        ReturnObject<Feedback> retObj = feedbackDao.findFeedbackById(feedbackId);
+        if(retObj.getData() == null){
+            return retObj;
+        }
+        Feedback feedback = retObj.getData();
+        if(!userId.equals(feedback.getUserId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(FeedbackStatus.EXPECTING.getCode().equals(feedback.getStatus()) ||
+                FeedbackStatus.HANDLING.getCode().equals(feedback.getStatus())){
+            feedback.setStatus(FeedbackStatus.CANCEL.getCode());
+            return feedbackDao.updateFeedback(feedback);
+        }
+        else{
+            return new ReturnObject(ResponseCode.FEEDBACK_STATUS_FORBID);
+        }
+    }
+
+    /**
+     * 用户删除反馈
+     * @author snow create 2021/04/19 14:55
+     * @param userId 用户id
+     * @param feedbackId 反馈id
+     * @return 操作结果
+     */
+    public ReturnObject userDeleteFeedback(Long userId, Long feedbackId){
+        ReturnObject<Feedback> retObj = feedbackDao.findFeedbackById(feedbackId);
+        if(retObj.getData() == null){
+            return retObj;
+        }
+        Feedback feedback = retObj.getData();
+        if(!userId.equals(feedback.getUserId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(FeedbackStatus.RESPONDED.getCode().equals(feedback.getStatus()) ||
+                FeedbackStatus.CANCEL.getCode().equals(feedback.getStatus())){
+            feedback.setDeleted((byte)1);
+            return feedbackDao.updateFeedback(feedback);
+        }
+        else{
+            return new ReturnObject(ResponseCode.FEEDBACK_STATUS_FORBID);
+        }
+    }
+
+    /**
+     * 管理员受理用户反馈
+     * @author snow create 2021/04/19 14:59
+     * @param feedbackId 反馈id
+     * @return 操作结果
+     */
+    public ReturnObject adminHandlingFeedback(Long feedbackId){
+        ReturnObject<Feedback> retObj = feedbackDao.findFeedbackById(feedbackId);
+        if(retObj.getData() == null){
+            return retObj;
+        }
+        Feedback feedback = retObj.getData();
+        if(FeedbackStatus.EXPECTING.getCode().equals(feedback.getStatus())){
+            feedback.setStatus(FeedbackStatus.HANDLING.getCode());
+            return feedbackDao.updateFeedback(feedback);
+        }
+        else{
+            return new ReturnObject(ResponseCode.FEEDBACK_STATUS_FORBID);
+        }
+    }
+
+    /**
+     * 管理员答复用户反馈
+     * @author snow create 2021/04/19 15:00
+     * @param feedbackId 反馈id
+     * @param response 答复内容
+     * @return 操作结果
+     */
+    public ReturnObject adminRespondFeedback(Long feedbackId, String response){
+        ReturnObject<Feedback> retObj = feedbackDao.findFeedbackById(feedbackId);
+        if(retObj.getData() == null){
+            return retObj;
+        }
+        Feedback feedback = retObj.getData();
+        if(FeedbackStatus.EXPECTING.getCode().equals(feedback.getStatus()) ||
+                FeedbackStatus.HANDLING.getCode().equals(feedback.getStatus())){
+            feedback.setResponse(response);
+            feedback.setStatus(FeedbackStatus.RESPONDED.getCode());
+            return feedbackDao.updateFeedback(feedback);
+        }
+        else{
+            return new ReturnObject(ResponseCode.FEEDBACK_STATUS_FORBID);
+        }
     }
 
     /**
