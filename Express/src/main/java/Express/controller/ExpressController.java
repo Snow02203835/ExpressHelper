@@ -7,14 +7,10 @@ import Core.util.ResponseUtil;
 import Core.util.ReturnObject;
 import Core.annotation.Audit;
 import Core.annotation.LoginUser;
-import Express.model.vo.BillVo;
-import Express.model.vo.DemandVo;
-import Express.model.vo.FeedbackVo;
-import Express.model.vo.URLVo;
+import Express.model.vo.*;
 import Express.service.DemandService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -528,6 +524,38 @@ public class ExpressController {
         else {
             return Common.getRetObject(retObj);
         }
+    }
+
+    /**
+     * 用户更新反馈内容
+     * @author snow create 2021/04/19 13:19
+     * @param userId 用户id
+     * @param feedbackId 反馈信息id
+     * @param contentVo 新反馈内容
+     * @param bindingResult 校验
+     * @return 操作结果
+     */
+    @ApiOperation(value = "用户更新反馈内容", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "feedbackId", value = "反馈id", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "FeedbackContentVo", name = "contentVo", value = "新反馈内容", required = true),
+
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("order/feedback/{feedbackId}")
+    public Object userUpdateFeedbackContent(@ApiIgnore @LoginUser Long userId,
+                                            @PathVariable Long feedbackId,
+                                            @RequestBody FeedbackContentVo contentVo,
+                                            BindingResult bindingResult){
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if(returnObject != null){
+            return returnObject;
+        }
+        return Common.decorateReturnObject(demandService.userUpdateFeedbackContent(userId, feedbackId, contentVo.getContent()));
     }
 
     /**

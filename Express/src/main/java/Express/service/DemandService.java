@@ -443,6 +443,27 @@ public class DemandService {
     }
 
     /**
+     * 用户更新反馈内容
+     * @author snow create 2021/04/19 13:11
+     * @param userId 用户id
+     * @param feedbackId 反馈信息id
+     * @param content 新反馈内容
+     * @return  操作结果
+     */
+    public ReturnObject userUpdateFeedbackContent(Long userId, Long feedbackId, String content){
+        ReturnObject<Feedback> retObj = feedbackDao.findFeedbackById(feedbackId);
+        if(retObj.getData() == null){
+            return retObj;
+        }
+        Feedback feedback = retObj.getData();
+        if(!userId.equals(feedback.getUserId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        feedback.setContent(content);
+        return feedbackDao.updateFeedback(feedback);
+    }
+
+    /**
      * 根据反馈id返回反馈详情
      * @author snow create 2021/04/19 01:37
      *            modified 2021/04/19 10:30
