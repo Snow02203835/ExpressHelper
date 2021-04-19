@@ -719,6 +719,74 @@ public class ExpressController {
     }
 
     /**
+     * 根据条件查找用户反馈
+     * @author snow create 2021/04/19 15:33
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param ownerId 反馈所有者id
+     * @param type 反馈类型
+     * @param status 反馈状态
+     * @param deleted 逻辑删除反馈是否可见
+     * @param content 反馈内容
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param page 页码
+     * @param pageSize 页大小
+     * @return 查找结果
+     */
+    @ApiOperation(value = "根据条件查找用户反馈", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "ownerId", value = "反馈所有者id", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "type", value = "反馈类型", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "status", value = "反馈状态", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "deleted", value = "逻辑删除反馈是否可见", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "content", value = "反馈内容", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "startTime", value = "开始时间", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "String", name = "endTime", value = "结束时间", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "page", value = "页码", defaultValue = "1", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "pageSize", value = "页大小", defaultValue = "5", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @GetMapping("order/feedback")
+    public Object getUserFeedbackWithCondition(@ApiIgnore @LoginUser Long userId,
+                                               @ApiIgnore @Depart Long departId,
+                                               @RequestParam(required = false) Long ownerId,
+                                               @RequestParam(required = false) Byte type,
+                                               @RequestParam(required = false) Byte status,
+                                               @RequestParam(required = false) Byte deleted,
+                                               @RequestParam(required = false) String content,
+                                               @RequestParam(required = false) String startTime,
+                                               @RequestParam(required = false) String endTime,
+                                               @RequestParam(defaultValue = "1") Integer page,
+                                               @RequestParam(defaultValue = "5") Integer pageSize){
+        if(page < 1 || pageSize < 0){
+            return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
+        }
+        System.out.println("departId: " + departId + ", ownerId: " + ownerId + ", type: " + type + ", status: " +status);
+        System.out.println("deleted: " + deleted + ", content: " + content + ", startTime: " + startTime);
+        System.out.println("endTime: " + endTime + ", page: " + page + ", pageSize: " + pageSize);
+        LocalDateTime start = null, end = null;
+        try {
+            if(startTime != null) {
+                start = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+            if(endTime != null){
+                end = LocalDateTime.parse(endTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
+        }
+        return Common.getPageRetObject(demandService.getUserFeedbackWithCondition(userId, departId,
+                ownerId, type, status, deleted, content, start, end, page, pageSize));
+    }
+
+    /**
      * 用户上传图片
      * @author snow create 2021/04/17 16:14
      * @param userId 用户id
