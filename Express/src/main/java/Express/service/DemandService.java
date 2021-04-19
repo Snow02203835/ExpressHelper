@@ -443,13 +443,14 @@ public class DemandService {
     /**
      * 根据反馈id返回反馈详情
      * @author snow create 2021/04/19 01:37
+     *            modified 2021/04/19 10:30
      * @param userId 用户id
      * @param departId 角色id
      * @param feedbackId 反馈id
      * @return 反馈详情
      */
     public ReturnObject getUserFeedbackById(Long userId, Long departId, Long feedbackId){
-        ReturnObject<Feedback> retObj = feedbackDao.findFeedBackById(feedbackId);
+        ReturnObject<Feedback> retObj = feedbackDao.findFeedbackById(feedbackId);
         if(retObj.getData() != null){
             Feedback feedback = retObj.getData();
             if(userDepartId.equals(departId) && !userId.equals(feedback.getUserId())){
