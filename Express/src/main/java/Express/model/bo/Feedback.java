@@ -9,19 +9,25 @@ import java.time.LocalDateTime;
 
 /**
  * @author snow create 2021/04/19 01:09
+ *            modified 2021/04/19 11:19
  */
 @Data
 public class Feedback implements VoObject, Serializable {
     private Long id;
     private Long userId;
     private Long orderId;
+    private Byte type;
     private Byte status;
+    private Byte deleted;
     private String content;
+    private String response;
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
 
-    public Feedback(Long userId, Long orderId, String content) {
+    public Feedback(Long userId, Byte type, Long orderId, String content) {
+        this.type = type;
         this.status = (byte)0;
+        this.deleted = (byte)0;
         this.userId = userId;
         this.orderId = orderId;
         this.content = content;
@@ -31,8 +37,11 @@ public class Feedback implements VoObject, Serializable {
         this.id = feedBackPo.getId();
         this.userId = feedBackPo.getUserId();
         this.orderId = feedBackPo.getOrderId();
+        this.type = feedBackPo.getType();
         this.status = feedBackPo.getStatus();
+        this.deleted = feedBackPo.getDeleted();
         this.content = feedBackPo.getContent();
+        this.response = feedBackPo.getResponse();
         this.gmtCreate = feedBackPo.getGmtCreate();
         this.gmtModified = feedBackPo.getGmtModified();
     }
@@ -42,8 +51,11 @@ public class Feedback implements VoObject, Serializable {
         feedBackPo.setId(this.id);
         feedBackPo.setUserId(this.userId);
         feedBackPo.setOrderId(this.orderId);
+        feedBackPo.setType(this.type);
         feedBackPo.setStatus(this.status);
+        feedBackPo.setDeleted(this.deleted);
         feedBackPo.setContent(this.content);
+        feedBackPo.setResponse(this.response);
         feedBackPo.setGmtCreate(this.gmtCreate);
         feedBackPo.setGmtModified(this.gmtModified);
         return feedBackPo;
