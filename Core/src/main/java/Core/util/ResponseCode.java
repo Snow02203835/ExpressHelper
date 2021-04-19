@@ -62,6 +62,7 @@ public enum ResponseCode {
      **************************************************/
     DEMAND_STATUS_FORBID(800,"需求状态禁止"),
     ORDER_STATUS_FORBID(810, "订单状态禁止"),
+    FEEDBACK_STATUS_FORBID(820, "反馈状态禁止"),
 
 
     /***************************************************
