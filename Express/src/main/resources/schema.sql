@@ -18,6 +18,7 @@ CREATE TABLE `demand` (
   `mobile` varchar(128) DEFAULT NULL,
   `address` varchar(256) DEFAULT NULL,
   `destination` varchar(256) DEFAULT NULL,
+  `expect_time` varchar(128) DEFAULT NULL,
   `status` tinyint DEFAULT NULL,
   `sponsor_id` bigint DEFAULT NULL,
   `price` int DEFAULT NULL,
