@@ -10,6 +10,7 @@ import Express.dao.ImageDao;
 import Express.dao.OrderDao;
 import Express.model.bo.*;
 import Express.model.po.DemandPo;
+import Express.model.po.FeedBackPo;
 import Express.model.po.OrderPo;
 import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
@@ -598,6 +599,47 @@ public class DemandService {
             }
         }
         return retObj;
+    }
+
+    /**
+     * 根据条件查找用户反馈
+     * @author snow create 2021/04/19 15:27
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param ownerId 反馈所有者id
+     * @param type 反馈类型
+     * @param status 反馈状态
+     * @param deleted 逻辑删除反馈是否可见
+     * @param content 反馈内容
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param page 页码
+     * @param pageSize 页大小
+     * @return 查找结果
+     */
+    public ReturnObject<PageInfo<VoObject>> getUserFeedbackWithCondition(Long userId, Long departId, Long ownerId,
+                                                                         Byte type, Byte status, Byte deleted, String content,
+                                                                         LocalDateTime startTime, LocalDateTime endTime,
+                                                                         Integer page, Integer pageSize){
+        if(userDepartId.equals(departId)){
+            deleted = (byte)0;
+            ownerId = userId;
+        }
+        PageHelper.startPage(page, pageSize);
+        PageInfo<FeedBackPo> feedBackPoPageInfo = feedbackDao.findFeedbackWithCondition(ownerId, type,
+                status, deleted, content, startTime, endTime);
+        if(feedBackPoPageInfo == null){
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+        List<VoObject> feedbackInfos = feedBackPoPageInfo.getList().stream().map(Feedback::new).collect(Collectors.toList());
+
+        PageInfo<VoObject> retObj = new PageInfo<>(feedbackInfos);
+        retObj.setPages(feedBackPoPageInfo.getPages());
+        retObj.setPageNum(feedBackPoPageInfo.getPageNum());
+        retObj.setPageSize(feedBackPoPageInfo.getPageSize());
+        retObj.setTotal(feedBackPoPageInfo.getTotal());
+
+        return new ReturnObject<>(retObj);
     }
 
     /**
