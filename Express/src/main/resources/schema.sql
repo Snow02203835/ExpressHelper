@@ -58,9 +58,12 @@ DROP TABLE IF EXISTS `feedback`;
 CREATE TABLE `feedback` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `user_id` bigint NOT NULL,
-  `order_id` bigint NOT NULL,
+  `order_id` bigint DEFAULT NULL,
+  `type` tinyint DEFAULT NULL,
   `status` tinyint DEFAULT NULL,
   `content` varchar(512) DEFAULT NULL,
+  `response` varchar(512) DEFAULT NULL,
+  `deleted` tinyint(1) unsigned zerofill NOT NULL,
   `gmt_create` datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
