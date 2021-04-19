@@ -375,6 +375,66 @@ public class FeedBackPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Byte value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Byte value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Byte value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Byte value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Byte value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Byte value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Byte> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Byte> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Byte value1, Byte value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Byte value1, Byte value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -476,7 +536,7 @@ public class FeedBackPoExample {
         }
 
         public Criteria andContentLike(String value) {
-            addCriterion("content like", value, "content");
+            addCriterion("content like", value + "%", "content");
             return (Criteria) this;
         }
 
@@ -502,6 +562,136 @@ public class FeedBackPoExample {
 
         public Criteria andContentNotBetween(String value1, String value2) {
             addCriterion("content not between", value1, value2, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseIsNull() {
+            addCriterion("response is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseIsNotNull() {
+            addCriterion("response is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseEqualTo(String value) {
+            addCriterion("response =", value, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseNotEqualTo(String value) {
+            addCriterion("response <>", value, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseGreaterThan(String value) {
+            addCriterion("response >", value, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseGreaterThanOrEqualTo(String value) {
+            addCriterion("response >=", value, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseLessThan(String value) {
+            addCriterion("response <", value, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseLessThanOrEqualTo(String value) {
+            addCriterion("response <=", value, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseLike(String value) {
+            addCriterion("response like", value, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseNotLike(String value) {
+            addCriterion("response not like", value, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseIn(List<String> values) {
+            addCriterion("response in", values, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseNotIn(List<String> values) {
+            addCriterion("response not in", values, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseBetween(String value1, String value2) {
+            addCriterion("response between", value1, value2, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseNotBetween(String value1, String value2) {
+            addCriterion("response not between", value1, value2, "response");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNull() {
+            addCriterion("deleted is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNotNull() {
+            addCriterion("deleted is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedEqualTo(Byte value) {
+            addCriterion("deleted =", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotEqualTo(Byte value) {
+            addCriterion("deleted <>", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThan(Byte value) {
+            addCriterion("deleted >", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThanOrEqualTo(Byte value) {
+            addCriterion("deleted >=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThan(Byte value) {
+            addCriterion("deleted <", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThanOrEqualTo(Byte value) {
+            addCriterion("deleted <=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIn(List<Byte> values) {
+            addCriterion("deleted in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotIn(List<Byte> values) {
+            addCriterion("deleted not in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedBetween(Byte value1, Byte value2) {
+            addCriterion("deleted between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotBetween(Byte value1, Byte value2) {
+            addCriterion("deleted not between", value1, value2, "deleted");
             return (Criteria) this;
         }
 
