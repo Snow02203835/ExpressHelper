@@ -14,6 +14,7 @@ import Express.model.po.FeedBackPo;
 import Express.model.po.OrderPo;
 import Express.model.vo.BillVo;
 import Express.model.vo.DemandVo;
+import Express.model.vo.FeedbackVo;
 import Express.model.vo.OrderRetVo;
 import Express.util.DemandStatus;
 import Express.util.FeedbackStatus;
@@ -433,14 +434,13 @@ public class DemandService {
      * 用户反馈
      * @author snow create 2021/04/19 01:32
      *            modified 2021/04/19 11:20
+     *            modified 2021/04/20 19:31
      * @param userId 用户id
-     * @param type 反馈类型
-     * @param orderId 相关订单id
-     * @param content 反馈内容
+     * @param feedbackVo 反馈信息
      * @return 插入结果
      */
-    public ReturnObject userFeedback(Long userId, Byte type, Long orderId, String content){
-        Feedback feedback = new Feedback(userId, type, orderId, content);
+    public ReturnObject userFeedback(Long userId, FeedbackVo feedbackVo){
+        Feedback feedback = new Feedback(userId, feedbackVo);
         return feedbackDao.insertFeedback(feedback);
     }
 
