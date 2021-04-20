@@ -494,6 +494,7 @@ public class ExpressController {
      * @author snow create 2021/04/19 01:39
      *            modified 2021/04/19 10:37
      *            modified 2021/04/19 11:23
+     *            modified 2021/04/20 19:32
      * @param userId 用户id
      * @param feedbackVo 反馈信息
      * @param bindingResult 校验信息
@@ -517,7 +518,7 @@ public class ExpressController {
         if(returnObject != null){
             return returnObject;
         }
-        ReturnObject retObj = demandService.userFeedback(userId, feedbackVo.getType(), feedbackVo.getOrderId(), feedbackVo.getContent());
+        ReturnObject retObj = demandService.userFeedback(userId, feedbackVo);
         if(retObj.getData() == null){
             return Common.decorateReturnObject(retObj);
         }
