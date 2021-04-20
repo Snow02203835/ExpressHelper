@@ -19,6 +19,9 @@ public class FeedbackVo {
     @ApiModelProperty(value = "订单id")
     private Long orderId;
 
+    @ApiModelProperty(value = "上传图片名")
+    private String img;
+
     @ApiModelProperty(value = "反馈内容")
     @NotBlank(message = "反馈内容不能为空")
     private String content;
