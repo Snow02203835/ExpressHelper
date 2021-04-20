@@ -62,6 +62,7 @@ CREATE TABLE `feedback` (
   `order_id` bigint DEFAULT NULL,
   `type` tinyint DEFAULT NULL,
   `status` tinyint DEFAULT NULL,
+  `img` varchar(64) DEFAULT NULL,
   `content` varchar(512) DEFAULT NULL,
   `response` varchar(512) DEFAULT NULL,
   `deleted` tinyint(1) unsigned zerofill NOT NULL,
