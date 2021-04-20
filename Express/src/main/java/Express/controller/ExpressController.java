@@ -530,17 +530,17 @@ public class ExpressController {
     /**
      * 用户更新反馈内容
      * @author snow create 2021/04/19 13:19
+     *            modified 2021/04/19 19:59
      * @param userId 用户id
      * @param feedbackId 反馈信息id
      * @param contentVo 新反馈内容
-     * @param bindingResult 校验
      * @return 操作结果
      */
     @ApiOperation(value = "用户更新反馈内容", produces = "application/json")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
             @ApiImplicitParam(paramType = "path", dataType = "int", name = "feedbackId", value = "反馈id", required = true),
-            @ApiImplicitParam(paramType = "body", dataType = "FeedbackContentVo", name = "contentVo", value = "新反馈内容", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "FeedbackVo", name = "contentVo", value = "新反馈内容", required = true),
 
     })
     @ApiResponses({
@@ -550,13 +550,9 @@ public class ExpressController {
     @PutMapping("order/feedback/{feedbackId}")
     public Object userUpdateFeedbackContent(@ApiIgnore @LoginUser Long userId,
                                             @PathVariable Long feedbackId,
-                                            @RequestBody FeedbackContentVo contentVo,
-                                            BindingResult bindingResult){
-        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
-        if(returnObject != null){
-            return returnObject;
-        }
-        return Common.decorateReturnObject(demandService.userUpdateFeedbackContent(userId, feedbackId, contentVo.getContent()));
+                                            @RequestBody FeedbackVo contentVo){
+        return Common.decorateReturnObject(demandService.userUpdateFeedbackContent(userId, feedbackId,
+                contentVo.getImg(), contentVo.getContent()));
     }
 
     /**

@@ -447,12 +447,14 @@ public class DemandService {
     /**
      * 用户更新反馈内容
      * @author snow create 2021/04/19 13:11
+     *            modified 2021/04/20 19:58
      * @param userId 用户id
      * @param feedbackId 反馈信息id
+     * @param img 上传图片
      * @param content 新反馈内容
      * @return  操作结果
      */
-    public ReturnObject userUpdateFeedbackContent(Long userId, Long feedbackId, String content){
+    public ReturnObject userUpdateFeedbackContent(Long userId, Long feedbackId, String img, String content){
         ReturnObject<Feedback> retObj = feedbackDao.findFeedbackById(feedbackId);
         if(retObj.getData() == null){
             return retObj;
@@ -461,7 +463,12 @@ public class DemandService {
         if(!userId.equals(feedback.getUserId())){
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
         }
-        feedback.setContent(content);
+        if(img != null){
+            feedback.setImg(img);
+        }
+        if(content != null) {
+            feedback.setContent(content);
+        }
         return feedbackDao.updateFeedback(feedback);
     }
 
