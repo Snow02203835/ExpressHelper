@@ -67,7 +67,6 @@ public class Common {
             //解析原错误信息，封装后返回，此处返回非法的字段名称，原始值，错误信息
             for (FieldError error : bindingResult.getFieldErrors()) {
                 msg.append(error.getDefaultMessage());
-                msg.append(";");
             }
             logger.debug("processFieldErrors: msg = "+ msg.toString());
             retObj = ResponseUtil.fail(ResponseCode.FIELD_NOT_VALID, msg.toString());
