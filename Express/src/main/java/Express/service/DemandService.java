@@ -123,6 +123,7 @@ public class DemandService {
      * 取消需求
      * @author snow create 2021/04/15 19:37
      *            modified 2021/04/16 00:53
+     *            modified 2021/04/26 15:29
      * @param userId
      * @param departId
      * @param demandId
@@ -139,6 +140,19 @@ public class DemandService {
         }
         if(DemandStatus.SATISFY.getCode() > demand.getStatus()){
             if(!DemandStatus.UNPAID.getCode().equals(demand.getStatus())){
+                if(DemandStatus.PICKED.getCode().equals(demand.getStatus())){
+                    List<Order> orderList = orderDao.findOrderByDemandId(demandId);
+                    if(orderList == null){
+                        return new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR);
+                    }
+                    Byte orderStatus = orderList.get(orderList.size()-1).getStatus();
+                    if(OrderStatus.PICKED.getCode().equals(orderStatus)){
+                        //credit
+                    }
+                    else if(!OrderStatus.CANCEL.getCode().equals(orderStatus)){
+                        return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
+                    }
+                }
                 //Refund
             }
             demand.setStatus(DemandStatus.CANCEL.getCode());
