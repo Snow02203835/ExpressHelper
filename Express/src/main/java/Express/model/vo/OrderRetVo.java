@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author snow create 2021/04/16 00:42
+ *            modified 2021/04/26 23:57
  */
 @Data
 public class OrderRetVo implements VoObject, Serializable {
@@ -47,7 +48,6 @@ public class OrderRetVo implements VoObject, Serializable {
             return;
         }
         this.type = demand.getType();
-        this.status = demand.getStatus();
         this.price = demand.getPrice();
         this.sponsorId = demand.getSponsorId();
         this.code = demand.getCode();
