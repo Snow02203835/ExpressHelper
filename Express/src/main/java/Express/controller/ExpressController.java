@@ -9,15 +9,7 @@ import Core.annotation.Audit;
 import Core.annotation.LoginUser;
 import Express.model.vo.*;
 import Express.service.DemandService;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.*;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,9 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
-import java.net.URI;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Api(value = "快递代取后端", tags = "express")
@@ -822,59 +812,21 @@ public class ExpressController {
     }
 
     /**
-     * 微信小程序接口获取open-id
-     * @author RLY
-     * @date 2021/4/26 20:00
+     * 用户登录
+     * @author RLY create 2021/04/26 20:00
+     *      snow modified 2021/04/27 21:11
      * @param code 小程序传来的js_code
-     * @return resultString 包含open-id的JSON字符串
+     * @return UserLoginRetVo 包含token的对象
      */
-
-
-    @PostMapping("wechat/login")
-    public String wx_login (@RequestParam("code") String code){
-        String appID="wx94b46827328ddde8";
-        String appSecret="d640691e16cd510a640237043059c12c";
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        String resultString = "";
-        CloseableHttpResponse response = null;
-        String url="https://api.weixin.qq.com/sns/jscode2session?appid="+appID+"&secret="+appSecret+"&js_code="+code+"&grant_type=authorization_code";
-        try {
-            // 创建uri
-            URIBuilder builder = new URIBuilder(url);
-            URI uri = builder.build();
-
-            // 创建http GET请求
-            HttpGet httpGet = new HttpGet(uri);
-
-            // 执行请求
-            response = httpclient.execute(httpGet);
-            // 判断返回状态是否为200
-            if (response.getStatusLine().getStatusCode() == 200) {
-                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    @PostMapping("user/login")
+    public Object userLogin (@RequestParam("code") String code){
+        ReturnObject retObj = demandService.userLogin(code);
+        if(retObj.getData() != null){
+            return Common.getRetObject(retObj);
         }
-
-        LocalTime localTime=LocalTime.now();
-        String timeStr=localTime.toString();
-        System.out.println(timeStr);
-
-        // 解析json
-        JSONObject jsonObject = (JSONObject) JSONObject.parse(resultString);
-        System.out.println(resultString);
-
-        String session_key = jsonObject.get("session_key") + "";
-        String openid = jsonObject.get("openid")+"";
-        System.out.println("session_key:\t"+session_key);
-        System.out.println("openid:\t"+openid);
-
-        String returnString="";
-        JSONObject json= new JSONObject();
-        json.put("token",openid);
-        //目前返回的还是open-id，之后需要改为生成token后返回前端
-        returnString=json.toString();
-        return returnString;
+        else{
+            return Common.decorateReturnObject(retObj);
+        }
     }
 
 }
