@@ -37,10 +37,11 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_key` varchar(32) DEFAULT NULL,
+  `open_id` varchar(64) DEFAULT NULL,
   `credit` int DEFAULT NULL,
   `mobile` varchar(128) DEFAULT NULL,
   `address` varchar(256) DEFAULT NULL,
+  `signature` varchar(500) DEFAULT NULL,
   `gmt_create` datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
