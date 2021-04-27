@@ -62,6 +62,11 @@ mybatis:
 Express:
   img:
     path: D:\Download
+  user:
+    login:
+      jwtExpire: 72000
+    appId: wx94b46827328ddde8
+    appSecret: d640691e16cd510a640237043059c12c
 
 
 #pagehelper分页插件配置
