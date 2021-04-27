@@ -829,5 +829,27 @@ public class ExpressController {
         }
     }
 
+    /**
+     * 用户更新自身信息
+     * @author snow create 2021/04/27 21:44
+     * @param userId 用户id
+     * @param userInfo 用户信息
+     * @return 操作结果
+     */
+    @ApiOperation(value = "上传图片", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "UserInfoVo", name = "userInfo", value = "用户信息", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("user")
+    public Object userUpdateSelfInfo(@ApiIgnore @LoginUser Long userId,
+                                     @RequestBody UserInfoVo userInfo){
+        return Common.decorateReturnObject(demandService.userUpdateSelfInfo(userId, userInfo.getMobile(), userInfo.getAddress()));
+    }
+
 }
 

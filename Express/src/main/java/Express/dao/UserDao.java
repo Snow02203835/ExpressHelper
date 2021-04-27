@@ -89,4 +89,28 @@ public class UserDao {
         return new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR);
     }
 
+    /**
+     * 用户更新信息
+     * @author snow create 2021/04/27 21:33
+     * @param user 用户信息bo
+     * @return 操作结果
+     */
+    public ResponseCode updateUserInfo(User user){
+        try {
+            UserPo userPo = user.createPo();
+            userPo.setGmtModified(LocalDateTime.now());
+            int effectRows = userMapper.updateByPrimaryKey(userPo);
+            if(effectRows == 1){
+                return ResponseCode.OK;
+            }
+            else{
+                return ResponseCode.RESOURCE_ID_NOT_EXIST;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResponseCode.INTERNAL_SERVER_ERR;
+    }
+
 }

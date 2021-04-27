@@ -56,6 +56,20 @@ public class User implements VoObject, Serializable {
         return userPo;
     }
 
+    public Boolean updateInfoSelective(String address, String mobile){
+        if(address == null && mobile == null){
+            return false;
+        }
+        if(mobile != null){
+            setMobile(mobile);
+        }
+        if(address != null){
+            setAddress(address);
+        }
+        this.signature = createSignature();
+        return true;
+    }
+
     public String getDecryptMobile(){
         return AES.decrypt(this.mobile, userKey);
     }
