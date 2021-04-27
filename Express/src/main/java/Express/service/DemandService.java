@@ -1,26 +1,28 @@
 package Express.service;
 
 import Core.model.VoObject;
+import Core.util.JwtHelper;
 import Core.util.MD5;
 import Core.util.ResponseCode;
 import Core.util.ReturnObject;
-import Express.dao.DemandDao;
-import Express.dao.FeedbackDao;
-import Express.dao.ImageDao;
-import Express.dao.OrderDao;
+import Express.dao.*;
 import Express.model.bo.*;
 import Express.model.po.DemandPo;
 import Express.model.po.FeedBackPo;
 import Express.model.po.OrderPo;
-import Express.model.vo.BillVo;
-import Express.model.vo.DemandVo;
-import Express.model.vo.FeedbackVo;
-import Express.model.vo.OrderRetVo;
+import Express.model.vo.*;
 import Express.util.DemandStatus;
 import Express.util.FeedbackStatus;
 import Express.util.OrderStatus;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.net.URI;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,6 +42,8 @@ public class DemandService {
 
     private final Long userDepartId = -1L;
 
+    @Autowired
+    private UserDao userDao;
     @Autowired
     private DemandDao demandDao;
     @Autowired
@@ -49,6 +55,12 @@ public class DemandService {
 
     @Value("${Express.img.path}")
     private String imgPath;
+    @Value("${Express.user.appId}")
+    private String appID;
+    @Value("${Express.user.appSecret}")
+    private String appSecret;
+    @Value("${Express.user.login.jwtExpire}")
+    private Integer jwtExpireTime;
 
     /**
      * 新建需求
@@ -661,6 +673,71 @@ public class DemandService {
         retObj.setTotal(feedBackPoPageInfo.getTotal());
 
         return new ReturnObject<>(retObj);
+    }
+
+    /**
+     * 根据code从微信获取openId
+     * @author snow create 2021/04/27 20:37
+     * @param code 前端获取的code
+     * @return openId
+     */
+    public String getOpenIdFromWeChat(String code){
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        String resultString = "";
+        CloseableHttpResponse response = null;
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appID + "&secret=" +
+                appSecret + "&js_code=" + code + "&grant_type=authorization_code";
+        try {
+            // 创建uri
+            URIBuilder builder = new URIBuilder(url);
+            URI uri = builder.build();
+            // 创建http GET请求
+            HttpGet httpGet = new HttpGet(uri);
+            // 执行请求
+            response = httpclient.execute(httpGet);
+            // 判断返回状态是否为200
+            if (response.getStatusLine().getStatusCode() == 200) {
+                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 解析json
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(resultString);
+        return jsonObject.get("openid").toString();
+    }
+
+    /**
+     * 用户登录
+     * @author snow create 2021/04/27 21:05
+     * @param code 前端获取的一次性code
+     * @return 登录结果
+     */
+    @Transactional
+    public ReturnObject userLogin(String code){
+        String openId = getOpenIdFromWeChat(code);
+        ReturnObject<User> userReturnObject = userDao.findUserByOpenId(openId);
+        User user;
+        if (userReturnObject.getCode() == ResponseCode.INTERNAL_SERVER_ERR){
+            return userReturnObject;
+        }
+        else{
+            if(userReturnObject.getData() != null){
+                user = userReturnObject.getData();
+                if (user.isSignatureBeenModify()){
+                    return new ReturnObject(ResponseCode.RESOURCE_FALSIFY);
+                }
+            }
+            else{
+                user = new User(openId);
+                ReturnObject retObj = userDao.insertNewUser(user);
+                if(retObj.getCode() != ResponseCode.OK){
+                    return retObj;
+                }
+            }
+            String token = new JwtHelper().createToken(user.getId(), userDepartId, jwtExpireTime);
+            return new ReturnObject(new UserLoginRetVo(token, user));
+        }
     }
 
     /**
