@@ -277,9 +277,10 @@ public class DemandService {
      * 用户接单
      * @author snow create 2021/04/15 16:08
      *            modified 2021/04/16 00:54
-     * @param userId
-     * @param demandId
-     * @return
+     *            modified 2021/04/28 09:24
+     * @param userId 用户id
+     * @param demandId 需求id
+     * @return 订单视图
      */
     public ReturnObject pickUpDemand(Long userId, Long demandId){
         ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
@@ -299,6 +300,7 @@ public class DemandService {
             return new ReturnObject(ResponseCode.USER_STUDENT_NOT_VERIFY);
         }
         Order order = new Order(userId, user.getDecryptMobile(), demandId);
+        order.setPickUpTime(LocalDateTime.now());
         System.out.println(order.toString());
         ReturnObject insertOrderResult = orderDao.insertOrder(order);
         if(insertOrderResult.getData() != null){
