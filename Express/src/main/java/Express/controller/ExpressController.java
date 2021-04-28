@@ -848,7 +848,7 @@ public class ExpressController {
     @PutMapping("user")
     public Object userUpdateSelfInfo(@ApiIgnore @LoginUser Long userId,
                                      @RequestBody UserInfoVo userInfo){
-        return Common.decorateReturnObject(demandService.userUpdateSelfInfo(userId, userInfo.getMobile(), userInfo.getAddress()));
+        return Common.decorateReturnObject(demandService.userUpdateSelfInfo(userId, userInfo));
     }
 
 }

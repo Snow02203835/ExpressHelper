@@ -277,9 +277,10 @@ public class DemandService {
      * 用户接单
      * @author snow create 2021/04/15 16:08
      *            modified 2021/04/16 00:54
-     * @param userId
-     * @param demandId
-     * @return
+     *            modified 2021/04/28 09:24
+     * @param userId 用户id
+     * @param demandId 需求id
+     * @return 订单视图
      */
     public ReturnObject pickUpDemand(Long userId, Long demandId){
         ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
@@ -290,7 +291,16 @@ public class DemandService {
         if(DemandStatus.EXPECTING.getCode() != demand.getStatus()){
             return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
         }
-        Order order = new Order(userId, demandId);
+        ReturnObject<User> userRetObj = userDao.findUserById(userId);
+        if(userRetObj.getData() != null){
+            return userRetObj;
+        }
+        User user = userRetObj.getData();
+        if(user.getStudentVerify().equals((byte)0)){
+            return new ReturnObject(ResponseCode.USER_STUDENT_NOT_VERIFY);
+        }
+        Order order = new Order(userId, user.getDecryptMobile(), demandId);
+        order.setPickUpTime(LocalDateTime.now());
         System.out.println(order.toString());
         ReturnObject insertOrderResult = orderDao.insertOrder(order);
         if(insertOrderResult.getData() != null){
@@ -311,10 +321,11 @@ public class DemandService {
     /**
      * 取消订单
      * @author snow create 2021/04/16 08:28
-     * @param userId
-     * @param departId
-     * @param orderId
-     * @return
+     *            modified 2021/04/28 09:23
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param orderId 订单id
+     * @return 操作结果
      */
     @Transactional
     public ReturnObject cancelOrder(Long userId, Long departId, Long orderId){
@@ -330,6 +341,7 @@ public class DemandService {
             return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
         }
         order.setStatus(OrderStatus.CANCEL.getCode());
+        order.setCancelTime(LocalDateTime.now());
         /*
         decrease user credit
          */
@@ -372,12 +384,13 @@ public class DemandService {
     /**
      * 更新订单状态：已接单->已取件 | 已取件->已送达
      * @author snow create 2021/04/15 20:13
-     * @param userId
-     * @param orderId
-     * @param urlCheck
-     * @return
+     *            modified 2021/04/28 09:2
+     * @param userId 用户id
+     * @param orderId 订单id
+     * @param url 图片地址
+     * @return 操作结果
      */
-    public ReturnObject updateOrderStatusWithURL(Long userId, Long orderId, String urlCheck){
+    public ReturnObject updateOrderStatusWithURL(Long userId, Long orderId, String url){
         ReturnObject<Order> retObj = orderDao.findOrderById(orderId);
         if(retObj.getData() == null){
             return retObj;
@@ -389,8 +402,16 @@ public class DemandService {
         if(!OrderStatus.PICKED.getCode().equals(order.getStatus()) && !OrderStatus.COLLECTED.getCode().equals(order.getStatus())){
             return new ReturnObject(ResponseCode.ORDER_STATUS_FORBID);
         }
-        order.setStatus(OrderStatus.PICKED.getCode().equals(order.getStatus()) ? OrderStatus.COLLECTED.getCode() : OrderStatus.SENT.getCode());
-        order.setUrlCheck(urlCheck);
+        if(OrderStatus.PICKED.getCode().equals(order.getStatus())){
+            order.setStatus(OrderStatus.COLLECTED.getCode());
+            order.setUrlCheck(url);
+            order.setCollectTime(LocalDateTime.now());
+        }
+        else{
+            order.setStatus(OrderStatus.SENT.getCode());
+            order.setUrlSent(url);
+            order.setSentTime(LocalDateTime.now());
+        }
         return orderDao.alterOrder(order);
     }
 
@@ -744,18 +765,17 @@ public class DemandService {
      * 用户更新自身信息
      * @author snow create 2021/04/27 21:42
      * @param userId 用户id
-     * @param mobile 手机号码
-     * @param address 默认地址
+     * @param userInfo 用户信息
      * @return 操作结果
      */
     @Transactional
-    public ReturnObject userUpdateSelfInfo(Long userId, String mobile, String address){
+    public ReturnObject userUpdateSelfInfo(Long userId, UserInfoVo userInfo){
         ReturnObject<User> userReturnObject = userDao.findUserById(userId);
         if(userReturnObject.getData() == null){
             return userReturnObject;
         }
         User user = userReturnObject.getData();
-        if(!user.updateInfoSelective(address, mobile)){
+        if(!user.updateInfoSelective(userInfo)){
             return new ReturnObject(ResponseCode.OK);
         }
         return new ReturnObject(userDao.updateUserInfo(user));

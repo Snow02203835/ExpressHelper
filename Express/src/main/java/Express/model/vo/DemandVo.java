@@ -32,6 +32,10 @@ public class DemandVo {
     @NotBlank(message = "取件地址不能为空")
     private String address;
 
+    @ApiModelProperty(value = "发布者姓名")
+    @NotBlank(message = "发布者姓名不能为空")
+    private String sponsorName;
+
     @ApiModelProperty(value = "送达地址")
     @NotBlank(message = "送达地址不能为空")
     private String destination;

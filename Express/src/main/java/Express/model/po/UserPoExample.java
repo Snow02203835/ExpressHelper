@@ -325,6 +325,206 @@ public class UserPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andRealNameIsNull() {
+            addCriterion("real_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameIsNotNull() {
+            addCriterion("real_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameEqualTo(String value) {
+            addCriterion("real_name =", value, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameNotEqualTo(String value) {
+            addCriterion("real_name <>", value, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameGreaterThan(String value) {
+            addCriterion("real_name >", value, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameGreaterThanOrEqualTo(String value) {
+            addCriterion("real_name >=", value, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameLessThan(String value) {
+            addCriterion("real_name <", value, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameLessThanOrEqualTo(String value) {
+            addCriterion("real_name <=", value, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameLike(String value) {
+            addCriterion("real_name like", value, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameNotLike(String value) {
+            addCriterion("real_name not like", value, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameIn(List<String> values) {
+            addCriterion("real_name in", values, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameNotIn(List<String> values) {
+            addCriterion("real_name not in", values, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameBetween(String value1, String value2) {
+            addCriterion("real_name between", value1, value2, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealNameNotBetween(String value1, String value2) {
+            addCriterion("real_name not between", value1, value2, "realName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberIsNull() {
+            addCriterion("student_number is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberIsNotNull() {
+            addCriterion("student_number is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberEqualTo(String value) {
+            addCriterion("student_number =", value, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberNotEqualTo(String value) {
+            addCriterion("student_number <>", value, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberGreaterThan(String value) {
+            addCriterion("student_number >", value, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberGreaterThanOrEqualTo(String value) {
+            addCriterion("student_number >=", value, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberLessThan(String value) {
+            addCriterion("student_number <", value, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberLessThanOrEqualTo(String value) {
+            addCriterion("student_number <=", value, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberLike(String value) {
+            addCriterion("student_number like", value, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberNotLike(String value) {
+            addCriterion("student_number not like", value, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberIn(List<String> values) {
+            addCriterion("student_number in", values, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberNotIn(List<String> values) {
+            addCriterion("student_number not in", values, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberBetween(String value1, String value2) {
+            addCriterion("student_number between", value1, value2, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentNumberNotBetween(String value1, String value2) {
+            addCriterion("student_number not between", value1, value2, "studentNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyIsNull() {
+            addCriterion("student_verify is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyIsNotNull() {
+            addCriterion("student_verify is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyEqualTo(Byte value) {
+            addCriterion("student_verify =", value, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyNotEqualTo(Byte value) {
+            addCriterion("student_verify <>", value, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyGreaterThan(Byte value) {
+            addCriterion("student_verify >", value, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyGreaterThanOrEqualTo(Byte value) {
+            addCriterion("student_verify >=", value, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyLessThan(Byte value) {
+            addCriterion("student_verify <", value, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyLessThanOrEqualTo(Byte value) {
+            addCriterion("student_verify <=", value, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyIn(List<Byte> values) {
+            addCriterion("student_verify in", values, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyNotIn(List<Byte> values) {
+            addCriterion("student_verify not in", values, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyBetween(Byte value1, Byte value2) {
+            addCriterion("student_verify between", value1, value2, "studentVerify");
+            return (Criteria) this;
+        }
+
+        public Criteria andStudentVerifyNotBetween(Byte value1, Byte value2) {
+            addCriterion("student_verify not between", value1, value2, "studentVerify");
+            return (Criteria) this;
+        }
+
         public Criteria andCreditIsNull() {
             addCriterion("credit is null");
             return (Criteria) this;

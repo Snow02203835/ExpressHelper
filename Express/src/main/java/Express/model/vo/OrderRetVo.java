@@ -22,25 +22,34 @@ public class OrderRetVo implements VoObject, Serializable {
     private Long demandId;
     private Long sponsorId;
     private Long receiverId;
+    private String receiverMobile;
     private String urlCheck;
     private String urlSent;
     private String code;
     private String mobile;
     private String address;
+    private String sponsorName;
     private String destination;
     private String comment;
-    private LocalDateTime gmtCreate;
-    private LocalDateTime gmtModified;
+    private LocalDateTime pickUpTime;
+    private LocalDateTime collectTime;
+    private LocalDateTime sentTime;
+    private LocalDateTime satisfyTime;
+    private LocalDateTime cancelTime;
 
     public OrderRetVo(Order order){
         this.id = order.getId();
         this.demandId = order.getDemandId();
         this.receiverId = order.getReceiverId();
+        this.receiverMobile = order.getReceiverMobile();
         this.status = order.getStatus();
         this.urlCheck = order.getUrlCheck();
         this.urlSent = order.getUrlSent();
-        this.gmtCreate = order.getGmtCreate();
-        this.gmtModified = order.getGmtModified();
+        this.pickUpTime = order.getPickUpTime();
+        this.collectTime = order.getCollectTime();
+        this.sentTime = order.getSentTime();
+        this.satisfyTime = order.getSatisfyTime();
+        this.cancelTime = order.getCancelTime();
     }
 
     public void addDemandDetail(Demand demand){
@@ -53,6 +62,7 @@ public class OrderRetVo implements VoObject, Serializable {
         this.code = demand.getCode();
         this.mobile = demand.getMobile();
         this.address = demand.getAddress();
+        this.sponsorName = demand.getSponsorName();
         this.destination = demand.getDestination();
         this.comment = demand.getComment();
     }

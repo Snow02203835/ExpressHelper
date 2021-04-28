@@ -375,6 +375,76 @@ public class OrderPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andReceiverMobileIsNull() {
+            addCriterion("receiver_mobile is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileIsNotNull() {
+            addCriterion("receiver_mobile is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileEqualTo(String value) {
+            addCriterion("receiver_mobile =", value, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileNotEqualTo(String value) {
+            addCriterion("receiver_mobile <>", value, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileGreaterThan(String value) {
+            addCriterion("receiver_mobile >", value, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileGreaterThanOrEqualTo(String value) {
+            addCriterion("receiver_mobile >=", value, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileLessThan(String value) {
+            addCriterion("receiver_mobile <", value, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileLessThanOrEqualTo(String value) {
+            addCriterion("receiver_mobile <=", value, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileLike(String value) {
+            addCriterion("receiver_mobile like", value, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileNotLike(String value) {
+            addCriterion("receiver_mobile not like", value, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileIn(List<String> values) {
+            addCriterion("receiver_mobile in", values, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileNotIn(List<String> values) {
+            addCriterion("receiver_mobile not in", values, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileBetween(String value1, String value2) {
+            addCriterion("receiver_mobile between", value1, value2, "receiverMobile");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiverMobileNotBetween(String value1, String value2) {
+            addCriterion("receiver_mobile not between", value1, value2, "receiverMobile");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -632,6 +702,306 @@ public class OrderPoExample {
 
         public Criteria andDeletedNotBetween(Byte value1, Byte value2) {
             addCriterion("deleted not between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeIsNull() {
+            addCriterion("pick_up_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeIsNotNull() {
+            addCriterion("pick_up_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeEqualTo(LocalDateTime value) {
+            addCriterion("pick_up_time =", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeNotEqualTo(LocalDateTime value) {
+            addCriterion("pick_up_time <>", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeGreaterThan(LocalDateTime value) {
+            addCriterion("pick_up_time >", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeGreaterThanOrEqualTo(LocalDateTime value) {
+            addCriterion("pick_up_time >=", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeLessThan(LocalDateTime value) {
+            addCriterion("pick_up_time <", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeLessThanOrEqualTo(LocalDateTime value) {
+            addCriterion("pick_up_time <=", value, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeIn(List<LocalDateTime> values) {
+            addCriterion("pick_up_time in", values, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeNotIn(List<LocalDateTime> values) {
+            addCriterion("pick_up_time not in", values, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("pick_up_time between", value1, value2, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPickUpTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("pick_up_time not between", value1, value2, "pickUpTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeIsNull() {
+            addCriterion("collect_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeIsNotNull() {
+            addCriterion("collect_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeEqualTo(LocalDateTime value) {
+            addCriterion("collect_time =", value, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeNotEqualTo(LocalDateTime value) {
+            addCriterion("collect_time <>", value, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeGreaterThan(LocalDateTime value) {
+            addCriterion("collect_time >", value, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeGreaterThanOrEqualTo(LocalDateTime value) {
+            addCriterion("collect_time >=", value, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeLessThan(LocalDateTime value) {
+            addCriterion("collect_time <", value, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeLessThanOrEqualTo(LocalDateTime value) {
+            addCriterion("collect_time <=", value, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeIn(List<LocalDateTime> values) {
+            addCriterion("collect_time in", values, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeNotIn(List<LocalDateTime> values) {
+            addCriterion("collect_time not in", values, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("collect_time between", value1, value2, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("collect_time not between", value1, value2, "collectTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeIsNull() {
+            addCriterion("sent_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeIsNotNull() {
+            addCriterion("sent_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeEqualTo(LocalDateTime value) {
+            addCriterion("sent_time =", value, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeNotEqualTo(LocalDateTime value) {
+            addCriterion("sent_time <>", value, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeGreaterThan(LocalDateTime value) {
+            addCriterion("sent_time >", value, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeGreaterThanOrEqualTo(LocalDateTime value) {
+            addCriterion("sent_time >=", value, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeLessThan(LocalDateTime value) {
+            addCriterion("sent_time <", value, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeLessThanOrEqualTo(LocalDateTime value) {
+            addCriterion("sent_time <=", value, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeIn(List<LocalDateTime> values) {
+            addCriterion("sent_time in", values, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeNotIn(List<LocalDateTime> values) {
+            addCriterion("sent_time not in", values, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("sent_time between", value1, value2, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSentTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("sent_time not between", value1, value2, "sentTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeIsNull() {
+            addCriterion("satisfy_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeIsNotNull() {
+            addCriterion("satisfy_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeEqualTo(LocalDateTime value) {
+            addCriterion("satisfy_time =", value, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeNotEqualTo(LocalDateTime value) {
+            addCriterion("satisfy_time <>", value, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeGreaterThan(LocalDateTime value) {
+            addCriterion("satisfy_time >", value, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeGreaterThanOrEqualTo(LocalDateTime value) {
+            addCriterion("satisfy_time >=", value, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeLessThan(LocalDateTime value) {
+            addCriterion("satisfy_time <", value, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeLessThanOrEqualTo(LocalDateTime value) {
+            addCriterion("satisfy_time <=", value, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeIn(List<LocalDateTime> values) {
+            addCriterion("satisfy_time in", values, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeNotIn(List<LocalDateTime> values) {
+            addCriterion("satisfy_time not in", values, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("satisfy_time between", value1, value2, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSatisfyTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("satisfy_time not between", value1, value2, "satisfyTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeIsNull() {
+            addCriterion("cancel_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeIsNotNull() {
+            addCriterion("cancel_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeEqualTo(LocalDateTime value) {
+            addCriterion("cancel_time =", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeNotEqualTo(LocalDateTime value) {
+            addCriterion("cancel_time <>", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeGreaterThan(LocalDateTime value) {
+            addCriterion("cancel_time >", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeGreaterThanOrEqualTo(LocalDateTime value) {
+            addCriterion("cancel_time >=", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeLessThan(LocalDateTime value) {
+            addCriterion("cancel_time <", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeLessThanOrEqualTo(LocalDateTime value) {
+            addCriterion("cancel_time <=", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeIn(List<LocalDateTime> values) {
+            addCriterion("cancel_time in", values, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeNotIn(List<LocalDateTime> values) {
+            addCriterion("cancel_time not in", values, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("cancel_time between", value1, value2, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeNotBetween(LocalDateTime value1, LocalDateTime value2) {
+            addCriterion("cancel_time not between", value1, value2, "cancelTime");
             return (Criteria) this;
         }
 
