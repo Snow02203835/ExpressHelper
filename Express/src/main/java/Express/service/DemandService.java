@@ -290,7 +290,15 @@ public class DemandService {
         if(DemandStatus.EXPECTING.getCode() != demand.getStatus()){
             return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
         }
-        Order order = new Order(userId, demandId);
+        ReturnObject<User> userRetObj = userDao.findUserById(userId);
+        if(userRetObj.getData() != null){
+            return userRetObj;
+        }
+        User user = userRetObj.getData();
+        if(user.getStudentVerify().equals((byte)0)){
+            return new ReturnObject(ResponseCode.USER_STUDENT_NOT_VERIFY);
+        }
+        Order order = new Order(userId, user.getDecryptMobile(), demandId);
         System.out.println(order.toString());
         ReturnObject insertOrderResult = orderDao.insertOrder(order);
         if(insertOrderResult.getData() != null){
