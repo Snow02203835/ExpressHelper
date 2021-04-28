@@ -384,12 +384,13 @@ public class DemandService {
     /**
      * 更新订单状态：已接单->已取件 | 已取件->已送达
      * @author snow create 2021/04/15 20:13
-     * @param userId
-     * @param orderId
-     * @param urlCheck
-     * @return
+     *            modified 2021/04/28 09:2
+     * @param userId 用户id
+     * @param orderId 订单id
+     * @param url 图片地址
+     * @return 操作结果
      */
-    public ReturnObject updateOrderStatusWithURL(Long userId, Long orderId, String urlCheck){
+    public ReturnObject updateOrderStatusWithURL(Long userId, Long orderId, String url){
         ReturnObject<Order> retObj = orderDao.findOrderById(orderId);
         if(retObj.getData() == null){
             return retObj;
@@ -401,8 +402,16 @@ public class DemandService {
         if(!OrderStatus.PICKED.getCode().equals(order.getStatus()) && !OrderStatus.COLLECTED.getCode().equals(order.getStatus())){
             return new ReturnObject(ResponseCode.ORDER_STATUS_FORBID);
         }
-        order.setStatus(OrderStatus.PICKED.getCode().equals(order.getStatus()) ? OrderStatus.COLLECTED.getCode() : OrderStatus.SENT.getCode());
-        order.setUrlCheck(urlCheck);
+        if(OrderStatus.PICKED.getCode().equals(order.getStatus())){
+            order.setStatus(OrderStatus.COLLECTED.getCode());
+            order.setUrlCheck(url);
+            order.setCollectTime(LocalDateTime.now());
+        }
+        else{
+            order.setStatus(OrderStatus.SENT.getCode());
+            order.setUrlSent(url);
+            order.setSentTime(LocalDateTime.now());
+        }
         return orderDao.alterOrder(order);
     }
 
