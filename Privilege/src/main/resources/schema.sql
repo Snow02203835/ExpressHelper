@@ -38,6 +38,9 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `open_id` varchar(64) DEFAULT NULL,
+  `real_name` varchar(64) DEFAULT NULL,
+  `student_number` char(14) DEFAULT NULL,
+  `student_verify` tinyint(3) unsigned zerofill NOT NULL,
   `credit` int DEFAULT NULL,
   `mobile` varchar(128) DEFAULT NULL,
   `address` varchar(256) DEFAULT NULL,
