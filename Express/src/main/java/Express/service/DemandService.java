@@ -744,18 +744,17 @@ public class DemandService {
      * 用户更新自身信息
      * @author snow create 2021/04/27 21:42
      * @param userId 用户id
-     * @param mobile 手机号码
-     * @param address 默认地址
+     * @param userInfo 用户信息
      * @return 操作结果
      */
     @Transactional
-    public ReturnObject userUpdateSelfInfo(Long userId, String mobile, String address){
+    public ReturnObject userUpdateSelfInfo(Long userId, UserInfoVo userInfo){
         ReturnObject<User> userReturnObject = userDao.findUserById(userId);
         if(userReturnObject.getData() == null){
             return userReturnObject;
         }
         User user = userReturnObject.getData();
-        if(!user.updateInfoSelective(address, mobile)){
+        if(!user.updateInfoSelective(userInfo)){
             return new ReturnObject(ResponseCode.OK);
         }
         return new ReturnObject(userDao.updateUserInfo(user));
