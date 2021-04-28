@@ -17,6 +17,7 @@ CREATE TABLE `demand` (
   `code` varchar(64) NOT NULL,
   `mobile` varchar(128) DEFAULT NULL,
   `address` varchar(256) DEFAULT NULL,
+  `sponsor_name` varchar(64) DEFAULT NULL,
   `destination` varchar(256) DEFAULT NULL,
   `expect_time` varchar(128) DEFAULT NULL,
   `status` tinyint DEFAULT NULL,
