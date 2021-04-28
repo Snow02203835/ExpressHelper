@@ -496,7 +496,7 @@ public class DemandPoExample {
         }
 
         public Criteria andAddressLike(String value) {
-            addCriterion("address like", value + "%", "address");
+            addCriterion("address like", value, "address");
             return (Criteria) this;
         }
 
@@ -522,6 +522,76 @@ public class DemandPoExample {
 
         public Criteria andAddressNotBetween(String value1, String value2) {
             addCriterion("address not between", value1, value2, "address");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameIsNull() {
+            addCriterion("sponsor_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameIsNotNull() {
+            addCriterion("sponsor_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameEqualTo(String value) {
+            addCriterion("sponsor_name =", value, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameNotEqualTo(String value) {
+            addCriterion("sponsor_name <>", value, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameGreaterThan(String value) {
+            addCriterion("sponsor_name >", value, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameGreaterThanOrEqualTo(String value) {
+            addCriterion("sponsor_name >=", value, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameLessThan(String value) {
+            addCriterion("sponsor_name <", value, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameLessThanOrEqualTo(String value) {
+            addCriterion("sponsor_name <=", value, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameLike(String value) {
+            addCriterion("sponsor_name like", value, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameNotLike(String value) {
+            addCriterion("sponsor_name not like", value, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameIn(List<String> values) {
+            addCriterion("sponsor_name in", values, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameNotIn(List<String> values) {
+            addCriterion("sponsor_name not in", values, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameBetween(String value1, String value2) {
+            addCriterion("sponsor_name between", value1, value2, "sponsorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSponsorNameNotBetween(String value1, String value2) {
+            addCriterion("sponsor_name not between", value1, value2, "sponsorName");
             return (Criteria) this;
         }
 
@@ -566,7 +636,7 @@ public class DemandPoExample {
         }
 
         public Criteria andDestinationLike(String value) {
-            addCriterion("destination like", value + "%", "destination");
+            addCriterion("destination like", value, "destination");
             return (Criteria) this;
         }
 
