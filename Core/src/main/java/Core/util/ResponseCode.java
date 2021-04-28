@@ -55,6 +55,7 @@ public enum ResponseCode {
     EMAIL_NOT_VERIFIED(748,"Email未确认"),
     MOBILE_NOT_VERIFIED(749,"电话号码未确认"),
     VERIFY_CODE_EXPIRE(750, "验证码不正确或已过期"),
+    USER_STUDENT_NOT_VERIFY(760, "用户学生认证未通过"),
 
 
     /***************************************************
