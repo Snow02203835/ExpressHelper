@@ -319,10 +319,11 @@ public class DemandService {
     /**
      * 取消订单
      * @author snow create 2021/04/16 08:28
-     * @param userId
-     * @param departId
-     * @param orderId
-     * @return
+     *            modified 2021/04/28 09:23
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param orderId 订单id
+     * @return 操作结果
      */
     @Transactional
     public ReturnObject cancelOrder(Long userId, Long departId, Long orderId){
@@ -338,6 +339,7 @@ public class DemandService {
             return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
         }
         order.setStatus(OrderStatus.CANCEL.getCode());
+        order.setCancelTime(LocalDateTime.now());
         /*
         decrease user credit
          */
