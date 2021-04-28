@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * @author snow create 2021/04/15 14:39
  *            modified 2021/04/19 11:44
+ *            modified 2021/04/28 08:33
  */
 @Data
 public class Demand implements VoObject, Serializable {
@@ -26,6 +27,7 @@ public class Demand implements VoObject, Serializable {
     private String code;
     private String mobile;
     private String address;
+    private String sponsorName;
     private String destination;
     private String expectTime;
     private String comment;
@@ -43,6 +45,7 @@ public class Demand implements VoObject, Serializable {
         this.code = demandPo.getCode();
         this.mobile = demandPo.getMobile();
         this.address = demandPo.getAddress();
+        this.sponsorName = demandPo.getSponsorName();
         this.destination = demandPo.getDestination();
         this.expectTime = demandPo.getExpectTime();
         this.comment = demandPo.getComment();
@@ -58,6 +61,7 @@ public class Demand implements VoObject, Serializable {
         this.code = demandVo.getCode();
         this.mobile = demandVo.getMobile();
         this.address = demandVo.getAddress();
+        this.sponsorName = demandVo.getSponsorName();
         this.destination = demandVo.getDestination();
         this.expectTime = demandVo.getExpectTime();
         this.comment = demandVo.getComment();
@@ -74,6 +78,7 @@ public class Demand implements VoObject, Serializable {
         demandPo.setCode(this.code);
         demandPo.setMobile(this.mobile);
         demandPo.setAddress(this.address);
+        demandPo.setSponsorName(this.sponsorName);
         demandPo.setDestination(this.destination);
         demandPo.setExpectTime(this.expectTime);
         demandPo.setGmtCreate(this.gmtCreate);
@@ -96,6 +101,9 @@ public class Demand implements VoObject, Serializable {
         }
         if(demandVo.getAddress() != null) {
             this.address = demandVo.getAddress();
+        }
+        if(demandVo.getSponsorName() != null){
+            this.sponsorName = demandVo.getSponsorName();
         }
         if(demandVo.getDestination() != null) {
             this.destination = demandVo.getDestination();
