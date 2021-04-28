@@ -14,7 +14,7 @@ public class UserInfoVo {
     private String name;
 
     @ApiModelProperty(value = "学号")
-    private String student_number;
+    private String studentNumber;
 
     @ApiModelProperty(value = "默认电话")
     private String mobile;
