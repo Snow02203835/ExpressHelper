@@ -837,7 +837,7 @@ public class ExpressController {
      * @param userInfo 用户信息
      * @return 操作结果
      */
-    @ApiOperation(value = "上传图片", produces = "application/json")
+    @ApiOperation(value = "用户更新自身信息", produces = "application/json")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
             @ApiImplicitParam(paramType = "body", dataType = "UserInfoVo", name = "userInfo", value = "用户信息", required = true),
