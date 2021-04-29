@@ -56,6 +56,7 @@ public enum ResponseCode {
     MOBILE_NOT_VERIFIED(749,"电话号码未确认"),
     VERIFY_CODE_EXPIRE(750, "验证码不正确或已过期"),
     USER_STUDENT_NOT_VERIFY(760, "用户学生认证未通过"),
+    REPEAT_COMMIT_VERIFICATION(761, "重复提交学生认证"),
 
 
     /***************************************************
