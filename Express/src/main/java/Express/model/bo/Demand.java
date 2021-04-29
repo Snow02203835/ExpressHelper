@@ -93,19 +93,19 @@ public class Demand implements VoObject, Serializable {
         if(demandVo.getPrice() != null) {
             this.price = demandVo.getPrice();
         }
-        if(demandVo.getCode() != null) {
+        if(!demandVo.getCode().isBlank()) {
             this.code = demandVo.getCode();
         }
-        if(demandVo.getMobile() != null) {
+        if(!demandVo.getMobile().isBlank()) {
             this.mobile = demandVo.getMobile();
         }
-        if(demandVo.getAddress() != null) {
+        if(!demandVo.getAddress().isBlank()) {
             this.address = demandVo.getAddress();
         }
-        if(demandVo.getSponsorName() != null){
+        if(!demandVo.getSponsorName().isBlank()){
             this.sponsorName = demandVo.getSponsorName();
         }
-        if(demandVo.getDestination() != null) {
+        if(!demandVo.getDestination().isBlank()) {
             this.destination = demandVo.getDestination();
         }
         if(demandVo.getExpectTime() != null){
