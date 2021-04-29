@@ -14,6 +14,7 @@ import Express.model.vo.*;
 import Express.util.DemandStatus;
 import Express.util.FeedbackStatus;
 import Express.util.OrderStatus;
+import Express.util.VerificationStatus;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -52,6 +53,8 @@ public class DemandService {
     private ImageDao imageDao;
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private VerificationDao verificationDao;
 
     @Value("${Express.img.path}")
     private String imgPath;
@@ -779,6 +782,35 @@ public class DemandService {
             return new ReturnObject(ResponseCode.OK);
         }
         return new ReturnObject(userDao.updateUserInfo(user));
+    }
+
+    /**
+     * 用户提交学生认证信息
+     * @author snow create 2021/04/29 10:17
+     * @param userId 用户id
+     * @param verificationVo 认证信息
+     * @return 提交结果
+     */
+    @Transactional
+    public ReturnObject userCommitVerification(Long userId, VerificationVo verificationVo){
+        ReturnObject<List<Verification>> retObjs = verificationDao.findVerificationByUserId(userId);
+        if(retObjs.getCode() == ResponseCode.INTERNAL_SERVER_ERR){
+            return retObjs;
+        }
+        if(retObjs.getData() != null){
+            List<Verification> verifications = retObjs.getData();
+            if(!VerificationStatus.FAILED.getCode().equals(verifications.get(verifications.size()-1).getStatus())){
+                return new ReturnObject(ResponseCode.REPEAT_COMMIT_VERIFICATION);
+            }
+        }
+        Verification verification = new Verification(userId, verificationVo);
+        ResponseCode code = verificationDao.insertNewVerification(verification);
+        if(code == ResponseCode.OK){
+            return new ReturnObject(verification);
+        }
+        else{
+            return new ReturnObject(code);
+        }
     }
 
     /**
