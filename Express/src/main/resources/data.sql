@@ -16,3 +16,13 @@ INSERT INTO `demand` VALUES (9,0,'string','string','string','string','string','s
 INSERT INTO `demand` VALUES (10,0,'string','string','string','string','string','string',4,1,0,NULL,1,'2021-04-15 18:00:00',NULL);
 /*!40000 ALTER TABLE `demand` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'snow', NULL, NULL, 0, 100, NULL, NULL, '3e887ee8e2d56f3e79188a1b22232fe16f3c2fb24927f2ddafc223000e9b6362','2021-04-29 15:00:00',NULL);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
