@@ -887,6 +887,31 @@ public class ExpressController {
     }
 
     /**
+     * 用户修改学生认证信息
+     * @author snow create 2021/04/29 14:12
+     * @param userId 用户id
+     * @param verificationId 认证id
+     * @param verificationVo 认证信息
+     * @return 操作结果
+     */
+    @ApiOperation(value = "用户修改学生认证信息", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "VerificationVo", name = "verificationVo", value = "用户信息", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("user/verification/{verificationId}")
+    public Object userAlterVerification(@ApiIgnore @LoginUser Long userId,
+                                        @PathVariable Long verificationId,
+                                        @RequestBody VerificationVo verificationVo){
+        return Common.decorateReturnObject(new ReturnObject(
+                demandService.userAlterVerificationInfo(userId, verificationId, verificationVo)));
+    }
+
+    /**
      * 管理员审核学生认证
      * @author snow create 2021/04/29 10:51
      * @param verificationId 认证id
