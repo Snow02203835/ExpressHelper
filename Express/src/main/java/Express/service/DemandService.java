@@ -768,6 +768,7 @@ public class DemandService {
      * 用户更新自身信息
      * @author snow create 2021/04/27 21:42
      *            modified 2021/04/29 14:34
+     *            modified 2021/04/29 15:10
      * @param userId 用户id
      * @param userInfo 用户信息
      * @return 操作结果
@@ -779,8 +780,11 @@ public class DemandService {
             return userReturnObject.getCode();
         }
         User user = userReturnObject.getData();
-        if(userInfo.getAddress().isBlank() && userInfo.getMobile().isBlank() &&
-                userInfo.getName().isBlank() && userInfo.getStudentNumber().isBlank()){
+        System.out.println(user.toString());
+        if((userInfo.getName() == null || userInfo.getName().isBlank()) &&
+                (userInfo.getMobile() == null || userInfo.getMobile().isBlank()) &&
+                (userInfo.getAddress() == null || userInfo.getAddress().isBlank()) &&
+                (userInfo.getStudentNumber() == null || userInfo.getStudentNumber().isBlank())){
             return ResponseCode.FIELD_NOT_VALID;
         }
         user.updateInfoSelective(userInfo);
