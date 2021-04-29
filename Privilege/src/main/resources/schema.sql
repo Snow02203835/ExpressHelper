@@ -27,25 +27,3 @@ CREATE TABLE `admin` (
   `gmt_modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `open_id` varchar(64) DEFAULT NULL,
-  `real_name` varchar(64) DEFAULT NULL,
-  `student_number` char(14) DEFAULT NULL,
-  `student_verify` tinyint(3) unsigned zerofill NOT NULL,
-  `credit` int DEFAULT NULL,
-  `mobile` varchar(128) DEFAULT NULL,
-  `address` varchar(256) DEFAULT NULL,
-  `signature` varchar(500) DEFAULT NULL,
-  `gmt_create` datetime DEFAULT NULL,
-  `gmt_modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
