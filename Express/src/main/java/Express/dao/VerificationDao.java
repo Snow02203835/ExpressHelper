@@ -68,6 +68,28 @@ public class VerificationDao {
     }
 
     /**
+     * 根据id查找认证记录
+     * @author snow create 2021/04/29 10:31
+     * @param id 认证信息id
+     * @return 认证信息
+     */
+    public ReturnObject<Verification> findVerificationById(Long id){
+        try {
+            VerificationPo verificationPo = mapper.selectByPrimaryKey(id);
+            if(verificationPo != null){
+                return new ReturnObject<>(new Verification(verificationPo));
+            }
+            else{
+                return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOT_EXIST);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+    }
+
+    /**
      * 根据用户id查找认证记录
      * @author snow create 2021/04/29 01:20
      * @param userId 用户id
