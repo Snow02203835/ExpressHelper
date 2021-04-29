@@ -851,5 +851,33 @@ public class ExpressController {
         return Common.decorateReturnObject(demandService.userUpdateSelfInfo(userId, userInfo));
     }
 
+    /**
+     * 用户提交学生认证
+     * @author snow create 2021/04/29 10:21
+     * @param userId 用户id
+     * @param verificationVo 认证信息
+     * @return 提交结果
+     */
+    @ApiOperation(value = "用户提交学生认证", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "body", dataType = "VerificationVo", name = "verificationVo", value = "用户信息", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PostMapping("user/verification")
+    public Object userCommitVerification (@ApiIgnore @LoginUser Long userId,
+                                          @RequestBody VerificationVo verificationVo){
+        ReturnObject retObj = demandService.userCommitVerification(userId, verificationVo);
+        if(retObj.getData() != null){
+            return Common.getRetObject(retObj);
+        }
+        else{
+            return Common.decorateReturnObject(retObj);
+        }
+    }
+
 }
 
