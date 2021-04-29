@@ -44,6 +44,30 @@ public class VerificationDao {
     }
 
     /**
+     * 更新认证信息
+     * @author snow create 2021/04/29 10:28
+     * @param verification 新的认证信息
+     * @return 操作结果错误码
+     */
+    public ResponseCode updateVerificationInfo(Verification verification){
+        try {
+            VerificationPo verificationPo = verification.createPo();
+            verificationPo.setGmtModified(LocalDateTime.now());
+            int effectRows = mapper.updateByPrimaryKey(verificationPo);
+            if(effectRows == 1){
+                return ResponseCode.OK;
+            }
+            else {
+                return ResponseCode.RESOURCE_ID_NOT_EXIST;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return ResponseCode.INTERNAL_SERVER_ERR;
+    }
+
+    /**
      * 根据用户id查找认证记录
      * @author snow create 2021/04/29 01:20
      * @param userId 用户id
