@@ -101,7 +101,7 @@ public class VerificationDao {
             VerificationPoExample.Criteria criteria = example.createCriteria();
             criteria.andUserIdEqualTo(userId);
             List<VerificationPo> verificationPos = mapper.selectByExample(example);
-            if(verificationPos == null && verificationPos.size() == 0){
+            if(verificationPos != null && verificationPos.size() != 0){
                 List<Verification> verifications = new ArrayList<>(verificationPos.size());
                 for(VerificationPo verificationPo : verificationPos){
                     verifications.add(new Verification(verificationPo));
