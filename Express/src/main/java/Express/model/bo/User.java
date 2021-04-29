@@ -69,16 +69,16 @@ public class User implements VoObject, Serializable {
     }
 
     public void updateInfoSelective(UserInfoVo userInfoVo){
-        if(!userInfoVo.getName().isBlank()){
+        if(userInfoVo.getName() != null && !userInfoVo.getName().isBlank()){
             this.name = userInfoVo.getName();
         }
-        if(!userInfoVo.getMobile().isBlank()){
+        if(userInfoVo.getMobile() != null && !userInfoVo.getMobile().isBlank()){
             setMobile(userInfoVo.getMobile());
         }
-        if(!userInfoVo.getAddress().isBlank()){
+        if(userInfoVo.getAddress() != null && !userInfoVo.getAddress().isBlank()){
             setAddress(userInfoVo.getAddress());
         }
-        if(!userInfoVo.getStudentNumber().isBlank()){
+        if(userInfoVo.getStudentNumber() != null && !userInfoVo.getStudentNumber().isBlank()){
             this.studentNumber = userInfoVo.getStudentNumber();
         }
         this.signature = createSignature();
