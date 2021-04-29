@@ -814,6 +814,43 @@ public class DemandService {
     }
 
     /**
+     * 管理员审核用户学生认证
+     * @author snow create 2021/04/29 10:44
+     * @param verificationId 认证id
+     * @param pass 是否通过
+     * @return 操作结果错误码
+     */
+    @Transactional
+    public ResponseCode adminAuditUserVerification(Long verificationId, Boolean pass){
+        ReturnObject<Verification> verificationRetObj = verificationDao.findVerificationById(verificationId);
+        if (verificationRetObj.getData() == null){
+            return verificationRetObj.getCode();
+        }
+        Verification verification = verificationRetObj.getData();
+        if(!VerificationStatus.UNHANDLED.getCode().equals(verification.getStatus())){
+            return ResponseCode.VERIFICATION_STATUS_FORBID;
+        }
+        if(pass){
+            verification.setStatus(VerificationStatus.PASS.getCode());
+            ReturnObject<User> userRetObj = userDao.findUserById(verification.getUserId());
+            if(userRetObj.getData() == null){
+                return userRetObj.getCode();
+            }
+            User user = userRetObj.getData();
+            user.setStudentVerify((byte)1);
+            user.setSignature(user.createSignature());
+            ResponseCode code = userDao.updateUserInfo(user);
+            if(code != ResponseCode.OK){
+                return code;
+            }
+        }
+        else{
+            verification.setStatus(VerificationStatus.FAILED.getCode());
+        }
+        return verificationDao.updateVerificationInfo(verification);
+    }
+
+    /**
      * 用户上传图片
      * @author snow create 2021/04/17 16:12
      * @param userId 用户id
