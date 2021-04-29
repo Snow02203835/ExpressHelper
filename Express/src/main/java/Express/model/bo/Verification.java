@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author snow create 2021/04/29 00:58
+ *            modified 2021/04/29 14:08
  */
 @Data
 public class Verification implements VoObject, Serializable {
@@ -49,6 +50,16 @@ public class Verification implements VoObject, Serializable {
         po.setGmtCreate(this.gmtCreate);
         po.setGmtModified(this.gmtModified);
         return po;
+    }
+
+    public void updateInfoWithVo(VerificationVo verificationVo){
+        if(!verificationVo.getCoverImg().isBlank()){
+            this.coverImg = verificationVo.getCoverImg();
+        }
+        if(!verificationVo.getContentImg().isBlank()){
+            this.contentImg = verificationVo.getContentImg();
+        }
+        this.status = VerificationStatus.UNHANDLED.getCode();
     }
 
     @Override
