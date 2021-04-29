@@ -767,21 +767,24 @@ public class DemandService {
     /**
      * 用户更新自身信息
      * @author snow create 2021/04/27 21:42
+     *            modified 2021/04/29 14:34
      * @param userId 用户id
      * @param userInfo 用户信息
      * @return 操作结果
      */
     @Transactional
-    public ReturnObject userUpdateSelfInfo(Long userId, UserInfoVo userInfo){
+    public ResponseCode userUpdateSelfInfo(Long userId, UserInfoVo userInfo){
         ReturnObject<User> userReturnObject = userDao.findUserById(userId);
         if(userReturnObject.getData() == null){
-            return userReturnObject;
+            return userReturnObject.getCode();
         }
         User user = userReturnObject.getData();
-        if(!user.updateInfoSelective(userInfo)){
-            return new ReturnObject(ResponseCode.OK);
+        if(userInfo.getAddress().isBlank() && userInfo.getMobile().isBlank() &&
+                userInfo.getName().isBlank() && userInfo.getStudentNumber().isBlank()){
+            return ResponseCode.FIELD_NOT_VALID;
         }
-        return new ReturnObject(userDao.updateUserInfo(user));
+        user.updateInfoSelective(userInfo);
+        return userDao.updateUserInfo(user);
     }
 
     /**
