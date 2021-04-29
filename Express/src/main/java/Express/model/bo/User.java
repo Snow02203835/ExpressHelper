@@ -68,27 +68,20 @@ public class User implements VoObject, Serializable {
         return userPo;
     }
 
-    public Boolean updateInfoSelective(UserInfoVo userInfoVo){
-        if(userInfoVo.getAddress() == null &&
-                userInfoVo.getMobile() == null &&
-                userInfoVo.getName() == null &&
-                userInfoVo.getStudentNumber() == null){
-            return false;
-        }
-        if(userInfoVo.getName() != null){
+    public void updateInfoSelective(UserInfoVo userInfoVo){
+        if(!userInfoVo.getName().isBlank()){
             this.name = userInfoVo.getName();
         }
-        if(userInfoVo.getMobile() != null){
+        if(!userInfoVo.getMobile().isBlank()){
             setMobile(userInfoVo.getMobile());
         }
-        if(userInfoVo.getAddress() != null){
+        if(!userInfoVo.getAddress().isBlank()){
             setAddress(userInfoVo.getAddress());
         }
-        if(userInfoVo.getStudentNumber() != null){
+        if(!userInfoVo.getStudentNumber().isBlank()){
             this.studentNumber = userInfoVo.getStudentNumber();
         }
         this.signature = createSignature();
-        return true;
     }
 
     public String getDecryptMobile(){
