@@ -879,5 +879,28 @@ public class ExpressController {
         }
     }
 
+    /**
+     * 管理员审核学生认证
+     * @author snow create 2021/04/29 10:51
+     * @param verificationId 认证id
+     * @param pass 是否通过
+     * @return 操作结果
+     */
+    @ApiOperation(value = "用户提交学生认证", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", dataType = "String", name = "authorization", value = "token", required = true),
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "verificationId", value = "认证id", required = true),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "pass", value = "是否通过", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @Audit
+    @PutMapping("admin/user/verification{verificationId}")
+    public Object adminAuditVerification(@PathVariable Long verificationId, @RequestParam Byte pass){
+        ResponseCode code = demandService.adminAuditUserVerification(verificationId, (pass == (byte)1));
+        return Common.decorateReturnObject(new ReturnObject(code));
+    }
+
 }
 
