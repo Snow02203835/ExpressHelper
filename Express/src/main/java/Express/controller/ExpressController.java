@@ -832,6 +832,7 @@ public class ExpressController {
     /**
      * 用户更新自身信息
      * @author snow create 2021/04/27 21:44
+     *            modified 2021/04/29 14:33
      * @param userId 用户id
      * @param userInfo 用户信息
      * @return 操作结果
@@ -848,7 +849,7 @@ public class ExpressController {
     @PutMapping("user")
     public Object userUpdateSelfInfo(@ApiIgnore @LoginUser Long userId,
                                      @RequestBody UserInfoVo userInfo){
-        return Common.decorateReturnObject(demandService.userUpdateSelfInfo(userId, userInfo));
+        return Common.decorateReturnObject(new ReturnObject(demandService.userUpdateSelfInfo(userId, userInfo)));
     }
 
     /**
