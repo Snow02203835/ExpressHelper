@@ -854,8 +854,10 @@ public class ExpressController {
     /**
      * 用户提交学生认证
      * @author snow create 2021/04/29 10:21
+     *            modified 2021/04/29 13:53
      * @param userId 用户id
      * @param verificationVo 认证信息
+     * @param bindingResult 校验信息
      * @return 提交结果
      */
     @ApiOperation(value = "用户提交学生认证", produces = "application/json")
@@ -869,7 +871,12 @@ public class ExpressController {
     @Audit
     @PostMapping("user/verification")
     public Object userCommitVerification (@ApiIgnore @LoginUser Long userId,
-                                          @RequestBody VerificationVo verificationVo){
+                                          @Validated @RequestBody VerificationVo verificationVo,
+                                          BindingResult bindingResult){
+        Object returnObject = Common.processFieldErrors(bindingResult, httpServletResponse);
+        if(returnObject != null){
+            return returnObject;
+        }
         ReturnObject retObj = demandService.userCommitVerification(userId, verificationVo);
         if(retObj.getData() != null){
             return Common.getRetObject(retObj);
