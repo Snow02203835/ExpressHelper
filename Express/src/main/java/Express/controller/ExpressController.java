@@ -217,20 +217,22 @@ public class ExpressController {
      * 根据条件获取需求列表
      * @author snow create 2021/04/16 13:25
      *            modified 2021/04/17 00:48
-     * @param departId
-     * @param sponsorId
-     * @param type
-     * @param status
-     * @param deleted
-     * @param minPrice
-     * @param maxPrice
-     * @param address
-     * @param destination
-     * @param startTime
-     * @param endTime
-     * @param page
-     * @param pageSize
-     * @return
+     *            modified 2021/04/30 16:06
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param sponsorId 发布者id
+     * @param type 类型
+     * @param status 状态
+     * @param deleted 逻辑删除是否可见
+     * @param minPrice 最低价格
+     * @param maxPrice 最高价格
+     * @param address 取件地址
+     * @param destination 送达地址
+     * @param startTime 开始时间
+     * @param endTime 结果时间
+     * @param page 页号
+     * @param pageSize 页大小
+     * @return 查询分页结果
      */
     @ApiOperation(value = "根据条件获取需求列表", produces = "application/json")
     @ApiImplicitParams({
@@ -253,7 +255,8 @@ public class ExpressController {
     })
     @Audit
     @GetMapping("demand")
-    public Object getDemands(@ApiIgnore @Depart Long departId,
+    public Object getDemands(@ApiIgnore @LoginUser Long userId,
+                             @ApiIgnore @Depart Long departId,
                              @RequestParam(required = false) Long sponsorId,
                              @RequestParam(required = false) Byte type,
                              @RequestParam(required = false) Byte status,
@@ -285,7 +288,7 @@ public class ExpressController {
             e.printStackTrace();
             return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
         }
-        return Common.getPageRetObject(demandService.getDemandsWithCondition(departId, sponsorId, type, status,
+        return Common.getPageRetObject(demandService.getDemandsWithCondition(userId, departId, sponsorId, type, status,
                 deleted, minPrice, maxPrice, address, destination, start, end, page, pageSize));
     }
 
