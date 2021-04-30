@@ -290,6 +290,7 @@ public class DemandService {
      * @author snow create 2021/04/15 16:08
      *            modified 2021/04/16 00:54
      *            modified 2021/04/28 09:24
+     *            modified 2021/04/30 17:04
      * @param userId 用户id
      * @param demandId 需求id
      * @return 订单视图
@@ -300,11 +301,11 @@ public class DemandService {
             return retObj;
         }
         Demand demand = retObj.getData();
-        if(DemandStatus.EXPECTING.getCode() != demand.getStatus()){
+        if(!DemandStatus.EXPECTING.getCode().equals(demand.getStatus())){
             return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
         }
         ReturnObject<User> userRetObj = userDao.findUserById(userId);
-        if(userRetObj.getData() != null){
+        if(userRetObj.getData() == null){
             return userRetObj;
         }
         User user = userRetObj.getData();
