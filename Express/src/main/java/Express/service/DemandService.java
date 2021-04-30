@@ -335,6 +335,7 @@ public class DemandService {
      * 取消订单
      * @author snow create 2021/04/16 08:28
      *            modified 2021/04/28 09:23
+     *            modified 2021/04/30 17:21
      * @param userId 用户id
      * @param departId 角色id
      * @param orderId 订单id
@@ -350,8 +351,8 @@ public class DemandService {
         if(userDepartId.equals(departId) && !userId.equals(order.getReceiverId())){
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
         }
-        if(OrderStatus.PICKED.getCode() != order.getStatus()){
-            return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
+        if(!OrderStatus.PICKED.getCode().equals(order.getStatus())){
+            return new ReturnObject(ResponseCode.ORDER_STATUS_FORBID);
         }
         order.setStatus(OrderStatus.CANCEL.getCode());
         order.setCancelTime(LocalDateTime.now());
