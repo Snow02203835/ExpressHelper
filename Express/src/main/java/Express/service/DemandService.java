@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 public class DemandService {
 
     private final Long userDepartId = -1L;
+    private final Long userSelfCode = -3835L;
 
     @Autowired
     private UserDao userDao;
@@ -235,27 +236,35 @@ public class DemandService {
      * 根据条件查找需求
      * @author snow create 2021/04/16 11:08
      *            modified 2021/04/17 00:49
-     * @param departId
-     * @param sponsorId
-     * @param type
-     * @param status
-     * @param deleted
-     * @param minPrice
-     * @param maxPrice
-     * @param address
-     * @param destination
-     * @param startTime
-     * @param endTime
-     * @param page
-     * @param pageSize
-     * @return
+     *            modified 2021/04/30 15:58
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param sponsorId 发布者id
+     * @param type 类型
+     * @param status 状态
+     * @param deleted 逻辑删除是否可见
+     * @param minPrice 最低价格
+     * @param maxPrice 最高价格
+     * @param address 取件地址
+     * @param destination 送达地址
+     * @param startTime 开始时间
+     * @param endTime 结果时间
+     * @param page 页号
+     * @param pageSize 页大小
+     * @return 查询分页结果
      */
-    public ReturnObject<PageInfo<VoObject>> getDemandsWithCondition(Long departId, Long sponsorId, Byte type, Byte status,
+    public ReturnObject<PageInfo<VoObject>> getDemandsWithCondition(Long userId, Long departId, Long sponsorId, Byte type, Byte status,
                                                                     Byte deleted, Integer minPrice, Integer maxPrice,
                                                                     String address, String destination,
                                                                     LocalDateTime startTime, LocalDateTime endTime,
                                                                     Integer page, Integer pageSize){
         if(userDepartId.equals(departId)){
+            if(userSelfCode.equals(sponsorId)){
+                sponsorId = userId;
+            }
+            else{
+                status = DemandStatus.EXPECTING.getCode();
+            }
             deleted = (byte)0;
         }
         PageHelper.startPage(page, pageSize);
