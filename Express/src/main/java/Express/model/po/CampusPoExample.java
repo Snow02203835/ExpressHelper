@@ -323,6 +323,76 @@ public class CampusPoExample {
             addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
+
+        public Criteria andBuildingIsNull() {
+            addCriterion("building is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingIsNotNull() {
+            addCriterion("building is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingEqualTo(String value) {
+            addCriterion("building =", value, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingNotEqualTo(String value) {
+            addCriterion("building <>", value, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingGreaterThan(String value) {
+            addCriterion("building >", value, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingGreaterThanOrEqualTo(String value) {
+            addCriterion("building >=", value, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingLessThan(String value) {
+            addCriterion("building <", value, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingLessThanOrEqualTo(String value) {
+            addCriterion("building <=", value, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingLike(String value) {
+            addCriterion("building like", value, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingNotLike(String value) {
+            addCriterion("building not like", value, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingIn(List<String> values) {
+            addCriterion("building in", values, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingNotIn(List<String> values) {
+            addCriterion("building not in", values, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingBetween(String value1, String value2) {
+            addCriterion("building between", value1, value2, "building");
+            return (Criteria) this;
+        }
+
+        public Criteria andBuildingNotBetween(String value1, String value2) {
+            addCriterion("building not between", value1, value2, "building");
+            return (Criteria) this;
+        }
     }
 
     /**
