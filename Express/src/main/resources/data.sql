@@ -4,16 +4,18 @@
 
 LOCK TABLES `demand` WRITE;
 /*!40000 ALTER TABLE `demand` DISABLE KEYS */;
-INSERT INTO `demand` VALUES (1,0,'string','string','string','string','string','string',0,1,0,NULL,0,'2021-04-15 17:13:50',NULL);
-INSERT INTO `demand` VALUES (2,0,'string','string','string','string','string','string',0,1,0,NULL,1,'2021-04-15 17:13:50',NULL);
-INSERT INTO `demand` VALUES (3,0,'string','string','string','string','string','string',1,1,0,NULL,0,'2021-04-15 17:13:50',NULL);
-INSERT INTO `demand` VALUES (4,0,'string','string','string','string','string','string',1,1,0,NULL,1,'2021-04-15 17:13:50',NULL);
-INSERT INTO `demand` VALUES (5,0,'string','string','string','string','string','string',2,1,0,NULL,0,'2021-04-15 17:13:50',NULL);
-INSERT INTO `demand` VALUES (6,0,'string','string','string','string','string','string',2,1,0,NULL,1,'2021-04-15 17:13:50',NULL);
-INSERT INTO `demand` VALUES (7,0,'string','string','string','string','string','string',3,1,0,NULL,0,'2021-04-15 17:13:50',NULL);
-INSERT INTO `demand` VALUES (8,0,'string','string','string','string','string','string',3,1,0,NULL,1,'2021-04-15 17:13:50',NULL);
-INSERT INTO `demand` VALUES (9,0,'string','string','string','string','string','string',4,1,0,NULL,0,'2021-04-15 18:00:00',NULL);
-INSERT INTO `demand` VALUES (10,0,'string','string','string','string','string','string',4,1,0,NULL,1,'2021-04-15 18:00:00',NULL);
+INSERT INTO `demand` VALUES (1,0,'10-1234','顺丰','13800001111','菜鸟驿站','王二狗','海韵2-123','今天21:00-23:00',0,2,2,NULL,0,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (2,0,'10-1235','顺丰','13800001111','菜鸟驿站','王二狗','海韵2-123','今天21:00-23:00',0,2,5,NULL,1,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (3,0,'12-1236','中通','13800002222','菜鸟驿站','李狗蛋','海韵8-412','明天09:00-12:00',1,1,5,NULL,0,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (4,0,'12-1237','中通','13800002222','菜鸟驿站','李狗蛋','海韵8-412','明天09:00-12:00',1,1,2,NULL,1,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (5,0,'14-1238','申通','13800003333','菜鸟驿站','张大牛','海韵6-312','今天11:00-12:00',2,1,2,NULL,0,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (6,0,'15-1238','圆通','13800003333','菜鸟驿站','张大牛','海韵6-312','今天11:00-12:00',2,1,2,NULL,0,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (7,0,'16-1238','顺丰','13800003333','菜鸟驿站','张大牛','海韵6-312','今天11:00-12:00',2,1,2,NULL,0,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (8,0,'14-1239','申通','13800003333','菜鸟驿站','张大牛','海韵6-312','今天11:00-12:00',2,1,5,NULL,1,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (9,0,'31-1240','韵达','13800004444','南光鸟箱','赵静安','芙蓉4-108','明天21:00-23:00',3,1,2,NULL,0,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (10,0,'3-1241','韵达','13800004444','南光鸟箱','赵静安','芙蓉4-108','明天21:00-23:00',3,1,8,NULL,1,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (11,0,'2-1243','百世','13800005555','南光鸟箱','蒋大力','凌云5-501','今天17:00-23:00',4,2,2,NULL,0,'2021-05-06 00:00:00',NULL);
+INSERT INTO `demand` VALUES (12,0,'3-1247','百世','13800005555','南光鸟箱','蒋大力','凌云5-501','今天17:00-23:00',5,2,9,NULL,1,'2021-05-06 00:00:00',NULL);
 /*!40000 ALTER TABLE `demand` ENABLE KEYS */;
 UNLOCK TABLES;
 
