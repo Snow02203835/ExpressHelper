@@ -984,5 +984,19 @@ public class ExpressController {
         return Common.decorateReturnObject(demandService.getCompanyData());
     }
 
+    /**
+     * 获取地址静态数据
+     * @author snow create 2021/05/06 21:00
+     * @return addressRetVo 地址数据
+     */
+    @ApiOperation(value = "获取地址静态数据", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @GetMapping("address")
+    public Object getAddresses(){
+        return Common.decorateReturnObject(demandService.getAddressData());
+    }
+
 }
 
