@@ -459,16 +459,17 @@ public class DemandService {
     /**
      * 根据条件查找订单
      * @author snow create 2021/04/17 00:39
-     * @param userId
-     * @param departId
-     * @param receiverId
-     * @param status
-     * @param deleted
-     * @param startTime
-     * @param endTime
-     * @param page
-     * @param pageSize
-     * @return
+     *            modified 2021/05/06 16:47
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param receiverId 接单者id
+     * @param status 状态
+     * @param deleted 逻辑删除是否可见
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param page 页码
+     * @param pageSize 页大小
+     * @return 查找结果
      */
     public ReturnObject<PageInfo<VoObject>> getOrdersWithCondition(Long userId, Long departId, Long receiverId, Byte status,
                                                       Byte deleted, LocalDateTime startTime, LocalDateTime endTime,
@@ -482,7 +483,12 @@ public class DemandService {
         if(orderPoPageInfo == null){
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
-        List<VoObject> orderInfos = orderPoPageInfo.getList().stream().map(Order::new).collect(Collectors.toList());
+        List<OrderRetVo> orderList = orderPoPageInfo.getList().stream().map(OrderRetVo::new).collect(Collectors.toList());
+        List<VoObject> orderInfos = new ArrayList<>(orderList.size());
+        for(OrderRetVo orderVo : orderList){
+            orderVo.addDemandDetail(demandDao.findDemandById(orderVo.getDemandId(), true).getData());
+            orderInfos.add(orderVo);
+        }
         System.out.println(orderInfos.toString());
 
         PageInfo<VoObject> retObj = new PageInfo<>(orderInfos);
