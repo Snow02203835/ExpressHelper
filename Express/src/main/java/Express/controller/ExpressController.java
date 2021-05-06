@@ -952,5 +952,23 @@ public class ExpressController {
         return Common.decorateReturnObject(demandService.getCampusData());
     }
 
+    /**
+     * 获取校区宿舍信息数据
+     * @author snow create 2021/05/07 00:33
+     * @param campusId 校园id
+     * @return campus 校区宿舍信息数据
+     */
+    @ApiOperation(value = "获取校区宿舍信息数据", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", dataType = "int", name = "campusId", value = "校园id", required = true),
+    })
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @GetMapping("campus/{campusId}")
+    public Object getCampusById(@PathVariable Integer campusId){
+        return Common.decorateReturnObject(demandService.getCampusDataById(campusId));
+    }
+
 }
 
