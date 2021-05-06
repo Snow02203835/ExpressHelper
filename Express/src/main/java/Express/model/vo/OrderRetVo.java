@@ -4,6 +4,7 @@ import Core.model.VoObject;
 import Express.model.bo.Demand;
 import Express.model.bo.Order;
 import Express.model.po.DemandPo;
+import Express.model.po.OrderPo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -53,6 +54,21 @@ public class OrderRetVo implements VoObject, Serializable {
         this.sentTime = order.getSentTime();
         this.satisfyTime = order.getSatisfyTime();
         this.cancelTime = order.getCancelTime();
+    }
+
+    public OrderRetVo(OrderPo orderPo){
+        this.orderId = orderPo.getId();
+        this.demandId = orderPo.getDemandId();
+        this.receiverId = orderPo.getReceiverId();
+        this.receiverMobile = orderPo.getReceiverMobile();
+        this.status = orderPo.getStatus();
+        this.urlCheck = orderPo.getUrlCheck();
+        this.urlSent = orderPo.getUrlSent();
+        this.pickUpTime = orderPo.getPickUpTime();
+        this.collectTime = orderPo.getCollectTime();
+        this.sentTime = orderPo.getSentTime();
+        this.satisfyTime = orderPo.getSatisfyTime();
+        this.cancelTime = orderPo.getCancelTime();
     }
 
     public OrderRetVo(DemandPo demandPo) {
