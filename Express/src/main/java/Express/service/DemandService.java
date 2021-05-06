@@ -1028,4 +1028,19 @@ public class DemandService {
         }
     }
 
+    /**
+     * 获取地址数据
+     * @author snow create 2021/05/06 20:52
+     * @return 数据/错误码
+     */
+    public ReturnObject getAddressData(){
+        AddressRetVo address = staticDao.getAddresses();
+        if(address == null){
+            return new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+        else{
+            return new ReturnObject(address);
+        }
+    }
+
 }
