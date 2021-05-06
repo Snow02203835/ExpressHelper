@@ -1013,4 +1013,19 @@ public class DemandService {
         }
     }
 
+    /**
+     * 获取快递公司数据
+     * @author snow create 2021/05/07 00:27
+     * @return 数据/错误码
+     */
+    public ReturnObject getCompanyData(){
+        CompanyRetVo company = staticDao.getCompanies();
+        if(company == null){
+            return new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+        else{
+            return new ReturnObject(company);
+        }
+    }
+
 }
