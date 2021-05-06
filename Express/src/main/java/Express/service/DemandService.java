@@ -55,6 +55,8 @@ public class DemandService {
     @Autowired
     private OrderDao orderDao;
     @Autowired
+    private StaticDao staticDao;
+    @Autowired
     private VerificationDao verificationDao;
 
     @Value("${Express.img.path}")
@@ -970,6 +972,24 @@ public class DemandService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 获取校园数据
+     * @author snow create 2021/05/07 00:26
+     * @return 数据/错误码
+     */
+    public ReturnObject getCampusData(){
+        CampusRetVo campusList = staticDao.getCampus();
+        if(campusList == null){
+            return new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+        else{
+            for(Campus campus : campusList.getCampusList()){
+                campus.setBuilding(null);
+            }
+            return new ReturnObject(campusList);
+        }
     }
 
 }
