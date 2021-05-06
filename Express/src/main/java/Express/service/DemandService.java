@@ -33,7 +33,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -496,11 +495,29 @@ public class DemandService {
      * @author snow create 2021/04/19 01:32
      *            modified 2021/04/19 11:20
      *            modified 2021/04/20 19:31
+     *            modified 2021/05/06 13:44
      * @param userId 用户id
      * @param feedbackVo 反馈信息
      * @return 插入结果
      */
     public ReturnObject userFeedback(Long userId, FeedbackVo feedbackVo){
+        if(feedbackVo.getOrderId() != null){
+            ReturnObject<Order> orderReturnObject = orderDao.findOrderById(feedbackVo.getOrderId());
+            if(orderReturnObject.getData() == null){
+                return orderReturnObject;
+            }
+            Order order = orderReturnObject.getData();
+            if(!order.getReceiverId().equals(userId)){
+                ReturnObject<Demand> demandReturnObject = demandDao.findDemandById(order.getDemandId(), false);
+                if (demandReturnObject.getData() == null){
+                    return demandReturnObject;
+                }
+                Demand demand = demandReturnObject.getData();
+                if(!demand.getSponsorId().equals(userId)){
+                    return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+                }
+            }
+        }
         Feedback feedback = new Feedback(userId, feedbackVo);
         return feedbackDao.insertFeedback(feedback);
     }
