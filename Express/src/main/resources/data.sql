@@ -43,3 +43,52 @@ INSERT INTO `user` VALUES (1,'snow', NULL, NULL, 0, 100, NULL, NULL, '3e887ee8e2
 INSERT INTO `user` VALUES (2,'ldr', '李东儒', '24320182203222', 1, 100, NULL, NULL, '1caddc0e274cf67b2de259413290dba390e3e642a35277ee6c4aa2cdefff91f6','2021-05-03 00:00:00',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping data for table `company`
+--
+
+LOCK TABLES `company` WRITE;
+/*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` VALUES (1,'申通');
+INSERT INTO `company` VALUES (2,'中通');
+INSERT INTO `company` VALUES (3,'圆通');
+INSERT INTO `company` VALUES (4,'韵达');
+INSERT INTO `company` VALUES (5,'顺丰');
+INSERT INTO `company` VALUES (6,'京东');
+INSERT INTO `company` VALUES (7,'邮政');
+INSERT INTO `company` VALUES (8,'EMS');
+INSERT INTO `company` VALUES (9,'百世');
+INSERT INTO `company` VALUES (10,'丹鸟');
+INSERT INTO `company` VALUES (11,'极兔');
+/*!40000 ALTER TABLE `company` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `address`
+--
+
+LOCK TABLES `address` WRITE;
+/*!40000 ALTER TABLE `address` DISABLE KEYS */;
+INSERT INTO `address` VALUES (1,1,'{\"快递\":[1,3,9,11]}','菜鸟驿站海韵学生公寓店');
+INSERT INTO `address` VALUES (2,1,'{\"快递\":[2]}','菜鸟驿站曾厝垵北二路后厝店');
+INSERT INTO `address` VALUES (3,1,'{\"快递\":[6]}','公寓门口手抓饼对面京东快递车');
+INSERT INTO `address` VALUES (4,1,'{\"快递\":[4]}','公寓下坡菜鸟快递旁韵达快递点');
+INSERT INTO `address` VALUES (5,1,'{\"快递\":[7,8]}','海韵8中国邮政');
+INSERT INTO `address` VALUES (6,1,'{\"快递\":[5]}','公寓门口水果街顺丰快递');
+INSERT INTO `address` VALUES (7,2,'{\"快递\":[7,8]}','西村门卡邮政快递点');
+INSERT INTO `address` VALUES (8,2,'{\"快递\":[1,2,3,4,5,6,9,10,11]}','南光鸟箱');
+/*!40000 ALTER TABLE `address` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `campus`
+--
+LOCK TABLES `campus` WRITE;
+/*!40000 ALTER TABLE `campus` DISABLE KEYS */;
+INSERT INTO `campus` VALUES (1,'海韵学生公寓','{\"海韵\":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]}');
+INSERT INTO `campus` VALUES (2,'思明校区本部','{\"芙蓉\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"石井\":[1,2,3,4,5,6,7],\"南光\":[4,5,7,\"综合楼\"],\"凌云\":[1,2,3,4,5,6,7,8,9,10,\"东村\"],\"勤业\":[4,6,7],\"丰庭\":[1,2,3,4,5,\"笃行3\"]}');
+INSERT INTO `campus` VALUES (3,'思明校区海滨','{\"海滨新区\":[1,2,3]}');
+INSERT INTO `campus` VALUES (4,'翔安校区',NULL);
+/*!40000 ALTER TABLE `campus` ENABLE KEYS */;
+UNLOCK TABLES;
