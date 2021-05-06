@@ -86,6 +86,28 @@ public class OrderDao {
     }
 
     /**
+     * 根据需求id返回最后一个相关订单信息
+     * @author snow create 2021/05/06 16:20
+     * @param demandId 需求id
+     * @return 操作结果
+     */
+    public Order findLastOrderByDemandId(Long demandId){
+        try {
+            OrderPoExample example = new OrderPoExample();
+            OrderPoExample.Criteria criteria = example.createCriteria();
+            criteria.andDemandIdEqualTo(demandId);
+            List<OrderPo> orderPos = orderPoMapper.selectByExample(example);
+            if(orderPos != null && orderPos.size() != 0){
+                return new Order(orderPos.get(orderPos.size()-1));
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * 根据需求id查找相关订单
      * @author snow create 2021/04/16 00:23
      * @param demandId
