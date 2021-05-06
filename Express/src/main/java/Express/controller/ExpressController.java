@@ -938,5 +938,19 @@ public class ExpressController {
         return Common.decorateReturnObject(new ReturnObject(code));
     }
 
+    /**
+     * 获取校区静态数据
+     * @author snow create 2021/05/07 00:33
+     * @return campusRetVo 校区数据
+     */
+    @ApiOperation(value = "获取校区静态数据", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @GetMapping("campus")
+    public Object getCampus(){
+        return Common.decorateReturnObject(demandService.getCampusData());
+    }
+
 }
 
