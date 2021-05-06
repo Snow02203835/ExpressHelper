@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -272,10 +273,14 @@ public class DemandService {
         if(demandPoPageInfo == null){
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
-        List<VoObject> userInfos = demandPoPageInfo.getList().stream().map(Demand::new).collect(Collectors.toList());
-        System.out.println(userInfos.toString());
-
-        PageInfo<VoObject> retObj = new PageInfo<>(userInfos);
+        List<OrderRetVo> demandList = demandPoPageInfo.getList().stream().map(OrderRetVo::new).collect(Collectors.toList());
+        List<VoObject> demandInfo = new ArrayList<>(demandList.size());
+        for(OrderRetVo demandVo : demandList){
+            demandVo.addOrderDetail(orderDao.findLastOrderByDemandId(demandVo.getDemandId()));
+            demandInfo.add(demandVo);
+        }
+        System.out.println(demandList.toString());
+        PageInfo<VoObject> retObj = new PageInfo<>(demandInfo);
         retObj.setPages(demandPoPageInfo.getPages());
         retObj.setPageNum(demandPoPageInfo.getPageNum());
         retObj.setPageSize(demandPoPageInfo.getPageSize());
