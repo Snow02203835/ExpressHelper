@@ -163,6 +163,27 @@
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
+        <!--table tableName="campus" domainObjectName="CampusPo"
+               enableCountByExample="false" enableUpdateByExample="true"
+               enableDeleteByExample="false" enableSelectByExample="true"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table-->
+        <!--table tableName="company" domainObjectName="CompanyPo"
+               enableCountByExample="false" enableUpdateByExample="true"
+               enableDeleteByExample="false" enableSelectByExample="true"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table-->
+        <!--table tableName="address" domainObjectName="AddressPo"
+               enableCountByExample="false" enableUpdateByExample="true"
+               enableDeleteByExample="false" enableSelectByExample="true"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table-->
         <!--table tableName="feedback" domainObjectName="FeedBackPo"
                enableCountByExample="false" enableUpdateByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true"
