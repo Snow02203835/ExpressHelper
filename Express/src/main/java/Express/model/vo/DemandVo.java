@@ -24,6 +24,10 @@ public class DemandVo {
     @NotBlank(message = "取件码不能为空")
     private String code;
 
+    @ApiModelProperty(value = "快递公司")
+    @NotBlank(message = "快递公司不能为空")
+    private String company;
+
     @ApiModelProperty(value = "联系电话")
     @NotBlank(message = "联系电话不能为空")
     private String mobile;
