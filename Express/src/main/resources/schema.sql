@@ -15,6 +15,7 @@ CREATE TABLE `demand` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `type` tinyint DEFAULT NULL,
   `code` varchar(64) NOT NULL,
+  `company` varchar(64) NOT NULL,
   `mobile` varchar(128) DEFAULT NULL,
   `address` varchar(256) DEFAULT NULL,
   `sponsor_name` varchar(64) DEFAULT NULL,
