@@ -992,4 +992,25 @@ public class DemandService {
         }
     }
 
+    /**
+     * 根据校园id获取校园宿舍信息
+     * @author snow create 2021/05/07 00:31
+     * @param campusId
+     * @return
+     */
+    public ReturnObject<Campus> getCampusDataById(Integer campusId){
+        CampusRetVo campusList = staticDao.getCampus();
+        if(campusList == null){
+            return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
+        }
+        else{
+            for(Campus campus : campusList.getCampusList()){
+                if(campusId.equals(campus.getId())){
+                    return new ReturnObject<>(campus);
+                }
+            }
+            return new ReturnObject<>(ResponseCode.RESOURCE_ID_NOT_EXIST);
+        }
+    }
+
 }
