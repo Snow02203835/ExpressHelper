@@ -159,7 +159,7 @@ DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
   `id` int NOT NULL AUTO_INCREMENT,
   `campus_id` int NOT NULL,
-  `company_id` JSON NOT NULL,
+  `company_id` varchar(1024) NOT NULL,
   `collect_address` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -174,6 +174,6 @@ DROP TABLE IF EXISTS `campus`;
 CREATE TABLE `campus` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `building` JSON DEFAULT NULL,
+  `building` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
