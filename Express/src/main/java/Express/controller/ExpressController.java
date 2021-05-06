@@ -970,5 +970,19 @@ public class ExpressController {
         return Common.decorateReturnObject(demandService.getCampusDataById(campusId));
     }
 
+    /**
+     * 获取快递公司静态数据
+     * @author snow create 2021/05/07 00:36
+     * @return companyRetVo 快递公司数据
+     */
+    @ApiOperation(value = "获取快递公司静态数据", produces = "application/json")
+    @ApiResponses({
+            @ApiResponse(code = 0, message = "成功"),
+    })
+    @GetMapping("company")
+    public Object getCompanies(){
+        return Common.decorateReturnObject(demandService.getCompanyData());
+    }
+
 }
 
