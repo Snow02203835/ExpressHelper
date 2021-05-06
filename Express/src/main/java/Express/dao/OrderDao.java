@@ -28,8 +28,8 @@ public class OrderDao {
      */
     public ReturnObject<Order> insertOrder(Order order){
         try {
+            order.setGmtCreate(LocalDateTime.now());
             OrderPo orderPo = order.createPo();
-            orderPo.setGmtCreate(LocalDateTime.now());
             int effectRows = orderPoMapper.insert(orderPo);
             if(effectRows == 1){
                 order.setId(orderPo.getId());
