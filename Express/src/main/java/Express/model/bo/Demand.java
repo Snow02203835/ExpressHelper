@@ -26,6 +26,7 @@ public class Demand implements VoObject, Serializable {
     private Long sponsorId;
     private String code;
     private String mobile;
+    private String company;
     private String address;
     private String sponsorName;
     private String destination;
@@ -44,6 +45,7 @@ public class Demand implements VoObject, Serializable {
         this.sponsorId = demandPo.getSponsorId();
         this.code = demandPo.getCode();
         this.mobile = demandPo.getMobile();
+        this.company = demandPo.getCompany();
         this.address = demandPo.getAddress();
         this.sponsorName = demandPo.getSponsorName();
         this.destination = demandPo.getDestination();
@@ -60,6 +62,7 @@ public class Demand implements VoObject, Serializable {
         this.price = demandVo.getPrice();
         this.code = demandVo.getCode();
         this.mobile = demandVo.getMobile();
+        this.company = demandVo.getCompany();
         this.address = demandVo.getAddress();
         this.sponsorName = demandVo.getSponsorName();
         this.destination = demandVo.getDestination();
@@ -77,6 +80,7 @@ public class Demand implements VoObject, Serializable {
         demandPo.setSponsorId(this.sponsorId);
         demandPo.setCode(this.code);
         demandPo.setMobile(this.mobile);
+        demandPo.setCompany(this.company);
         demandPo.setAddress(this.address);
         demandPo.setSponsorName(this.sponsorName);
         demandPo.setDestination(this.destination);
@@ -98,6 +102,9 @@ public class Demand implements VoObject, Serializable {
         }
         if(demandVo.getMobile() != null && !demandVo.getMobile().isBlank()) {
             this.mobile = demandVo.getMobile();
+        }
+        if(demandVo.getCompany() != null && !demandVo.getCompany().isBlank()){
+            this.company = demandVo.getCompany();
         }
         if(demandVo.getAddress() != null && !demandVo.getAddress().isBlank()) {
             this.address = demandVo.getAddress();
