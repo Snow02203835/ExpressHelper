@@ -76,7 +76,7 @@ INSERT INTO `address` VALUES (3,1,'{\"快递\":[6]}','公寓门口手抓饼对�
 INSERT INTO `address` VALUES (4,1,'{\"快递\":[4]}','公寓下坡菜鸟快递旁韵达快递点');
 INSERT INTO `address` VALUES (5,1,'{\"快递\":[7,8]}','海韵8中国邮政');
 INSERT INTO `address` VALUES (6,1,'{\"快递\":[5]}','公寓门口水果街顺丰快递');
-INSERT INTO `address` VALUES (7,2,'{\"快递\":[7,8]}','西村门卡邮政快递点');
+INSERT INTO `address` VALUES (7,2,'{\"快递\":[7,8]}','西村门口邮政快递点');
 INSERT INTO `address` VALUES (8,2,'{\"快递\":[1,2,3,4,5,6,9,10,11]}','南光鸟箱');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
