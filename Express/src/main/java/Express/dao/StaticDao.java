@@ -147,11 +147,13 @@ public class StaticDao {
     }
 
     /**
-     * 从redis中获取地址数据，若没有则从数据库中取数据放入Redis
+     * 从redis中根据校区id获取地址数据，若没有则从数据库中取数据放入Redis
      * @author snow create 2021/05/06 20:50
+     *            modified 2021/05/07 09:54
+     * @param campusId 校区id
      * @return 数据/null
      */
-    public AddressRetVo getAddresses(){
+    public AddressRetVo getAddresses(Integer campusId){
         try{
             boolean result = true;
             Set<Serializable> addressSet = redisTemplate.boundSetOps(addressKeys).members();
@@ -161,7 +163,10 @@ public class StaticDao {
             }
             List<Address> addressList = new ArrayList<>(addressSet.size());
             for (Serializable object : addressSet){
-                addressList.add((Address)object);
+                Address address = (Address)object;
+                if(campusId.equals(address.getCampusId())) {
+                    addressList.add(address);
+                }
             }
             return new AddressRetVo(addressList);
         }
