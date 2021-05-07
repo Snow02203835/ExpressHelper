@@ -987,15 +987,20 @@ public class ExpressController {
     /**
      * 获取地址静态数据
      * @author snow create 2021/05/06 21:00
+     *            modified 2021/05/07 09:56
+     * @param campusId 校区id
      * @return addressRetVo 地址数据
      */
     @ApiOperation(value = "获取地址静态数据", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "campusId", value = "校区id", required = true),
+    })
     @ApiResponses({
             @ApiResponse(code = 0, message = "成功"),
     })
     @GetMapping("address")
-    public Object getAddresses(){
-        return Common.decorateReturnObject(demandService.getAddressData());
+    public Object getAddresses(@RequestParam Integer campusId){
+        return Common.decorateReturnObject(demandService.getAddressData(campusId));
     }
 
 }

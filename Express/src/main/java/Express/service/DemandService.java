@@ -1029,12 +1029,14 @@ public class DemandService {
     }
 
     /**
-     * 获取地址数据
+     * 根据校区id获取地址数据
      * @author snow create 2021/05/06 20:52
+     *            modified 2021/05/07 09:55
+     * @param campusId 校区id
      * @return 数据/错误码
      */
-    public ReturnObject getAddressData(){
-        AddressRetVo address = staticDao.getAddresses();
+    public ReturnObject getAddressData(Integer campusId){
+        AddressRetVo address = staticDao.getAddresses(campusId);
         if(address == null){
             return new ReturnObject(ResponseCode.INTERNAL_SERVER_ERR);
         }
