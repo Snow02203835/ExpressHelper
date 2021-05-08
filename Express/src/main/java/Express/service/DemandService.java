@@ -347,6 +347,7 @@ public class DemandService {
      * @author snow create 2021/04/16 08:28
      *            modified 2021/04/28 09:23
      *            modified 2021/04/30 17:21
+     *            modified 2021/05/08 16:57
      * @param userId 用户id
      * @param departId 角色id
      * @param orderId 订单id
@@ -367,9 +368,7 @@ public class DemandService {
         }
         order.setStatus(OrderStatus.CANCEL.getCode());
         order.setCancelTime(LocalDateTime.now());
-        /*
-        decrease user credit
-         */
+        decreaseUserCredit(userId, illegalCancelOrders);
         ReturnObject<Demand> demandReturnObject = demandDao.findDemandById(order.getDemandId(), false);
         if (demandReturnObject.getData() == null){
             return demandReturnObject;
