@@ -67,6 +67,10 @@ public class DemandService {
     private String appSecret;
     @Value("${Express.user.login.jwtExpire}")
     private Integer jwtExpireTime;
+    @Value("${Express.user.illegalCancelDemand}")
+    private Integer illegalCancelDemand;
+    @Value("${Express.user.illegalCancelOrders}")
+    private Integer illegalCancelOrders;
 
     /**
      * 新建需求
@@ -803,6 +807,23 @@ public class DemandService {
             String token = new JwtHelper().createToken(user.getId(), userDepartId, jwtExpireTime);
             return new ReturnObject(new UserLoginRetVo(token, user));
         }
+    }
+
+    /**
+     * 扣除/增加用户信誉分
+     * @author snow create 2021/05/08 16:46
+     * @param userId 用户id
+     * @param credit 扣除量
+     * @return 操作结果错误码
+     */
+    private ResponseCode decreaseUserCredit(Long userId, Integer credit){
+        ReturnObject<User> retObj = userDao.findUserById(userId);
+        if(retObj.getData() == null){
+            return retObj.getCode();
+        }
+        User user = retObj.getData();
+        user.decreaseCredit(credit);
+        return userDao.updateUserInfo(user);
     }
 
     /**
