@@ -65,8 +65,8 @@ Express:
   user:
     login:
       jwtExpire: 72000
-    illegalCacelDemand: 2
-    illegelCacelOrders: 3
+    illegalCancelDemand: 2
+    illegalCancelOrders: 3
     appId: wx94b46827328ddde8
     appSecret: d640691e16cd510a640237043059c12c
 
