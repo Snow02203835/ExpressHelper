@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 public class User implements VoObject, Serializable {
 
     private final static String userKey = "express-help-2021-04-27-19-55";
+    private final Integer fullCredit = 100;
     private Long id;
     private String name;
     private String openId;
@@ -32,7 +33,7 @@ public class User implements VoObject, Serializable {
     private LocalDateTime gmtModified;
 
     public User(String openId){
-        this.credit = 100;
+        this.credit = fullCredit;
         this.openId = openId;
         this.studentVerify = (byte)0;
         this.signature = createSignature();
@@ -98,6 +99,19 @@ public class User implements VoObject, Serializable {
 
     public void setAddress(String address){
         this.address = AES.encrypt(address, userKey);
+    }
+
+    public void decreaseCredit(Integer credit){
+        if (credit > this.credit){
+            this.credit = 0;
+        }
+        else{
+            this.credit -= credit;
+        }
+        if(this.credit > fullCredit){
+            this.credit = fullCredit;
+        }
+        this.signature = createSignature();
     }
 
     /**
