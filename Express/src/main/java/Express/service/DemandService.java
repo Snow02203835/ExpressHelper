@@ -146,10 +146,11 @@ public class DemandService {
      * @author snow create 2021/04/15 19:37
      *            modified 2021/04/16 00:53
      *            modified 2021/04/26 15:29
-     * @param userId
-     * @param departId
-     * @param demandId
-     * @return
+     *            modified 2021/05/08 16:54
+     * @param userId 用户id
+     * @param departId 角色id
+     * @param demandId 需求id
+     * @return 操作结果
      */
     public ReturnObject cancelDemand(Long userId, Long departId, Long demandId){
         ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
@@ -169,7 +170,7 @@ public class DemandService {
                     }
                     Byte orderStatus = orderList.get(orderList.size()-1).getStatus();
                     if(OrderStatus.PICKED.getCode().equals(orderStatus)){
-                        //credit
+                        decreaseUserCredit(userId, illegalCancelDemand);
                     }
                     else if(!OrderStatus.CANCEL.getCode().equals(orderStatus)){
                         return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
