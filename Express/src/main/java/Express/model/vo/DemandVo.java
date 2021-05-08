@@ -20,6 +20,10 @@ public class DemandVo {
     @NotNull(message = "酬金不能为空")
     private Integer price;
 
+    @ApiModelProperty(value = "校区id")
+    @NotNull(message = "校区id不能为空")
+    private Integer campusId;
+
     @ApiModelProperty(value = "取件码")
     @NotBlank(message = "取件码不能为空")
     private String code;
