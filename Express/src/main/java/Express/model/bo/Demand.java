@@ -23,6 +23,7 @@ public class Demand implements VoObject, Serializable {
     private Byte status;
     private Byte deleted;
     private Integer price;
+    private Integer campusId;
     private Long sponsorId;
     private String code;
     private String mobile;
@@ -41,6 +42,7 @@ public class Demand implements VoObject, Serializable {
         this.type = demandPo.getType();
         this.status = demandPo.getStatus();
         this.price = demandPo.getPrice();
+        this.campusId = demandPo.getCampusId();
         this.deleted = demandPo.getDeleted();
         this.sponsorId = demandPo.getSponsorId();
         this.code = demandPo.getCode();
@@ -60,6 +62,7 @@ public class Demand implements VoObject, Serializable {
         this.status = DemandStatus.UNPAID.getCode();
         this.deleted = (byte)0;
         this.price = demandVo.getPrice();
+        this.campusId = demandVo.getCampusId();
         this.code = demandVo.getCode();
         this.mobile = demandVo.getMobile();
         this.company = demandVo.getCompany();
@@ -77,6 +80,7 @@ public class Demand implements VoObject, Serializable {
         demandPo.setStatus(this.status);
         demandPo.setDeleted(this.deleted);
         demandPo.setPrice(this.price);
+        demandPo.setCampusId(this.campusId);
         demandPo.setSponsorId(this.sponsorId);
         demandPo.setCode(this.code);
         demandPo.setMobile(this.mobile);
@@ -96,6 +100,9 @@ public class Demand implements VoObject, Serializable {
         }
         if(demandVo.getPrice() != null) {
             this.price = demandVo.getPrice();
+        }
+        if(demandVo.getCampusId != null){
+            this.campusId = demandVo.getCampusId;
         }
         if(demandVo.getCode() != null && !demandVo.getCode().isBlank()) {
             this.code = demandVo.getCode();
