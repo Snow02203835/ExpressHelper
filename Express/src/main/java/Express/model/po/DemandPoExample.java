@@ -315,6 +315,66 @@ public class DemandPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andCampusIdIsNull() {
+            addCriterion("campus_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdIsNotNull() {
+            addCriterion("campus_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdEqualTo(Integer value) {
+            addCriterion("campus_id =", value, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdNotEqualTo(Integer value) {
+            addCriterion("campus_id <>", value, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdGreaterThan(Integer value) {
+            addCriterion("campus_id >", value, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("campus_id >=", value, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdLessThan(Integer value) {
+            addCriterion("campus_id <", value, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdLessThanOrEqualTo(Integer value) {
+            addCriterion("campus_id <=", value, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdIn(List<Integer> values) {
+            addCriterion("campus_id in", values, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdNotIn(List<Integer> values) {
+            addCriterion("campus_id not in", values, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdBetween(Integer value1, Integer value2) {
+            addCriterion("campus_id between", value1, value2, "campusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCampusIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("campus_id not between", value1, value2, "campusId");
+            return (Criteria) this;
+        }
+
         public Criteria andCodeIsNull() {
             addCriterion("code is null");
             return (Criteria) this;
