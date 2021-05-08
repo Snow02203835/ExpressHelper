@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS `demand`;
 CREATE TABLE `demand` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `type` tinyint DEFAULT NULL,
+  `campus_id` int NOT NULL,
   `code` varchar(64) NOT NULL,
   `company` varchar(64) NOT NULL,
   `mobile` varchar(128) DEFAULT NULL,
