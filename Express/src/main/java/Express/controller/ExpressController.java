@@ -218,6 +218,7 @@ public class ExpressController {
      * @author snow create 2021/04/16 13:25
      *            modified 2021/04/17 00:48
      *            modified 2021/04/30 16:06
+     *            modified 2021/05/09 19:43
      * @param userId 用户id
      * @param departId 角色id
      * @param sponsorId 发布者id
@@ -226,6 +227,7 @@ public class ExpressController {
      * @param deleted 逻辑删除是否可见
      * @param minPrice 最低价格
      * @param maxPrice 最高价格
+     * @param campusId 校区id
      * @param address 取件地址
      * @param destination 送达地址
      * @param startTime 开始时间
@@ -243,6 +245,7 @@ public class ExpressController {
             @ApiImplicitParam(paramType = "query", dataType = "int", name = "deleted", value = "逻辑删除需求是否可见", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "int", name = "minPrice", value = "最低价格", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "int", name = "maxPrice", value = "最高价格", required = false),
+            @ApiImplicitParam(paramType = "query", dataType = "int", name = "campusId", value = "校区id", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "address", value = "取件地址", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "destination", value = "送达地址", required = false),
             @ApiImplicitParam(paramType = "query", dataType = "String", name = "startTime", value = "开始时间", required = false),
@@ -263,6 +266,7 @@ public class ExpressController {
                              @RequestParam(required = false) Byte deleted,
                              @RequestParam(required = false) Integer minPrice,
                              @RequestParam(required = false) Integer maxPrice,
+                             @RequestParam(required = false) Integer campusId,
                              @RequestParam(required = false) String address,
                              @RequestParam(required = false) String destination,
                              @RequestParam(required = false) String startTime,
@@ -289,7 +293,7 @@ public class ExpressController {
             return Common.getNullRetObj(new ReturnObject(ResponseCode.FIELD_NOT_VALID), httpServletResponse);
         }
         return Common.getPageRetObject(demandService.getDemandsWithCondition(userId, departId, sponsorId, type, status,
-                deleted, minPrice, maxPrice, address, destination, start, end, page, pageSize));
+                deleted, minPrice, maxPrice, campusId, address, destination, start, end, page, pageSize));
     }
 
     /**
