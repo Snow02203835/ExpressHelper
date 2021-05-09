@@ -21,6 +21,7 @@ public class OrderRetVo implements VoObject, Serializable {
     private Byte type;
     private Byte status;
     private Integer price;
+    private Integer campusId;
     private Long demandId;
     private Long sponsorId;
     private Long receiverId;
@@ -75,6 +76,7 @@ public class OrderRetVo implements VoObject, Serializable {
         this.demandId = demandPo.getId();
         this.type = demandPo.getType();
         this.price = demandPo.getPrice();
+        this.campusId = demandPo.getCampusId();
         this.sponsorId = demandPo.getSponsorId();
         this.code = demandPo.getCode();
         this.mobile = demandPo.getMobile();
@@ -109,6 +111,7 @@ public class OrderRetVo implements VoObject, Serializable {
         }
         this.type = demand.getType();
         this.price = demand.getPrice();
+        this.campusId = demand.getCampusId();
         this.sponsorId = demand.getSponsorId();
         this.code = demand.getCode();
         this.mobile = demand.getMobile();
