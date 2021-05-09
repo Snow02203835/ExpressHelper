@@ -90,20 +90,21 @@ public class DemandDao {
      * 根据条件查找需求
      * @author snow create 2021/04/16 11:03
      *            modified 2021/04/17 00:49
-     * @param sponsorId
-     * @param type
-     * @param status
-     * @param deleted
-     * @param minPrice
-     * @param maxPrice
-     * @param address
-     * @param destination
-     * @param startTime
-     * @param endTime
-     * @return
+     *            modified 2021/05/09 19:34
+     * @param sponsorId 发布者id
+     * @param type 类型
+     * @param status 状态
+     * @param deleted 逻辑删除是否可见
+     * @param minPrice 最低价格
+     * @param maxPrice 最高价格
+     * @param address 地址
+     * @param destination 目的地
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @return 结果
      */
     public PageInfo<DemandPo> findDemandsWithCondition(Long sponsorId, Byte type, Byte status, Byte deleted,
-                                                       Integer minPrice, Integer maxPrice,
+                                                       Integer minPrice, Integer maxPrice, Integer campusId,
                                                        String address, String destination,
                                                        LocalDateTime startTime, LocalDateTime endTime){
         try {
@@ -126,6 +127,9 @@ public class DemandDao {
             }
             if(maxPrice != null){
                 criteria.andPriceLessThanOrEqualTo(maxPrice);
+            }
+            if(campusId != null){
+                criteria.andCampusIdEqualTo(campusId);
             }
             if(address != null){
                 criteria.andAddressLike(address);
