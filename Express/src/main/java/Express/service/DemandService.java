@@ -244,6 +244,7 @@ public class DemandService {
      * @author snow create 2021/04/16 11:08
      *            modified 2021/04/17 00:49
      *            modified 2021/04/30 15:58
+     *            modified 2021/05/09 19:41
      * @param userId 用户id
      * @param departId 角色id
      * @param sponsorId 发布者id
@@ -252,6 +253,7 @@ public class DemandService {
      * @param deleted 逻辑删除是否可见
      * @param minPrice 最低价格
      * @param maxPrice 最高价格
+     * @param campusId 校区id
      * @param address 取件地址
      * @param destination 送达地址
      * @param startTime 开始时间
@@ -261,7 +263,7 @@ public class DemandService {
      * @return 查询分页结果
      */
     public ReturnObject<PageInfo<VoObject>> getDemandsWithCondition(Long userId, Long departId, Long sponsorId, Byte type, Byte status,
-                                                                    Byte deleted, Integer minPrice, Integer maxPrice,
+                                                                    Byte deleted, Integer minPrice, Integer maxPrice, Integer campusId,
                                                                     String address, String destination,
                                                                     LocalDateTime startTime, LocalDateTime endTime,
                                                                     Integer page, Integer pageSize){
@@ -276,7 +278,7 @@ public class DemandService {
         }
         PageHelper.startPage(page, pageSize);
         PageInfo<DemandPo> demandPoPageInfo = demandDao.findDemandsWithCondition(sponsorId, type, status, deleted,
-                minPrice, maxPrice, address, destination, startTime, endTime);
+                minPrice, maxPrice, campusId, address, destination, startTime, endTime);
         if(demandPoPageInfo == null){
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
