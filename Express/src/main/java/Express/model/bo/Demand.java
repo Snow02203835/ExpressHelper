@@ -101,8 +101,8 @@ public class Demand implements VoObject, Serializable {
         if(demandVo.getPrice() != null) {
             this.price = demandVo.getPrice();
         }
-        if(demandVo.getCampusId != null){
-            this.campusId = demandVo.getCampusId;
+        if(demandVo.getCampusId() != null){
+            this.campusId = demandVo.getCampusId();
         }
         if(demandVo.getCode() != null && !demandVo.getCode().isBlank()) {
             this.code = demandVo.getCode();
