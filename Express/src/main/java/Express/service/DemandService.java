@@ -545,6 +545,7 @@ public class DemandService {
      * 用户更新反馈内容
      * @author snow create 2021/04/19 13:11
      *            modified 2021/04/20 19:58
+     *            modified 2021/05/14 11:11
      * @param userId 用户id
      * @param feedbackId 反馈信息id
      * @param img 上传图片
@@ -559,6 +560,9 @@ public class DemandService {
         Feedback feedback = retObj.getData();
         if(!userId.equals(feedback.getUserId())){
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(FeedbackStatus.HANDLING.getCode() < feedback.getStatus()){
+            return new ReturnObject(ResponseCode.FEEDBACK_STATUS_FORBID);
         }
         if(img != null){
             feedback.setImg(img);
