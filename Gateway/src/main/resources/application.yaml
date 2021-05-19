@@ -1,0 +1,90 @@
+server:
+  port: 8088
+all-ip:
+  admin: localhost:8084
+  express: localhost:8082
+
+spring:
+  application:
+    name: privilege-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+              - OPTIONS
+      routes:
+        - id: login
+          uri: http://localhost:8086/
+          predicates:
+            - Path=/adminusers,/privileges/login,/adminusers/login
+          filters:
+            - PrefixPath=/privilege
+
+        - id: front-data
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/company,/campus,/campus/*,/address
+
+        - id: demand
+          uri: http://${all-ip.express}/
+          predicates:
+            - Path=/demand,/demand/*,/demand/payment/*,/demand/*/cancel
+          filters:
+            - Auth=authorization
+
+        - id: order
+          uri: http://${all-ip.express}/
+          predicates:
+            - Path=/order/*,/order/*/cancel,/order,/image
+          filters:
+            - Auth=authorization
+
+        - id: feedback
+          uri: http://${all-ip.express}/
+          predicates:
+            - Path=/order/feedback,/order/feedback/*,order/feedback/*/*,order/{id}/feedback
+          filters:
+            - Auth=authorization
+
+        - id: user
+          uri: http://${all-ip.express}/
+          predicates:
+            - Path=/user,/user/login,/user/verification,/user/verification/*,admin/user/verification/{id}
+          filters:
+            - Auth=authorization
+
+  redis:
+    # Redis服务器地址
+    host: localhost
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码
+    password: 123456
+    # Redis数据库索引（默认为0）
+    database: 0
+    #连接池最大连接数（使用负值表示没有限制）
+    lettuce:
+      pool:
+        max-active: 100
+        # 连接池中的最大空闲连接
+        max-idle: 100
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+    # 连接超时时间（毫秒）
+    timeout: 5000
+
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
