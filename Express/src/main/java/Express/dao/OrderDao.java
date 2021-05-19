@@ -6,6 +6,7 @@ import Express.mapper.OrderPoMapper;
 import Express.model.bo.Order;
 import Express.model.po.OrderPo;
 import Express.model.po.OrderPoExample;
+import Express.util.OrderStatus;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -136,12 +137,13 @@ public class OrderDao {
     /**
      * 根据条件查找订单
      * @author snow create 2021/04/17 00:34
-     * @param receiverId
-     * @param status
-     * @param deleted
-     * @param startTime
-     * @param endTime
-     * @return
+     *            modified 2021/05/20 00:59
+     * @param receiverId 接单者id
+     * @param status 状态
+     * @param deleted 逻辑删除是否可见
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @return 分页结果
      */
     public PageInfo<OrderPo> findOrdersWithCondition(Long receiverId , Byte status, Byte deleted,
                                                      LocalDateTime startTime, LocalDateTime endTime){
@@ -152,7 +154,12 @@ public class OrderDao {
                 criteria.andReceiverIdEqualTo(receiverId);
             }
             if(status != null){
-                criteria.andStatusEqualTo(status);
+                if (status == 25){
+                    criteria.andStatusNotEqualTo(OrderStatus.CANCEL.getCode());
+                }
+                else {
+                    criteria.andStatusEqualTo(status);
+                }
             }
             if(deleted != null){
                 criteria.andDeletedEqualTo(deleted);
