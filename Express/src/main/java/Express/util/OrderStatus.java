@@ -6,9 +6,10 @@ public enum OrderStatus {
     COLLECTED((byte)1, "已取件"),
     SENT((byte)2, "已送达"),
     CANCEL((byte)3, "已取消"),
+    BEEN_CANCEL((byte)4, "被取消"),
     SATISFY((byte)9, "已完成");
 
-    private Byte code;
+    private final Byte code;
     private String message;
 
     OrderStatus(Byte code, String message){
