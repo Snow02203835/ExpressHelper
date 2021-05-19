@@ -258,7 +258,7 @@ public class PrivilegeController {
             @ApiResponse(code = 0, message = "成功"),
     })
     @Audit
-    @GetMapping("admin/informations")
+    @GetMapping("admin/information")
     public Object getAdminInformation(@ApiIgnore @Depart Long departId,
                                           @RequestParam(required = false) Byte role,
                                           @RequestParam(required = false) String userName,
