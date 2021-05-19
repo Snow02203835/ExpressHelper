@@ -61,6 +61,18 @@ spring:
           filters:
             - Auth=authorization
 
+        - id: admin-free
+          uri: http://${all-ip.admin}/
+          predicates:
+            - Path=/admin/login,/verifyCode
+
+        - id: admin
+          uri: http://${all-ip.admin}/
+          predicates:
+            - Path=/admin,/admin/password/*,/admin/password,/admin/information,/admin/email/verify,/admin/email
+          filters:
+            - Auth=authorization
+
   redis:
     # Redis服务器地址
     host: localhost
