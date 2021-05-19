@@ -936,7 +936,7 @@ public class ExpressController {
             @ApiResponse(code = 0, message = "成功"),
     })
     @Audit
-    @PutMapping("admin/user/verification{verificationId}")
+    @PutMapping("admin/user/verification/{verificationId}")
     public Object adminAuditVerification(@PathVariable Long verificationId, @RequestParam Byte pass){
         ResponseCode code = demandService.adminAuditUserVerification(verificationId, (pass == (byte)1));
         return Common.decorateReturnObject(new ReturnObject(code));
