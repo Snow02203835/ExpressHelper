@@ -490,13 +490,10 @@ public class DemandService {
                                                       Integer page, Integer pageSize){
         if(userDepartId.equals(departId)){
             deleted = (byte)0;
-            if(status == null) {
-                status = (byte) 25;
-            }
             receiverId = userId;
         }
         PageHelper.startPage(page, pageSize);
-        PageInfo<OrderPo> orderPoPageInfo = orderDao.findOrdersWithCondition(receiverId, status, deleted, startTime, endTime);
+        PageInfo<OrderPo> orderPoPageInfo = orderDao.findOrdersWithCondition(userDepartId.equals(departId), receiverId, status, deleted, startTime, endTime);
         if(orderPoPageInfo == null){
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
