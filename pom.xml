@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>Core</module>
+        <module>Gateway</module>
         <module>Express</module>
         <module>Privilege</module>
     </modules>
