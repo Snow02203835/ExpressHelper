@@ -473,6 +473,7 @@ public class DemandService {
      * 根据条件查找订单
      * @author snow create 2021/04/17 00:39
      *            modified 2021/05/06 16:47
+     *            modified 2021/05/20 00:59
      * @param userId 用户id
      * @param departId 角色id
      * @param receiverId 接单者id
@@ -489,6 +490,9 @@ public class DemandService {
                                                       Integer page, Integer pageSize){
         if(userDepartId.equals(departId)){
             deleted = (byte)0;
+            if(status == null) {
+                status = (byte) 25;
+            }
             receiverId = userId;
         }
         PageHelper.startPage(page, pageSize);
