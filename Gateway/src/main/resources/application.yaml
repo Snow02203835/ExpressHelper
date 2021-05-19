@@ -31,7 +31,7 @@ spring:
         - id: front-data
           uri: http://localhost:8082/
           predicates:
-            - Path=/company,/campus,/campus/*,/address
+            - Path=/company,/campus,/campus/*,/address,/user/login
 
         - id: demand
           uri: http://${all-ip.express}/
@@ -57,7 +57,7 @@ spring:
         - id: user
           uri: http://${all-ip.express}/
           predicates:
-            - Path=/user,/user/login,/user/verification,/user/verification/*,admin/user/verification/{id}
+            - Path=/user,/user/verification,/user/verification/*,admin/user/verification/{id}
           filters:
             - Auth=authorization
 
