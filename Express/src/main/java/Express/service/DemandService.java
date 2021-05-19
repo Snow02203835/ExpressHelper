@@ -147,11 +147,13 @@ public class DemandService {
      *            modified 2021/04/16 00:53
      *            modified 2021/04/26 15:29
      *            modified 2021/05/08 16:54
+     *            modified 2021/05/20 00:52
      * @param userId 用户id
      * @param departId 角色id
      * @param demandId 需求id
      * @return 操作结果
      */
+    @Transactional
     public ReturnObject cancelDemand(Long userId, Long departId, Long demandId){
         ReturnObject<Demand> retObj = demandDao.findDemandById(demandId, false);
         if(retObj.getData() == null){
@@ -171,6 +173,9 @@ public class DemandService {
                     Byte orderStatus = orderList.get(orderList.size()-1).getStatus();
                     if(OrderStatus.PICKED.getCode().equals(orderStatus)){
                         decreaseUserCredit(userId, illegalCancelDemand);
+                        Order order = orderList.get(orderList.size()-1);
+                        order.setStatus(OrderStatus.BEEN_CANCEL.getCode());
+                        orderDao.alterOrder(order);
                     }
                     else if(!OrderStatus.CANCEL.getCode().equals(orderStatus)){
                         return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
