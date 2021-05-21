@@ -447,6 +447,33 @@ public class DemandService {
     }
 
     /**
+     * 需求发布者确认订单已完成
+     * @author snow create 2021/5/21 16:04
+     * @param userId 用户id
+     * @param orderId 订单id
+     * @return 操作结果
+     */
+    public ReturnObject sponsorConfirmOrder(Long userId, Long orderId){
+        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId);
+        if(orderReturnObject.getData() == null){
+            return orderReturnObject;
+        }
+        Order order = orderReturnObject.getData();
+        ReturnObject<Demand> demandReturnObject = demandDao.findDemandById(order.getDemandId(), false);
+        if (demandReturnObject.getData() == null){
+            return demandReturnObject;
+        }
+        Demand demand = demandReturnObject.getData();
+        if(!userId.equals(demand.getSponsorId())){
+            return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        order.setStatus(OrderStatus.SATISFY.getCode());
+        demand.setStatus(DemandStatus.SATISFY.getCode());
+        orderDao.alterOrder(order);
+        return demandDao.alterDemand(demand);
+    }
+
+    /**
      * 根据订单id查找订单以及对应需求
      * @author snow create 2021/04/16 01:00
      * @param userId
