@@ -255,6 +255,76 @@ public class OrderPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andSnIsNull() {
+            addCriterion("sn is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnIsNotNull() {
+            addCriterion("sn is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnEqualTo(String value) {
+            addCriterion("sn =", value, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnNotEqualTo(String value) {
+            addCriterion("sn <>", value, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnGreaterThan(String value) {
+            addCriterion("sn >", value, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnGreaterThanOrEqualTo(String value) {
+            addCriterion("sn >=", value, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnLessThan(String value) {
+            addCriterion("sn <", value, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnLessThanOrEqualTo(String value) {
+            addCriterion("sn <=", value, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnLike(String value) {
+            addCriterion("sn like", value, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnNotLike(String value) {
+            addCriterion("sn not like", value, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnIn(List<String> values) {
+            addCriterion("sn in", values, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnNotIn(List<String> values) {
+            addCriterion("sn not in", values, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnBetween(String value1, String value2) {
+            addCriterion("sn between", value1, value2, "sn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSnNotBetween(String value1, String value2) {
+            addCriterion("sn not between", value1, value2, "sn");
+            return (Criteria) this;
+        }
+
         public Criteria andDemandIdIsNull() {
             addCriterion("demand_id is null");
             return (Criteria) this;
