@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class OrderRetVo implements VoObject, Serializable {
 
     private Long orderId;
+    private String orderSn;
     private Byte type;
     private Byte status;
     private Integer price;
@@ -44,6 +45,7 @@ public class OrderRetVo implements VoObject, Serializable {
 
     public OrderRetVo(Order order){
         this.orderId = order.getId();
+        this.orderSn = order.getSn();
         this.demandId = order.getDemandId();
         this.receiverId = order.getReceiverId();
         this.receiverMobile = order.getReceiverMobile();
@@ -59,6 +61,7 @@ public class OrderRetVo implements VoObject, Serializable {
 
     public OrderRetVo(OrderPo orderPo){
         this.orderId = orderPo.getId();
+        this.orderSn = orderPo.getSn();
         this.demandId = orderPo.getDemandId();
         this.receiverId = orderPo.getReceiverId();
         this.receiverMobile = orderPo.getReceiverMobile();
@@ -93,6 +96,7 @@ public class OrderRetVo implements VoObject, Serializable {
             return;
         }
         this.orderId = order.getId();
+        this.orderSn = order.getSn();
         this.receiverId = order.getReceiverId();
         this.receiverMobile = order.getReceiverMobile();
         this.status = order.getStatus();
