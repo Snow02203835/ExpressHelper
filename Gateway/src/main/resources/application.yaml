@@ -21,17 +21,11 @@ spring:
               - HEAD
               - OPTIONS
       routes:
-        - id: login
-          uri: http://localhost:8086/
-          predicates:
-            - Path=/adminusers,/privileges/login,/adminusers/login
-          filters:
-            - PrefixPath=/privilege
 
         - id: front-data
-          uri: http://localhost:8082/
+          uri: http://${all-ip.express}/
           predicates:
-            - Path=/company,/campus,/campus/*,/address,/user/login
+            - Path=/company,/campus,/campus/*,/address,/user/login,/resource/img/*
 
         - id: demand
           uri: http://${all-ip.express}/
