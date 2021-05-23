@@ -41,6 +41,7 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` bigint NOT NULL AUTO_INCREMENT,
+  `sn` char(18) NOT NULL UNIQUE,
   `demand_id` bigint NOT NULL,
   `receiver_id` bigint NOT NULL,
   `receiver_mobile` varchar(128) DEFAULT NULL,
