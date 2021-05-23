@@ -585,6 +585,66 @@ public class UserPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andSucceedIsNull() {
+            addCriterion("succeed is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedIsNotNull() {
+            addCriterion("succeed is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedEqualTo(Integer value) {
+            addCriterion("succeed =", value, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedNotEqualTo(Integer value) {
+            addCriterion("succeed <>", value, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedGreaterThan(Integer value) {
+            addCriterion("succeed >", value, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedGreaterThanOrEqualTo(Integer value) {
+            addCriterion("succeed >=", value, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedLessThan(Integer value) {
+            addCriterion("succeed <", value, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedLessThanOrEqualTo(Integer value) {
+            addCriterion("succeed <=", value, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedIn(List<Integer> values) {
+            addCriterion("succeed in", values, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedNotIn(List<Integer> values) {
+            addCriterion("succeed not in", values, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedBetween(Integer value1, Integer value2) {
+            addCriterion("succeed between", value1, value2, "succeed");
+            return (Criteria) this;
+        }
+
+        public Criteria andSucceedNotBetween(Integer value1, Integer value2) {
+            addCriterion("succeed not between", value1, value2, "succeed");
+            return (Criteria) this;
+        }
+
         public Criteria andMobileIsNull() {
             addCriterion("mobile is null");
             return (Criteria) this;
