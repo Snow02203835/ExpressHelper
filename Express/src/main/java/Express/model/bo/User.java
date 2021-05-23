@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 /**
  * @author snow create 2021/04/27 19:51
  *            modified 2021/04/28 09:00
+ *            modified 2021/05/23 20:00
  */
 @Data
 public class User implements VoObject, Serializable {
@@ -24,6 +25,7 @@ public class User implements VoObject, Serializable {
     private String name;
     private String openId;
     private Integer credit;
+    private Integer succeed;
     private String mobile;
     private String address;
     private String studentNumber;
@@ -33,6 +35,7 @@ public class User implements VoObject, Serializable {
     private LocalDateTime gmtModified;
 
     public User(String openId){
+        this.succeed = 0;
         this.credit = fullCredit;
         this.openId = openId;
         this.studentVerify = (byte)0;
@@ -46,6 +49,7 @@ public class User implements VoObject, Serializable {
         this.credit = userPo.getCredit();
         this.mobile = userPo.getMobile();
         this.address = userPo.getAddress();
+        this.succeed = userPo.getSucceed();
         this.studentNumber = userPo.getStudentNumber();
         this.studentVerify = userPo.getStudentVerify();
         this.signature = userPo.getSignature();
@@ -61,6 +65,7 @@ public class User implements VoObject, Serializable {
         userPo.setCredit(this.credit);
         userPo.setMobile(this.mobile);
         userPo.setAddress(this.address);
+        userPo.setSucceed(this.succeed);
         userPo.setStudentNumber(this.studentNumber);
         userPo.setStudentVerify(this.studentVerify);
         userPo.setSignature(this.signature);
@@ -114,28 +119,35 @@ public class User implements VoObject, Serializable {
         this.signature = createSignature();
     }
 
+    public void successfullyDeliverPackage(){
+        this.succeed++;
+        if(this.succeed%10 == 0){
+            decreaseCredit(-1);
+        }
+    }
+
     /**
      * 生成签名
      * @author snow create 2021/01/19 00:25
      *            modified 2021/04/28 08:48
-     * @return
+     *            modified 2021/05/23 19:58
+     * @return 签名
      */
     public String createSignature(){
         StringBuilder signature = Common.concatString("-", this.openId, this.name,
-                this.credit.toString(), this.mobile, this.address, this.studentNumber, this.studentVerify.toString());
+                this.credit.toString(), this.succeed.toString(), this.mobile,
+                this.address, this.studentNumber, this.studentVerify.toString());
         return SHA256.getSHA256(signature.toString());
     }
 
     /**
      * 判断签名是否被篡改
      * @author snow create 2021/01/19 00:26
-     * @return
+     *            modified 2021/05/23 20:00
+     * @return bool
      */
     public Boolean isSignatureBeenModify(){
-        if(this.signature.equals(createSignature())){
-            return false;
-        }
-        return true;
+        return !this.signature.equals(createSignature());
     }
 
     @Override
