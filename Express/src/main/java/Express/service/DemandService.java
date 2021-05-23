@@ -309,6 +309,7 @@ public class DemandService {
      *            modified 2021/04/16 00:54
      *            modified 2021/04/28 09:24
      *            modified 2021/04/30 17:04
+     *            modified 2021/05/23 20:08
      * @param userId 用户id
      * @param demandId 需求id
      * @return 订单视图
@@ -329,6 +330,9 @@ public class DemandService {
         User user = userRetObj.getData();
         if(user.getStudentVerify().equals((byte)0)){
             return new ReturnObject(ResponseCode.USER_STUDENT_NOT_VERIFY);
+        }
+        if(user.getMobile() == null || user.getDecryptMobile() == null){
+            return new ReturnObject(ResponseCode.MOBILE_EMPTY);
         }
         Order order = new Order(userId, user.getDecryptMobile(), demandId);
         order.setPickUpTime(LocalDateTime.now());
