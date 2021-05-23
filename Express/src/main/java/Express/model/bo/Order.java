@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 /**
  * @author snow create 2021/04/15 16:05
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 public class Order implements VoObject, Serializable {
 
     private Long id;
+    private String sn;
     private Long demandId;
     private Long receiverId;
     private String receiverMobile;
@@ -30,8 +33,12 @@ public class Order implements VoObject, Serializable {
     private LocalDateTime gmtCreate;
     private LocalDateTime gmtModified;
 
+    private final static Random random = new Random();
+    private final static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmm0ss");
+
     public Order(OrderPo orderPo){
         this.id = orderPo.getId();
+        this.sn = orderPo.getSn();
         this.demandId = orderPo.getDemandId();
         this.receiverId = orderPo.getReceiverId();
         this.receiverMobile = orderPo.getReceiverMobile();
@@ -49,6 +56,7 @@ public class Order implements VoObject, Serializable {
     }
 
     public Order(Long receiverId, String mobile, Long demandId){
+        this.sn = generateSn();
         this.demandId = demandId;
         this.receiverMobile = mobile;
         this.receiverId = receiverId;
@@ -59,6 +67,7 @@ public class Order implements VoObject, Serializable {
     public OrderPo createPo(){
         OrderPo orderPo = new OrderPo();
         orderPo.setId(this.id);
+        orderPo.setSn(this.sn);
         orderPo.setDemandId(this.demandId);
         orderPo.setReceiverId(this.receiverId);
         orderPo.setReceiverMobile(this.receiverMobile);
@@ -74,6 +83,13 @@ public class Order implements VoObject, Serializable {
         orderPo.setGmtCreate(this.gmtCreate);
         orderPo.setGmtModified(this.gmtModified);
         return orderPo;
+    }
+
+    private String generateSn(){
+        return LocalDateTime.now().format(df) +
+                random.nextInt(10) +
+                random.nextInt(10) +
+                random.nextInt(10);
     }
 
     @Override
