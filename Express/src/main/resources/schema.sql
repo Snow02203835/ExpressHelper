@@ -112,6 +112,7 @@ CREATE TABLE `user` (
   `student_number` char(14) DEFAULT NULL,
   `student_verify` tinyint(3) unsigned zerofill NOT NULL,
   `credit` int DEFAULT NULL,
+  `succeed` int DEFAULT NULL,
   `mobile` varchar(128) DEFAULT NULL,
   `address` varchar(256) DEFAULT NULL,
   `signature` varchar(500) DEFAULT NULL,
