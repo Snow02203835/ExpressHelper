@@ -448,7 +448,8 @@ public class DemandService {
 
     /**
      * 需求发布者确认订单已完成
-     * @author snow create 2021/5/21 16:04
+     * @author snow create 2021/05/21 16:04
+     *            modified 2021/05/23 20:03
      * @param userId 用户id
      * @param orderId 订单id
      * @return 操作结果
@@ -463,10 +464,17 @@ public class DemandService {
         if (demandReturnObject.getData() == null){
             return demandReturnObject;
         }
+        ReturnObject<User> userReturnObject = userDao.findUserById(order.getReceiverId());
+        if(userReturnObject.getData() == null){
+            return userReturnObject;
+        }
+        User user = userReturnObject.getData();
         Demand demand = demandReturnObject.getData();
         if(!userId.equals(demand.getSponsorId())){
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
         }
+        user.successfullyDeliverPackage();
+        userDao.updateUserInfo(user);
         order.setStatus(OrderStatus.SATISFY.getCode());
         demand.setStatus(DemandStatus.SATISFY.getCode());
         orderDao.alterOrder(order);
