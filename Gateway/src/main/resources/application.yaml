@@ -44,14 +44,14 @@ spring:
         - id: feedback
           uri: http://${all-ip.express}/
           predicates:
-            - Path=/order/feedback,/order/feedback/*,order/feedback/*/*,order/{id}/feedback
+            - Path=/order/feedback,/order/feedback/*,/order/feedback/*/*,/order/{id}/feedback
           filters:
             - Auth=authorization
 
         - id: user
           uri: http://${all-ip.express}/
           predicates:
-            - Path=/user,/user/verification,/user/verification/*,admin/user/verification/{id}
+            - Path=/user,/user/verification,/user/verification/*,/admin/user/verification/{id}
           filters:
             - Auth=authorization
 
