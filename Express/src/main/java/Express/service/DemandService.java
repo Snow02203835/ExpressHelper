@@ -305,13 +305,11 @@ public class DemandService {
         List<OrderRetVo> demandList = demandPoPageInfo.getList().stream().map(OrderRetVo::new).collect(Collectors.toList());
         List<VoObject> demandInfo = new ArrayList<>(demandList.size());
         for(OrderRetVo demandVo : demandList){
-            if(DemandStatus.CANCEL.getCode().equals(demandVo.getDemandStatus())){
-                continue;
+            if(!DemandStatus.CANCEL.getCode().equals(demandVo.getDemandStatus())){
+                demandVo.addOrderDetail(orderDao.findLastOrderByDemandId(demandVo.getDemandId()));
             }
-            demandVo.addOrderDetail(orderDao.findLastOrderByDemandId(demandVo.getDemandId()));
             demandInfo.add(demandVo);
         }
-        System.out.println(demandList.toString());
         PageInfo<VoObject> retObj = new PageInfo<>(demandInfo);
         retObj.setPages(demandPoPageInfo.getPages());
         retObj.setPageNum(demandPoPageInfo.getPageNum());
