@@ -227,6 +227,7 @@ public class DemandService {
      * @author snow create 2021/04/16 00:24
      *            modified 2021/04/16 00:54
      *            modified 2021/05/25 14:06
+     *            modified 2021/05/25 15:42
      * @param userId 用户id
      * @param departId 角色id
      * @param demandId 需求id
@@ -242,7 +243,17 @@ public class DemandService {
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
         }
         if(!DemandStatus.CANCEL.getCode().equals(demand.getStatus())) {
-            demand.setOrders(orderDao.findOrderByDemandId(demandId));
+            if (userDepartId.equals(departId)){
+                Order order = orderDao.findLastOrderByDemandId(demandId);
+                if(!OrderStatus.CANCEL.getCode().equals(order.getStatus())){
+                    List<Order> orders = new ArrayList<>(1);
+                    orders.add(order);
+                    demand.setOrders(orders);
+                }
+            }
+            else {
+                demand.setOrders(orderDao.findOrderByDemandId(demandId));
+            }
         }
         return new ReturnObject(demand);
     }
