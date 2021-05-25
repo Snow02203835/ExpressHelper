@@ -250,6 +250,7 @@ public class DemandService {
      *            modified 2021/04/17 00:49
      *            modified 2021/04/30 15:58
      *            modified 2021/05/09 19:41
+     *            modified 2021/05/25 14:02
      * @param userId 用户id
      * @param departId 角色id
      * @param sponsorId 发布者id
@@ -290,6 +291,9 @@ public class DemandService {
         List<OrderRetVo> demandList = demandPoPageInfo.getList().stream().map(OrderRetVo::new).collect(Collectors.toList());
         List<VoObject> demandInfo = new ArrayList<>(demandList.size());
         for(OrderRetVo demandVo : demandList){
+            if(DemandStatus.CANCEL.getCode().equals(demandVo.getDemandStatus())){
+                continue;
+            }
             demandVo.addOrderDetail(orderDao.findLastOrderByDemandId(demandVo.getDemandId()));
             demandInfo.add(demandVo);
         }
