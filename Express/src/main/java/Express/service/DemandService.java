@@ -310,6 +310,7 @@ public class DemandService {
      *            modified 2021/04/28 09:24
      *            modified 2021/04/30 17:04
      *            modified 2021/05/23 20:08
+     *            modified 2021/05/25 13:52
      * @param userId 用户id
      * @param demandId 需求id
      * @return 订单视图
@@ -322,6 +323,9 @@ public class DemandService {
         Demand demand = retObj.getData();
         if(!DemandStatus.EXPECTING.getCode().equals(demand.getStatus())){
             return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
+        }
+        if(demand.getSponsorId().equals(userId)){
+            return new ReturnObject(ResponseCode.DEMAND_BELONG_SELF);
         }
         ReturnObject<User> userRetObj = userDao.findUserById(userId);
         if(userRetObj.getData() == null){
