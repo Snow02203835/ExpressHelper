@@ -245,7 +245,7 @@ public class DemandService {
         if(!DemandStatus.CANCEL.getCode().equals(demand.getStatus())) {
             if (userDepartId.equals(departId)){
                 Order order = orderDao.findLastOrderByDemandId(demandId);
-                if(!OrderStatus.CANCEL.getCode().equals(order.getStatus())){
+                if(order != null && !OrderStatus.CANCEL.getCode().equals(order.getStatus())){
                     List<Order> orders = new ArrayList<>(1);
                     orders.add(order);
                     demand.setOrders(orders);
