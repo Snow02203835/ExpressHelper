@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 /**
  * @author snow create 2021/04/16 00:42
  *            modified 2021/04/26 23:57
+ *            modified 2021/05/25 13:55
  */
 @Data
 public class OrderRetVo implements VoObject, Serializable {
@@ -20,7 +21,8 @@ public class OrderRetVo implements VoObject, Serializable {
     private Long orderId;
     private String orderSn;
     private Byte type;
-    private Byte status;
+    private Byte orderStatus;
+    private Byte demandStatus;
     private Integer price;
     private Integer campusId;
     private Long demandId;
@@ -49,7 +51,7 @@ public class OrderRetVo implements VoObject, Serializable {
         this.demandId = order.getDemandId();
         this.receiverId = order.getReceiverId();
         this.receiverMobile = order.getReceiverMobile();
-        this.status = order.getStatus();
+        this.orderStatus = order.getStatus();
         this.urlCheck = order.getUrlCheck();
         this.urlSent = order.getUrlSent();
         this.pickUpTime = order.getPickUpTime();
@@ -65,7 +67,7 @@ public class OrderRetVo implements VoObject, Serializable {
         this.demandId = orderPo.getDemandId();
         this.receiverId = orderPo.getReceiverId();
         this.receiverMobile = orderPo.getReceiverMobile();
-        this.status = orderPo.getStatus();
+        this.orderStatus = orderPo.getStatus();
         this.urlCheck = orderPo.getUrlCheck();
         this.urlSent = orderPo.getUrlSent();
         this.pickUpTime = orderPo.getPickUpTime();
@@ -82,6 +84,7 @@ public class OrderRetVo implements VoObject, Serializable {
         this.campusId = demandPo.getCampusId();
         this.sponsorId = demandPo.getSponsorId();
         this.code = demandPo.getCode();
+        this.demandStatus = demandPo.getStatus();
         this.mobile = demandPo.getMobile();
         this.company = demandPo.getCompany();
         this.address = demandPo.getAddress();
@@ -99,7 +102,7 @@ public class OrderRetVo implements VoObject, Serializable {
         this.orderSn = order.getSn();
         this.receiverId = order.getReceiverId();
         this.receiverMobile = order.getReceiverMobile();
-        this.status = order.getStatus();
+        this.orderStatus = order.getStatus();
         this.urlCheck = order.getUrlCheck();
         this.urlSent = order.getUrlSent();
         this.pickUpTime = order.getPickUpTime();
@@ -118,6 +121,7 @@ public class OrderRetVo implements VoObject, Serializable {
         this.campusId = demand.getCampusId();
         this.sponsorId = demand.getSponsorId();
         this.code = demand.getCode();
+        this.demandStatus = demand.getStatus();
         this.mobile = demand.getMobile();
         this.company = demand.getCompany();
         this.address = demand.getAddress();
