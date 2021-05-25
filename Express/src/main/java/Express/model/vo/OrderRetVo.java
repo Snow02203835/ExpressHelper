@@ -5,6 +5,7 @@ import Express.model.bo.Demand;
 import Express.model.bo.Order;
 import Express.model.po.DemandPo;
 import Express.model.po.OrderPo;
+import Express.util.OrderStatus;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -96,6 +97,9 @@ public class OrderRetVo implements VoObject, Serializable {
 
     public void addOrderDetail(Order order){
         if(order == null){
+            return;
+        }
+        if(OrderStatus.CANCEL.getCode().equals(order.getStatus())){
             return;
         }
         this.orderId = order.getId();
