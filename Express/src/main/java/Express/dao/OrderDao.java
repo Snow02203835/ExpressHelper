@@ -67,13 +67,15 @@ public class OrderDao {
     /**
      * 根据id查找订单
      * @author snow create 2021/04/15 19:50
-     * @param orderId
-     * @return
+     *            modified 2021/05/26 15:40
+     * @param orderId 订单id
+     * @param selectDeleted 逻辑删除是否可见
+     * @return 订单详细
      */
-    public ReturnObject<Order> findOrderById(Long orderId){
+    public ReturnObject<Order> findOrderById(Long orderId, boolean selectDeleted){
         try {
             OrderPo orderPo = orderPoMapper.selectByPrimaryKey(orderId);
-            if(orderPo != null && orderPo.getDeleted() != (byte)1){
+            if(orderPo != null && (selectDeleted || orderPo.getDeleted() != (byte)1)){
                 return new ReturnObject<>(new Order(orderPo));
             }
             else {
