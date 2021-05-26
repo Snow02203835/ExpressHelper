@@ -386,7 +386,7 @@ public class DemandService {
      */
     @Transactional
     public ReturnObject cancelOrder(Long userId, Long departId, Long orderId){
-        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId);
+        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId, false);
         if(orderReturnObject.getData() == null){
             return orderReturnObject;
         }
@@ -418,7 +418,7 @@ public class DemandService {
      * @return
      */
     public ReturnObject deleteOrderLogically(Long userId, Long orderId){
-        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId);
+        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId, false);
         if(orderReturnObject.getData() == null){
             return orderReturnObject;
         }
@@ -446,7 +446,7 @@ public class DemandService {
      * @return 操作结果
      */
     public ReturnObject updateOrderStatusWithURL(Long userId, Long orderId, String url){
-        ReturnObject<Order> retObj = orderDao.findOrderById(orderId);
+        ReturnObject<Order> retObj = orderDao.findOrderById(orderId, false);
         if(retObj.getData() == null){
             return retObj;
         }
@@ -479,7 +479,7 @@ public class DemandService {
      * @return 操作结果
      */
     public ReturnObject sponsorConfirmOrder(Long userId, Long orderId){
-        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId);
+        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId, false);
         if(orderReturnObject.getData() == null){
             return orderReturnObject;
         }
@@ -514,7 +514,7 @@ public class DemandService {
      * @return
      */
     public ReturnObject getOrderById(Long userId, Long departId, Long orderId){
-        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId);
+        ReturnObject<Order> orderReturnObject = orderDao.findOrderById(orderId, false);
         if(orderReturnObject.getData() == null){
             return orderReturnObject;
         }
@@ -585,13 +585,14 @@ public class DemandService {
      *            modified 2021/04/19 11:20
      *            modified 2021/04/20 19:31
      *            modified 2021/05/06 13:44
+     *            modified 2021/05/26 15:41
      * @param userId 用户id
      * @param feedbackVo 反馈信息
      * @return 插入结果
      */
     public ReturnObject userFeedback(Long userId, FeedbackVo feedbackVo){
         if(feedbackVo.getOrderId() != null){
-            ReturnObject<Order> orderReturnObject = orderDao.findOrderById(feedbackVo.getOrderId());
+            ReturnObject<Order> orderReturnObject = orderDao.findOrderById(feedbackVo.getOrderId(), true);
             if(orderReturnObject.getData() == null){
                 return orderReturnObject;
             }
