@@ -533,6 +533,7 @@ public class DemandService {
      * @author snow create 2021/04/17 00:39
      *            modified 2021/05/06 16:47
      *            modified 2021/05/20 00:59
+     *            modified 2021/05/26 15:18
      * @param userId 用户id
      * @param departId 角色id
      * @param receiverId 接单者id
@@ -552,14 +553,18 @@ public class DemandService {
             receiverId = userId;
         }
         PageHelper.startPage(page, pageSize);
-        PageInfo<OrderPo> orderPoPageInfo = orderDao.findOrdersWithCondition(userDepartId.equals(departId), receiverId, status, deleted, startTime, endTime);
+        PageInfo<OrderPo> orderPoPageInfo = orderDao.findOrdersWithCondition(receiverId, status, deleted, startTime, endTime);
         if(orderPoPageInfo == null){
             return new ReturnObject<>(ResponseCode.INTERNAL_SERVER_ERR);
         }
         List<OrderRetVo> orderList = orderPoPageInfo.getList().stream().map(OrderRetVo::new).collect(Collectors.toList());
         List<VoObject> orderInfos = new ArrayList<>(orderList.size());
         for(OrderRetVo orderVo : orderList){
-            orderVo.addDemandDetail(demandDao.findDemandById(orderVo.getDemandId(), true).getData());
+            if (!userDepartId.equals(departId) || (
+                    !OrderStatus.CANCEL.getCode().equals(orderVo.getOrderStatus()) &&
+                    !OrderStatus.BEEN_CANCEL.getCode().equals(orderVo.getOrderStatus()))) {
+                orderVo.addDemandDetail(demandDao.findDemandById(orderVo.getDemandId(), true).getData());
+            }
             orderInfos.add(orderVo);
         }
         System.out.println(orderInfos.toString());
