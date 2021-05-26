@@ -53,7 +53,7 @@ public class Verification implements VoObject, Serializable {
     }
 
     public void updateInfoWithVo(VerificationVo verificationVo){
-        if(!verificationVo.getContentImg().isEmpty() && !verificationVo.getCoverImg().isBlank()){
+        if(verificationVo.getCoverImg() != null && !verificationVo.getCoverImg().isBlank()){
             this.coverImg = verificationVo.getCoverImg();
         }
         if(!verificationVo.getContentImg().isEmpty() && !verificationVo.getContentImg().isBlank()){
