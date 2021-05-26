@@ -962,6 +962,7 @@ public class DemandService {
     /**
      * 用户修改自己的未处理/未通过认证信息
      * @author snow create 2021/04/29 14:11
+     *            modified 2021/05/26 20:31
      * @param userId 用户id
      * @param verificationId 认证id
      * @param verificationVo 认证信息
@@ -969,7 +970,8 @@ public class DemandService {
      */
     @Transactional
     public ResponseCode userAlterVerificationInfo(Long userId, Long verificationId, VerificationVo verificationVo){
-        if(verificationVo.getCoverImg().isBlank() && verificationVo.getContentImg().isBlank()){
+        if((verificationVo.getCoverImg() == null || verificationVo.getCoverImg().isBlank()) &&
+                (verificationVo.getContentImg() == null || verificationVo.getContentImg().isBlank())){
             return ResponseCode.FIELD_NOT_VALID;
         }
         ReturnObject<Verification> retObj = verificationDao.findVerificationById(verificationId);
