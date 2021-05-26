@@ -37,7 +37,7 @@ spring:
         - id: order
           uri: http://${all-ip.express}/
           predicates:
-            - Path=/order/*,/order/*/cancel,/order,/image
+            - Path=/order/*,/order/*/cancel,/order,/image,/order/*/confirm
           filters:
             - Auth=authorization
 
