@@ -138,7 +138,7 @@ public class OrderDao {
      * 根据条件查找订单
      * @author snow create 2021/04/17 00:34
      *            modified 2021/05/20 01:05
-     * @param commonUser 是否为普通用户
+     *            modified 2021/05/26 15:15
      * @param receiverId 接单者id
      * @param status 状态
      * @param deleted 逻辑删除是否可见
@@ -146,16 +146,13 @@ public class OrderDao {
      * @param endTime 结束时间
      * @return 分页结果
      */
-    public PageInfo<OrderPo> findOrdersWithCondition(boolean commonUser, Long receiverId , Byte status, Byte deleted,
+    public PageInfo<OrderPo> findOrdersWithCondition(Long receiverId , Byte status, Byte deleted,
                                                      LocalDateTime startTime, LocalDateTime endTime){
         try {
             OrderPoExample example = new OrderPoExample();
             OrderPoExample.Criteria criteria = example.createCriteria();
             if(receiverId != null){
                 criteria.andReceiverIdEqualTo(receiverId);
-            }
-            if(commonUser){
-                criteria.andStatusNotEqualTo(OrderStatus.CANCEL.getCode());
             }
             if(status != null){
                 criteria.andStatusEqualTo(status);
