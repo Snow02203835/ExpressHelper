@@ -474,6 +474,7 @@ public class DemandService {
      * 需求发布者确认订单已完成
      * @author snow create 2021/05/21 16:04
      *            modified 2021/05/23 20:03
+     *            modified 2021/05/28 16:55
      * @param userId 用户id
      * @param orderId 订单id
      * @return 操作结果
@@ -496,6 +497,10 @@ public class DemandService {
         Demand demand = demandReturnObject.getData();
         if(!userId.equals(demand.getSponsorId())){
             return new ReturnObject(ResponseCode.RESOURCE_ID_OUT_SCOPE);
+        }
+        if(!DemandStatus.PICKED.getCode().equals(demand.getStatus()) ||
+                !OrderStatus.SENT.getCode().equals(order.getStatus())){
+            return new ReturnObject(ResponseCode.DEMAND_STATUS_FORBID);
         }
         user.successfullyDeliverPackage();
         userDao.updateUserInfo(user);
