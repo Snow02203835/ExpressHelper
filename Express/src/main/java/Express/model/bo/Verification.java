@@ -56,7 +56,7 @@ public class Verification implements VoObject, Serializable {
         if(verificationVo.getCoverImg() != null && !verificationVo.getCoverImg().isBlank()){
             this.coverImg = verificationVo.getCoverImg();
         }
-        if(!verificationVo.getContentImg().isEmpty() && !verificationVo.getContentImg().isBlank()){
+        if(verificationVo.getContentImg() != null && !verificationVo.getContentImg().isBlank()){
             this.contentImg = verificationVo.getContentImg();
         }
         this.status = VerificationStatus.UNHANDLED.getCode();
